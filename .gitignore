@@ -1,0 +1,27 @@
+#! Ignore environment variables
+.env
+
+#! Ignore node & composer dependencies
+node_modules/
+vendor/
+
+#! Ignore IDE/editor settings
+.vscode/
+.idea/
+
+#! Ignore logs and system files
+*.log
+.DS_Store
+Thumbs.db
+
+#! Ignore OS swap/backup files
+*.swp
+*.swo
+*.bak
+
+#! Ignore build or dist folders 
+dist/
+build/
+
+#! Ignore Docker volumes (optional)
+docker/data/
