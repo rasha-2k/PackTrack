@@ -1,0 +1,31 @@
+<?php
+header('Content-Type: application/json'); // Force JSON output for Postman or browser
+
+require_once __DIR__ . '/../helpers/response.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+
+
+// Load .env file (PackWise/.env is two levels up from db.php)
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
+// Check if environment variables are loaded correctly
+$host = $_ENV['DB_HOST'] ?? '';
+$db   = $_ENV['DB_NAME'] ?? '';
+$user = $_ENV['DB_USER'] ?? '';
+$pass = $_ENV['DB_PASS'] ?? '';
+
+// Optional for debugging
+//echo json_encode(['host' => $host, 'db' => $db, 'user' => $user]);
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // echo json_encode(["success" => true, "message" => "Connected to the database!"]);
+} catch (PDOException $e) {
+    sendError("Database connection failed: " . $e->getMessage(), 500);
+
+}
