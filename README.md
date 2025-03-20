@@ -1,17 +1,11 @@
 ![Status](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
 ![License](https://img.shields.io/badge/License-Educational-blue)
-![Tech Stack](https://img.shields.io/badge/Tech%20Stack-PHP%20%7C%20JS%20%7C%20MySQL-lightgrey)
+<!--![Tech Stack](https://img.shields.io/badge/Tech%20Stack-PHP%20%7C%20JS%20%7C%20MySQL%20%7C%20Docker-lightgrey)-->
 ---
 
 # PackWise – Personal Delivery Log with Status Tracker and Smart Tips
 
 > PackWise is a lightweight web-based application that helps users organize and track their personal deliveries in one centralized platform. Designed with modern users in mind, PackWise combines powerful delivery tracking features with smart tips and motivational quotes to make package management fun and insightful.
-
----
-
-## Project Overview
-
-PackWise is a web application designed to streamline the way users handle their deliveries. With features like delivery log management, real-time courier tracking via a public API, motivational quotes, and smart packaging tips, PackWise is more than just a tracker — it’s your personal delivery companion.
 
 ---
 
@@ -72,25 +66,36 @@ Most online shoppers manage their deliveries through fragmented sources like ema
 ## Project Structure
  ```bash
 PackWise/ 
-├── frontend/ 
-│   ├── index.html 
-│   ├── dashboard.html 
-│   ├── admin-panel.html 
-│   └── assets/ 
-│       ├── css/  
-│       └── js/ 
+├── docs/
 ├── backend/ 
 │   ├── api/ 
-│   ├── auth/ 
+│   │   └── protectedRoute.php
+│   ├── auth/
+│   │   ├── login.php
+│   │   ├── register.php
+│   │   └── validateToken.php
+│   ├── controllers/ 
 │   ├── db/ 
-│   └── controllers/ 
-├── .github/ 
-│   └── workflows/ 
-│       └── ci-cd.yml 
+│   │   └── db.php
+│   ├── helpers/
+│   │   └── response.php
+│   ├── jwt/
+│   │   └── JwtHandler.php
+│   └── test/
+│       └── responseTest.php
+├── frontend/ 
+│   ├── assets/ 
+│   │   ├── css/  
+│   │   └── js/ 
+│   ├── index.html 
+│   ├── dashboard.html 
+│   └── admin-panel.html 
 ├── docker/ 
 │   └── Dockerfile 
-├── docs/
-├── .env.example 
+├── .env.example
+├── .github/ 
+│   └── workflows/ 
+│       └── ci-cd.yml  
 └── README.md
  ```
 <!--
