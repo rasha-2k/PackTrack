@@ -4,6 +4,11 @@ header("Content-Type: application/json");
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../db/db.php';
 
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
 $data = json_decode(file_get_contents("php://input"), true);
 $name = trim($data["name"] ?? '');
 $email = trim($data["email"] ?? '');

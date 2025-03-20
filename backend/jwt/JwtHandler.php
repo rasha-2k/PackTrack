@@ -1,14 +1,30 @@
 <?php
 namespace Jwt;
+header('Content-Type: application/json');
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../helpers/response.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Dotenv\Dotenv;
+use \Exception;
 
+$dotenv = Dotenv::createImmutable(__DIR__.'/../../');
+$dotenv->load();
 
 class JwtHandler {
 
-    // Secret key for encoding and decoding JWT
-    private static $secretKey = 'YOUR_SECRET_KEY';  // Change this to a strong secret
+    private static $secretKey;
+    public function __construct() {
+
+            self::$secretKey = $_ENV['JWT_SECRET'] ?? null;
+    
+            if (empty(self::$secretKey)) {
+                sendError("JWT secret key not set in .env", 500);
+            }
+    }
+    
+
 
     public static function generate($userId) {
         $issuedAt = time();
@@ -16,25 +32,27 @@ class JwtHandler {
         $payload = [
             'iat' => $issuedAt,
             'exp' => $expirationTime,
-            'sub' => $userId  // The user's ID is the subject
+            'sub' => $userId 
         ];
 
         return JWT::encode($payload, self::$secretKey, 'HS256');
     }
 
-
-    
-public function encode($payload)
-{
-    return JWT::encode($payload, self::$secretKey, 'HS256');
-}
-
-public function decode($token)
-{
-    try {
-        return JWT::decode($token, new Key(self::$secretKey, 'HS256'));
-    } catch (\Exception $e) {
-        throw new \Exception("Token decoding failed: " . $e->getMessage());
+    public function encode($payload)
+    {
+        return JWT::encode($payload, self::$secretKey, 'HS256');
     }
-}
+
+    public function decode($token)
+    {
+        try {
+            return JWT::decode($token, new Key(self::$secretKey, 'HS256'));
+        } catch (\Firebase\JWT\ExpiredException $e) {
+            sendError("Token has expired: " . $e->getMessage(), 401);
+        } catch (\Firebase\JWT\SignatureInvalidException $e) {
+            sendError("Invalid token signature: " . $e->getMessage(), 401);
+        } catch (\Exception $e) {
+            sendError("Token decoding failed: " . $e->getMessage(), 401);
+        }
+    }
 }

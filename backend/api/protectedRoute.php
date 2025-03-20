@@ -1,10 +1,21 @@
 <?php
 header("Content-Type: application/json");
 
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../jwt/JwtHandler.php';
 
+use Dotenv\Dotenv;
 use Jwt\JwtHandler;
+
+$dotenv = Dotenv::createImmutable(__DIR__.'/../../');
+$dotenv->load();
+
+
+if (!isset($_ENV['JWT_SECRET']) || empty($_ENV['JWT_SECRET'])) {
+    sendError("JWT secret key is not set in the environment!", 500);
+}
+
 
 // Get Authorization header
 $headers = apache_request_headers();
@@ -17,15 +28,14 @@ $jwt = str_replace('Bearer ', '', $headers['Authorization']);
 
 // Decode the token using instance method
 $jwtHandler = new JwtHandler();
-$user = $jwtHandler->decode($jwt);
+try {
+    $user = $jwtHandler->decode($jwt);
+} catch (Exception $e) {
+    sendError("Invalid or expired token: " . $e->getMessage(), 401); 
+}
 
 if (!$user) {
     sendError("Invalid or expired token", 401);
 }
 
-// Now you have access to the user data (e.g., $user->sub is the user ID)
-echo json_encode([
-    "success" => true,
-    "message" => "You are authenticated",
-    "user_id" => $user->sub
-]);
+sendSuccess("You are authenticated", ["user_id" => $user->sub]);

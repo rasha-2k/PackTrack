@@ -6,6 +6,11 @@ require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../jwt/JwtHandler.php';
 
 use Jwt\JwtHandler;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
 
 $data = json_decode(file_get_contents("php://input"), true);
 $email = $data['email'] ?? '';
@@ -29,7 +34,9 @@ if (!password_verify($password, $user['password'])) {
     sendError("Invalid email or password", 401);
 }
 
-$token = JwtHandler::generate($user['id']);
+$jwtHandler = new JwtHandler();
+$token = $jwtHandler->generate($user['id']);
+
 
 echo json_encode([
     "success" => true,
