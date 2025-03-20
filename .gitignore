@@ -1,27 +1,34 @@
-#! Ignore environment variables
+#! environment variables
 .env
 
-#! Ignore node & composer dependencies
+#! node & composer dependencies
 node_modules/
 vendor/
 
-#! Ignore IDE/editor settings
+#! IDE/editor settings
 .vscode/
 .idea/
 
-#! Ignore logs and system files
+#! logs and system files
 *.log
 .DS_Store
 Thumbs.db
+*.tmp
 
-#! Ignore OS swap/backup files
+#! OS swap/backup files
 *.swp
 *.swo
 *.bak
 
-#! Ignore build or dist folders 
+#! build or dist folders 
 dist/
 build/
 
-#! Ignore Docker volumes (optional)
+#! Docker volumes 
 docker/data/
+
+#! Composer dependencies
+/vendor/
+
+#! Composer lock file
+composer.lock
