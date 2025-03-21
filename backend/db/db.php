@@ -8,7 +8,7 @@ use Dotenv\Dotenv;
 
 
 
-// Load .env file (PackWise/.env is two levels up from db.php)
+// Load .env file (PackTrack/.env is two levels up from db.php)
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
@@ -17,9 +17,10 @@ $host = $_ENV['DB_HOST'] ?? '';
 $db   = $_ENV['DB_NAME'] ?? '';
 $user = $_ENV['DB_USER'] ?? '';
 $pass = $_ENV['DB_PASS'] ?? '';
+$port = $_ENV['DB_PORT'] ?? '';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // echo json_encode(["success" => true, "message" => "Connected to the database!"]);
 } catch (PDOException $e) {

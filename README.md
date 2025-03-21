@@ -3,9 +3,9 @@
 <!--![Tech Stack](https://img.shields.io/badge/Tech%20Stack-PHP%20%7C%20JS%20%7C%20MySQL%20%7C%20Docker-lightgrey)-->
 ---
 
-# PackWise – Personal Delivery Log with Status Tracker and Smart Tips
+# PackTrack – Personal Delivery Log with Status Tracker and Smart Tips
 
-> PackWise is a lightweight web-based application that helps users organize and track their personal deliveries in one centralized platform. Designed with modern users in mind, PackWise combines powerful delivery tracking features with smart tips and motivational quotes to make package management fun and insightful.
+> PackTrack is a lightweight web-based application that helps users organize and track their personal deliveries in one centralized platform. Designed with modern users in mind, PackTrack combines powerful delivery tracking features with smart tips and motivational quotes to make package management fun and insightful.
 
 ---
 
@@ -13,7 +13,7 @@
 
 Most online shoppers manage their deliveries through fragmented sources like emails and SMS links. There’s no centralized tool tailored for personal delivery management, which leads to confusion, missed deliveries, and lack of packaging awareness.
 
-**PackWise** solves this by offering a streamlined delivery log dashboard, real-time status tracking, and insightful packaging tips — all while demonstrating best practices in modern software engineering.
+**PackTrack** solves this by offering a streamlined delivery log dashboard, real-time status tracking, and insightful packaging tips — all while demonstrating best practices in modern software engineering.
 
 ---
 
@@ -65,7 +65,7 @@ Most online shoppers manage their deliveries through fragmented sources like ema
 
 ## Project Structure
  ```bash
-PackWise/ 
+PackTrack/ 
 ├── docs/
 ├── backend/ 
 │   ├── api/ 
@@ -91,11 +91,13 @@ PackWise/
 │   ├── dashboard.html 
 │   └── admin-panel.html 
 ├── docker/ 
-│   └── Dockerfile 
 ├── .env.example
 ├── .github/ 
 │   └── workflows/ 
-│       └── ci-cd.yml  
+│       └── ci-cd.yml 
+├── docker-compose.yml 
+├── Dockerfile  
+├── LICENSE/ 
 └── README.md
  ```
 <!--
@@ -112,8 +114,8 @@ PackWise/
 ### Local Setup
 1. **Clone the Repository**
 ```bash
-git clone https://github.com/your-username/packwise.git
-cd packwise
+git clone https://github.com/your-username/packtrack.git
+cd packtrack
 ```
 2. **Copy `.env.example` and fill in credentials**
 ```bash
@@ -122,13 +124,13 @@ cp .env.example .env
 > Fill in your database credentials, JWT secret, and API keys.
 3. **Run Backend Server**
     - Configure your Apache or PHP local server (XAMPP, Laragon, etc.)
-    - Import `packwise_db.sql` to your database  
+    - Import `packtrackdb.sql` to your database  
 4. Open Frontend
     - Start from `index.html` (Login Page)
 5. **Optional: Docker Deployment**
 ```bash
-docker build -t packwise-app .
-docker run -p 8000:80 packwise-app
+docker build -t packtrack-app .
+docker run -p 8000:80 packtrack-app
 ```
 
 ---
@@ -137,7 +139,7 @@ docker run -p 8000:80 packwise-app
 ```env
 DB_HOST=localhost
 DB_PORT=3306
-DB_NAME=packwise_db
+DB_NAME=packtrackdb
 DB_USER=your_db_user
 DB_PASS=your_db_password
 
@@ -148,7 +150,7 @@ QUOTES_API_URL=https://api.quotable.io/random
 ```
 ---
 ## DevOps & CI/CD
-PackWise includes GitHub Actions workflow for Continuous Integration and Deployment:
+PackTrack includes GitHub Actions workflow for Continuous Integration and Deployment:
 - Code Linting & Testing
 - Auto Deployment (Optional)
 - Docker Support for Containerized Environments
