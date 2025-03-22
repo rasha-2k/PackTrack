@@ -48,8 +48,8 @@ Most online shoppers manage their deliveries through fragmented sources like ema
 | Layer          | Technologies                      |
 |----------------|-----------------------------------|
 | Frontend       | HTML, CSS, JavaScript             |
-| Backend        | PHP (REST APIs)                   |
-| Database       | MySQL / PostgreSQL                |
+| Backend        | PHP                               |
+| Database       | MySQL                             |
 | Authentication | JWT Tokens                        |
 | DevOps         | GitHub Actions, Docker (Advanced) |
 | APIs Used      | TrackingMore API, Quotable API    |
@@ -86,7 +86,11 @@ PackTrack/
 ├── frontend/ 
 │   ├── assets/ 
 │   │   ├── css/  
+│   │   │   └── style.css
 │   │   └── js/ 
+│   │       ├── backend-conn.js
+│   │       ├── script.js
+│   │       └── style-switcher.js
 │   ├── index.html 
 │   ├── dashboard.html 
 │   └── admin-panel.html 
