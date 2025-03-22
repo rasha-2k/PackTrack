@@ -6,8 +6,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-
-
 // Load .env file (PackTrack/.env is two levels up from db.php)
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();

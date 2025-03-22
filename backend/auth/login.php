@@ -14,14 +14,15 @@ $dotenv->load();
 
 $data = json_decode(file_get_contents("php://input"), true);
 $email = $data['email'] ?? '';
+$role = $data['role'] ?? 'user';
 $password = $data['password'] ?? '';
 
 if (!$email || !$password) {
     sendError("Email and password are required", 400);
 }
 
-$stmt = $pdo->prepare("SELECT id, name, email, password FROM users WHERE email = ?");
-$stmt->execute([$email]);
+$stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND role = ?");
+$stmt->execute([$email, $role]);
 
 if ($stmt->rowCount() === 0) {
     sendError("Invalid email or password", 401);
@@ -35,8 +36,11 @@ if (!password_verify($password, $user['password'])) {
 }
 
 $jwtHandler = new JwtHandler();
-$token = $jwtHandler->generate($user['id']);
-
+$token = $jwtHandler->generate($user['id'], [
+    "name" => $user['name'],
+    "email" => $user['email'],
+    "role" => $user['role']
+]);
 
 echo json_encode([
     "success" => true,
@@ -45,6 +49,9 @@ echo json_encode([
     "user" => [
         "id" => $user['id'],
         "name" => $user['name'],
-        "email" => $user['email']
+        "email" => $user['email'],
+        "role" => $user['role']
     ]
 ]);
+
+?>

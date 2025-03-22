@@ -11,29 +11,74 @@
 
 <body class="dark">
     <div class="container Box">
+        <div class="logo">
+            <i class="fas fa-box-open fa-2x" style="color: var(--color-primary);"></i>
+            <h1>PackTrack</h1>
+            <p>Your package tracking solution</p>
+        </div>
+
         <div class="form-toggle">
             <button id="show-login" class="active">Login</button>
             <button id="show-register">Register</button>
         </div>
 
-        <div id="login-form" class="form-box">
-            <h2>Login to PackTrack</h2>
+        <div id="login-form" class="form-box animated fadeIn">
+            <h2>Welcome Back</h2>
             <form action="#" method="POST">
+                <div class="input-group">
+                    <label for="login-role">Login as</label>
+                    <select id="login-role">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>                
                 <div class="input-group">
                     <label for="login-email">Email</label>
                     <input type="email" id="login-email" placeholder="Enter your email" required>
                 </div>
                 <div class="input-group">
                     <label for="login-password">Password</label>
-                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                    <div class="password-field">
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                        <span class="password-toggle" id="login-password-toggle">
+                            <i class="far fa-eye"></i>
+                        </span>
+                    </div>
                 </div>
-                <button type="submit" class="btn-primary">Login</button>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="checkbox" style="margin-right: 0.5rem;">
+                        <span style="font-size: 0.875rem; color: var(--text-black-700);">Remember me</span>
+                    </label>
+                    <a href="#" style="font-size: 0.875rem; color: var(--color-primary); text-decoration: none;">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn-primary">Log In</button>
             </form>
+            <div class="form-footer">
+                Don't have an account? <a href="#" id="link-to-register">Sign up now</a>
+            </div>
         </div>
 
         <div id="register-form" class="form-box hidden">
-            <h2>Create your PackTrack Account</h2>
+            <h2>Create Account</h2>
             <form action="#" method="POST">
+                <div class="input-group">
+                    <label for="register-role">Register as</label>
+                    <select id="register-role">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="input-group" id="admin-secret-group" style="display: none;">
+                    <label for="admin-secret">Admin Secret Key</label>
+                    <div class="password-field">
+                        <input type="password" id="admin-secret" placeholder="Admin secret key">
+                        <span class="password-toggle" id="admin-password-toggle">
+                            <i class="far fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                
                 <div class="input-group">
                     <label for="register-name">Full Name</label>
                     <input type="text" id="register-name" placeholder="Your full name" required>
@@ -44,10 +89,27 @@
                 </div>
                 <div class="input-group">
                     <label for="register-password">Password</label>
-                    <input type="password" id="register-password" placeholder="Create a password" required>
+                    <div class="password-field">
+                        <input type="password" id="register-password" placeholder="Create a password" required>
+                        <span class="password-toggle" id="register-password-toggle">
+                            <i class="far fa-eye"></i>
+                        </span>
+                    </div>
                 </div>
-                <button type="submit" class="btn-primary">Register</button>
+                <div class="input-group">
+                    <label for="register-confirm">Confirm Password</label>
+                    <div class="password-field">
+                        <input type="password" id="register-confirm" placeholder="Confirm your password" required>
+                        <span class="password-toggle" id="confirm-password-toggle">
+                            <i class="far fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Create Account</button>
             </form>
+            <div class="form-footer">
+                Already have an account? <a href="#" id="link-to-login">Sign in</a>
+            </div>
         </div>
     </div>
     <div class="style-switcher">
@@ -61,6 +123,6 @@
     <!-- js files -->
     <script src="assets/js/script.js"></script>
     <script src="assets/js/style-switcher.js"></script>
-    <script src="assets/js/conn.js"></script>
+    <script src="assets/js/backend-conn.js"></script>
+
 </body>
-</html>

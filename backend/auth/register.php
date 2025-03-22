@@ -13,6 +13,14 @@ $data = json_decode(file_get_contents("php://input"), true);
 $name = trim($data["name"] ?? '');
 $email = trim($data["email"] ?? '');
 $password = trim($data["password"] ?? '');
+$role = trim($data['role'] ?? 'user');
+$adminSecret = trim($data['adminSecret'] ?? '');
+
+if ($role === 'admin') {
+    if (!$adminSecret || $adminSecret !== $_ENV['ADMIN_SECRET']) {
+        sendError("Invalid admin secret key", 403);
+    }
+}
 
 
 if (!$name || !$email || !$password) {
@@ -30,8 +38,9 @@ try {
     }
 
     // Register user
-    $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-    if ($stmt->execute([$name, $email, $hashedPassword])) {
+    $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+
+    if ($stmt->execute([$name, $email, $hashedPassword, $role])) {
         sendSuccess("User registered successfully");
     } else {
         sendError("Something went wrong", 500);

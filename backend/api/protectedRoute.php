@@ -4,6 +4,7 @@ header("Content-Type: application/json");
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../jwt/JwtHandler.php';
+require_once __DIR__ . '../middlewares/authMiddleware.php';
 
 use Dotenv\Dotenv;
 use Jwt\JwtHandler;
@@ -39,3 +40,11 @@ if (!$user) {
 }
 
 sendSuccess("You are authenticated", ["user_id" => $user->sub]);
+
+$token = str_replace("Bearer ", "", $headers['Authorization'] ?? '');
+$userData = validateToken($token);
+if (!$userData) {
+    http_response_code(401);
+    echo json_encode(["error" => "Unauthorized"]);
+    exit;
+}

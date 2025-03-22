@@ -9,9 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = document.getElementById("register-name").value.trim();
         const email = document.getElementById("register-email").value.trim();
         const password = document.getElementById("register-password").value.trim();
+        const role = document.getElementById('register-role').value;
+        const adminSecret = role === 'admin' ? document.getElementById('admin-secret').value : '';
 
-        const data = { name, email, password };
+        if (!name || !email || !password || !role) {
+            alert("All fields are required.");
+            return;
+        }
+        
+        const data = { name, email, password, role};
 
+        // Only attach adminSecretKey if role is admin
+        if (role === 'admin') {
+            data.adminSecret = adminSecret;
+        }
         try {
             const response = await fetch("http://localhost/PackTrack/backend/auth/register.php", {
                 method: "POST",
@@ -22,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
             if (result.success) {
                 alert(result.message || "Registered successfully!");
-                // Optionally, switch to login form
+
                 document.getElementById("show-login").click();
             } else {
                 alert(result.message || "Registration failed");
@@ -44,8 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const email = document.getElementById("login-email").value.trim();
         const password = document.getElementById("login-password").value.trim();
+        const role = document.getElementById('login-role').value;
 
-        const data = { email, password };
+        if (!email || !password) {
+            alert("Email and password are required.");
+            return;
+        }
+        const data = { email, password, role };
 
         try {
             const response = await fetch("http://localhost/PackTrack/backend/auth/login.php", {
@@ -59,8 +75,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(`Login successful! Welcome, ${result.user.name}`);
                 // Save token to localStorage
                 localStorage.setItem("token", result.token);
-                // Redirect to dashboard.html or wherever you want
-                window.location.href = "dashboard.html";
+                localStorage.setItem("user", JSON.stringify(result.user));
+                console.log("Token:", result.token);
+                console.log("User:", JSON.stringify(result.user));
+                // Redirect based on role
+                if (result.user.role === "admin") {
+                window.location.href = "admin-dashboard.html";
+                } else {
+                window.location.href = "user-dashboard.html";
+                }
             } else {
                 alert(result.message || "Login failed");
             }
@@ -70,3 +93,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
