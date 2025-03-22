@@ -81,6 +81,8 @@ PackTrack/
 │   │   └── response.php
 │   ├── jwt/
 │   │   └── JwtHandler.php
+│   ├── middlewares/
+│   │   └── authMiddleware.php
 │   └── test/
 │       └── responseTest.php
 ├── frontend/ 
@@ -88,9 +90,13 @@ PackTrack/
 │   │   ├── css/  
 │   │   │   └── style.css
 │   │   └── js/ 
+│   │       ├── auth.js
 │   │       ├── backend-conn.js
+│   │       ├── dashboard.js
 │   │       ├── script.js
 │   │       └── style-switcher.js
+│   ├── components/ 
+│   │   └── navbar.html
 │   ├── index.html 
 │   ├── dashboard.html 
 │   └── admin-panel.html 
@@ -118,7 +124,7 @@ PackTrack/
 ### Local Setup
 1. **Clone the Repository**
 ```bash
-git clone https://github.com/your-username/packtrack.git
+git clone https://github.com/rasha-2k/PackTrack.git
 cd packtrack
 ```
 2. **Copy `.env.example` and fill in credentials**
