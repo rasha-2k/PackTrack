@@ -12,24 +12,33 @@ if(document.querySelector(".style-switcher").classList.contains("open"))
 }
 })
 /*=========================== theme light and dark mode ===========================*/
-const dayNight = document.querySelector(".day-night");
+const dayNightToggle = document.querySelector(".day-night");
+const icon = dayNightToggle.querySelector("i");
 
-dayNight.addEventListener("click", () =>{
-    dayNight.querySelector("i").classList.toggle("fa-sun");
-    dayNight.querySelector("i").classList.toggle("fa-moon")
-
-    document.body.classList.toggle( "light" );
-
-    body.classList.toggle('light');
-    body.classList.toggle('dark');
-    })
-    window.addEventListener("load", () => {
-    if(document.body.classList.contains("light"))
-    {
-        dayNight.querySelector("i").classList.add("fa-moon");
+// Function to apply the theme
+function applyTheme(theme) {
+    document.body.classList.remove("dark", "light");
+    document.body.classList.add(theme);
+    
+    // Update the icon
+    if (theme === "dark") {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+    } else {
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
     }
-    else
-    {
-        dayNight.querySelector("i").classList.add("fa-sun");
-    }
-})
+}
+// Check localStorage for theme on page load
+const savedTheme = localStorage.getItem("theme") || "dark";
+applyTheme(savedTheme);
+
+// Toggle theme on button click
+dayNightToggle.addEventListener("click", () => {
+    const newTheme = document.body.classList.contains("dark") ? "light" : "dark";
+    localStorage.setItem("theme", newTheme);
+    applyTheme(newTheme);
+    
+    // Update charts to match current theme
+    updateChartsTheme();
+});

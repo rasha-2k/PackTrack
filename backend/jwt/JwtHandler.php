@@ -26,13 +26,14 @@ class JwtHandler {
     
 
 
-    public static function generate($userId) {
+    public static function generate($userId, $userData = []) {
         $issuedAt = time();
         $expirationTime = $issuedAt + 3600;  // jwt valid for 1 hour from the issued time
         $payload = [
             'iat' => $issuedAt,
             'exp' => $expirationTime,
-            'sub' => $userId 
+            'sub' => $userId,
+            'data' => $userData
         ];
 
         return JWT::encode($payload, self::$secretKey, 'HS256');
