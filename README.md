@@ -1,6 +1,5 @@
 ![Status](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
 ![License](https://img.shields.io/badge/License-Educational-blue)
-<!--![Tech Stack](https://img.shields.io/badge/Tech%20Stack-PHP%20%7C%20JS%20%7C%20MySQL%20%7C%20Docker-lightgrey)-->
 ---
 
 # PackTrack – Personal Delivery Log with Status Tracker and Smart Tips
@@ -177,7 +176,6 @@ PackTrack includes GitHub Actions workflow for Continuous Integration and Deploy
 > ✅ Admin Panel  
 > ✅ API Responses  
 > ✅ PDF Export Example -->
-
 ## Future Enhancements
 
 - Interactive Dashboard Charts:
