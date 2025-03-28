@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PackTrack | Admin Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+</head>
+<body class="dark">
+    <!-- Mobile sidebar toggle -->
+    <div class="sidebar-overlay"></div>
+    
+    <!-- Dashboard Container -->
+    <div class="dashboard-container Box">
+        <!-- Sidebar container -->
+        <div id="sidebar-container"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Admin Dashboard</h1>
+                </div>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search users or packages...">
+                    </div>
+                    <button class="btn-add-package">
+                        <i class="fas fa-plus"></i>
+                        Add User
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Stats Cards -->
+            <div class="dashboard-cards">
+                <div class="card stat-card">
+                    <div class="stat-info">
+                        <h3>Total Users</h3>
+                        <div class="value">256</div>
+                        <div class="change positive">
+                            <i class="fas fa-arrow-up"></i> 15% from last month
+                        </div>
+                    </div>
+                    <div class="stat-icon bg-primary">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-info">
+                        <h3>Total Packages</h3>
+                        <div class="value">1,204</div>
+                        <div class="change positive">
+                            <i class="fas fa-arrow-up"></i> 22% from last month
+                        </div>
+                    </div>
+                    <div class="stat-icon bg-warning">
+                        <i class="fas fa-box"></i>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-info">
+                        <h3>Active Users</h3>
+                        <div class="value">198</div>
+                        <div class="change positive">
+                            <i class="fas fa-arrow-up"></i> 10% from last month
+                        </div>
+                    </div>
+                    <div class="stat-icon bg-success">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-info">
+                        <h3>Packages Delayed</h3>
+                        <div class="value">24</div>
+                        <div class="change negative">
+                            <i class="fas fa-arrow-down"></i> 5% from last month
+                        </div>
+                    </div>
+                    <div class="stat-icon bg-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <!-- Chart 1: Bar Chart for Deliveries Overview (Status) -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Deliveries Overview (Status)</div>
+                    </div>
+                    <div class="chart-actions-group">
+                        <button class="chart-action" id="statusDailyButton" data-chart-type="delivery-status">Daily</button>
+                        <button class="chart-action active" id="statusWeeklyButton" data-chart-type="delivery-status">Weekly</button>
+                        <button class="chart-action" id="statusMonthlyButton" data-chart-type="delivery-status">Monthly</button>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="deliveryStatusChart"></canvas>
+                    </div>
+                </div>
+            
+                <!-- Chart 2: Line Chart for Delivery Trends -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Delivery Trends</div>
+                    </div>
+                    <div class="chart-actions-group">
+                        <button class="chart-action" id="trendWeekButton" data-chart-type="delivery-trend">Week</button>
+                        <button class="chart-action active" id="trendMonthButton" data-chart-type="delivery-trend">Month</button>
+                        <button class="chart-action" id="trendYearButton" data-chart-type="delivery-trend">Year</button>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="deliveryTrendChart"></canvas>
+                    </div>
+                </div>
+            
+            
+                <!-- Chart 3: Pie Chart for Package Category Distribution -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Package Category Distribution</div>
+                    </div>
+                    <div class="chart-actions-group">
+                        <button class="chart-action" id="categoryFragileButton" data-chart-type="package-category">Fragile</button>
+                        <button class="chart-action active" id="categoryAllButton" data-chart-type="package-category">All Categories</button>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="packageCategoryChart"></canvas>
+                    </div>
+                </div>
+            
+                <!-- Chart 4: Stacked Bar Chart for Delivery Status by Time (Week) -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Delivery Status by Time (Week)</div>
+                    </div>
+                    <div class="chart-actions-group">
+                        <button class="chart-action" id="timeWeek1Button" data-chart-type="delivery-status-by-time">Week 1</button>
+                        <button class="chart-action active" id="timeWeek2Button" data-chart-type="delivery-status-by-time">Week 2</button>
+                        <button class="chart-action" id="timeWeek3Button" data-chart-type="delivery-status-by-time">Week 3</button>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="statusByTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+            <!-- Recent User Activity & Logs -->
+            <div class="packages-section">
+                <div class="table-header">
+                    <div class="table-title">Recent User Activity</div>
+                    <div class="table-actions">
+                        <a href="#">View All Logs <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <table class="packages-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Last Login</th>
+                            <th>Packages</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>john.doe@example.com</td>
+                            <td>Today, 10:45 AM</td>
+                            <td>12 Active</td>
+                            <td><span class="status-badge status-success">Active</span></td>
+                            <td>
+                                <a href="#" class="package-action"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="package-action text-red-500"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <!-- More user rows can be added similarly -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Style Switcher (same as user dashboard) -->
+    <div class="style-switcher">
+        <div class="style-switcher-toggler s-icon">
+            <i class="fas fa-cog fa-spin"></i>
+        </div>
+        <div class="day-night s-icon">
+            <i class="fas fa-moon"></i>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/shared/sidebar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = new Sidebar();
+            sidebar.loadSidebar();
+        });
+    </script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/style-switcher.js"></script>
+    <script src="../assets/js/admin.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/shared/notifications.js"></script>
+    <script src="../assets/js/access-control.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkPageAccess(); // Check access before loading the page content
+        });
+    </script>
+</body>
+</html>
