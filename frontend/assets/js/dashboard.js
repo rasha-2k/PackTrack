@@ -4,22 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const userData = localStorage.getItem("user");
     
     if (!token || !userData) {
-        alert("Unauthorized access. Please log in first.");
+        showNotification("Unauthorized access. Please log in first.", "error");
         window.location.href = "index.html";
         return;
     }
 
     const user = JSON.parse(userData);
-    const welcomeText = document.getElementById("welcome-message");
-    welcomeText.innerHTML = `Hello, <strong>${user.name}</strong>! You are now logged in.`;
-
-    const logoutBtn = document.getElementById("logout-btn");
-    logoutBtn.addEventListener("click", () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        alert("You have been logged out.");
-        window.location.href = "index.html";
-    });
+    console.log('User data:', user);
+    
 });
 
 
@@ -30,18 +22,6 @@ let statusChart;
 
 // Initialize Dashboard
 document.addEventListener('DOMContentLoaded', () => {
-    // Check saved theme preference
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'dark') {
-        document.body.classList.add('dark');
-        dayNightToggle.querySelector('i').classList.remove('fa-moon');
-        dayNightToggle.querySelector('i').classList.add('fa-sun');
-    } else {
-        document.body.classList.remove('dark');
-        dayNightToggle.querySelector('i').classList.remove('fa-sun');
-        dayNightToggle.querySelector('i').classList.add('fa-moon');
-    }
-    
     // Initialize Charts
     initCharts();
     
@@ -86,7 +66,72 @@ function initCharts() {
     const isDarkMode = document.body.classList.contains('dark');
     const textColor = isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
     const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-    
+
+    // Common chart options for consistent styling
+    const commonChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: textColor,
+                    padding: 20,
+                    font: {
+                        family: 'Inter',
+                        size: 12,
+                        weight: 500
+                    }
+                }
+            },
+            tooltip: {
+                backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
+                titleColor: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
+                bodyColor: isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
+                padding: 12,
+                cornerRadius: 6,
+                titleFont: {
+                    family: 'Inter',
+                    size: 13,
+                    weight: 600
+                },
+                bodyFont: {
+                    family: 'Inter',
+                    size: 12,
+                    weight: 500
+                }
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    color: gridColor
+                },
+                ticks: {
+                    color: textColor,
+                    font: {
+                        family: 'Inter',
+                        size: 12,
+                        weight: 500
+                    }
+                }
+            },
+            y: {
+                grid: {
+                    color: gridColor
+                },
+                ticks: {
+                    color: textColor,
+                    font: {
+                        family: 'Inter',
+                        size: 12,
+                        weight: 500
+                    }
+                }
+            }
+        }
+    };
+
     // Activity Chart
     const activityCtx = document.getElementById('activityChart').getContext('2d');
     activityChart = new Chart(activityCtx, {
@@ -100,7 +145,16 @@ function initCharts() {
                     borderColor: '#3b82f6',
                     backgroundColor: 'rgba(59, 130, 246, 0.1)',
                     tension: 0.4,
-                    fill: true
+                    fill: true,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#3b82f6',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#3b82f6',
+                    pointHoverBorderColor: '#ffffff',
+                    pointHoverBorderWidth: 2
                 },
                 {
                     label: 'Delivered',
@@ -108,48 +162,48 @@ function initCharts() {
                     borderColor: '#10b981',
                     backgroundColor: 'rgba(16, 185, 129, 0.1)',
                     tension: 0.4,
-                    fill: true
+                    fill: true,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#10b981',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#10b981',
+                    pointHoverBorderColor: '#ffffff',
+                    pointHoverBorderWidth: 2
                 }
             ]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: {
+            ...commonChartOptions,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        color: gridColor
+                    },
+                    ticks: {
                         color: textColor,
                         font: {
                             family: 'Inter',
-                            size: 12
+                            size: 12,
+                            weight: 500
                         }
                     }
                 },
-                tooltip: { 
-                    enabled: true,
-                    backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-                    titleColor: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
-                    bodyColor: isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
-                    padding: 12,
-                    cornerRadius: 6
-                }
-            },
-            scales: {
-                x: {
-                    grid: {
-                        color: gridColor
-                    },
-                    ticks: {
-                        color: textColor
-                    }
-                },
                 y: {
+                    beginAtZero: true,
                     grid: {
                         color: gridColor
                     },
                     ticks: {
-                        color: textColor
+                        color: textColor,
+                        font: {
+                            family: 'Inter',
+                            size: 12,
+                            weight: 500
+                        }
                     }
                 }
             }
@@ -165,38 +219,84 @@ function initCharts() {
             datasets: [{
                 data: [15, 8, 5, 1],
                 backgroundColor: [
-                    '#10b981',
-                    '#3b82f6',
-                    '#f59e0b',
-                    '#ef4444'
+                    'rgba(16, 185, 129, 0.8)',
+                    'rgba(59, 130, 246, 0.8)',
+                    'rgba(245, 158, 11, 0.8)',
+                    'rgba(239, 68, 68, 0.8)'
                 ],
-                borderWidth: 0
+                borderColor: [
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(245, 158, 11, 1)',
+                    'rgba(239, 68, 68, 1)'
+                ],
+                borderWidth: 1,
+                borderRadius: 5,
+                hoverOffset: 10
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
+            ...commonChartOptions,
+            cutout: '50%',
             plugins: {
+                ...commonChartOptions.plugins,
                 legend: {
-                    position: 'bottom',
-                    labels: {
+                    ...commonChartOptions.plugins.legend,
+                    position: 'bottom'
+                }
+            },
+            scales: false
+        }
+    });
+
+    // Chart 3: Bar Chart for Delivery Times
+    const deliveryTimesCtx = document.getElementById('deliveryTimesChart').getContext('2d');
+    deliveryTimesChart = new Chart(deliveryTimesCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+            datasets: [{
+                label: 'Number of Deliveries',
+                data: [45, 65, 35, 25],
+                backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 1,
+                borderRadius: 5,
+                hoverBackgroundColor: 'rgba(59, 130, 246, 1)'
+            }]
+        },
+        options: {
+            ...commonChartOptions,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        color: gridColor
+                    },
+                    ticks: {
                         color: textColor,
-                        padding: 20,
                         font: {
                             family: 'Inter',
-                            size: 12
+                            size: 12,
+                            weight: 500
                         }
                     }
                 },
-                tooltip: {
-                    backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-                    titleColor: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
-                    bodyColor: isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
-                    padding: 12,
-                    cornerRadius: 6
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: gridColor
+                    },
+                    ticks: {
+                        color: textColor,
+                        font: {
+                            family: 'Inter',
+                            size: 12,
+                            weight: 500
+                        }
+                    }
                 }
-            },
-            cutout: '70%'
+            }
         }
     });
 }
@@ -206,74 +306,117 @@ function updateChartsTheme() {
     const isDarkMode = document.body.classList.contains('dark');
     const textColor = isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
     const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-    
+
+    // Common font settings
+    const fontSettings = {
+        family: 'Inter',
+        size: 12,
+        weight: 500
+    };
+
+    // Common tooltip settings
+    const tooltipSettings = {
+        backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
+        titleColor: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
+        bodyColor: isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
+        titleFont: { ...fontSettings, size: 13, weight: 600 },
+        bodyFont: fontSettings
+    };
+
     // Update Activity Chart theme
     if (activityChart) {
-        // Update legend colors
         activityChart.options.plugins.legend.labels.color = textColor;
-        
-        // Update tooltip colors
-        activityChart.options.plugins.tooltip.backgroundColor = isDarkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
-        activityChart.options.plugins.tooltip.titleColor = isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)';
-        activityChart.options.plugins.tooltip.bodyColor = isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
-        
-        // Update axis colors
+        activityChart.options.plugins.legend.labels.font = fontSettings;
+        activityChart.options.plugins.tooltip = tooltipSettings;
         activityChart.options.scales.x.grid.color = gridColor;
         activityChart.options.scales.x.ticks.color = textColor;
+        activityChart.options.scales.x.ticks.font = fontSettings;
         activityChart.options.scales.y.grid.color = gridColor;
         activityChart.options.scales.y.ticks.color = textColor;
-        
-        // Update the chart
+        activityChart.options.scales.y.ticks.font = fontSettings;
         activityChart.update();
     }
-    
+
     // Update Status Chart theme
     if (statusChart) {
-        // Update legend colors
         statusChart.options.plugins.legend.labels.color = textColor;
-        
-        // Update tooltip colors
-        statusChart.options.plugins.tooltip.backgroundColor = isDarkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
-        statusChart.options.plugins.tooltip.titleColor = isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)';
-        statusChart.options.plugins.tooltip.bodyColor = isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
-        
-        // Update the chart
+        statusChart.options.plugins.legend.labels.font = fontSettings;
+        statusChart.options.plugins.tooltip = tooltipSettings;
         statusChart.update();
+    }
+
+    // Update Delivery Times Chart theme
+    if (deliveryTimesChart) {
+        deliveryTimesChart.options.plugins.legend.labels.color = textColor;
+        deliveryTimesChart.options.plugins.legend.labels.font = fontSettings;
+        deliveryTimesChart.options.plugins.tooltip = tooltipSettings;
+        deliveryTimesChart.options.scales.x.grid.color = gridColor;
+        deliveryTimesChart.options.scales.x.ticks.color = textColor;
+        deliveryTimesChart.options.scales.x.ticks.font = fontSettings;
+        deliveryTimesChart.options.scales.y.grid.color = gridColor;
+        deliveryTimesChart.options.scales.y.ticks.color = textColor;
+        deliveryTimesChart.options.scales.y.ticks.font = fontSettings;
+        deliveryTimesChart.update();
     }
 }
 
 // Update Chart Data based on selected period (Week, Month, Year)
 function updateChartData(period) {
-    let labels = [];
+    let newlabels = [];
     let receivedData = [];
     let deliveredData = [];
     
     switch(period) {
-        case 'Week':
-            labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        case 'month':
+            newlabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
             receivedData = [2, 1, 3, 1, 2, 0, 1];
             deliveredData = [1, 2, 1, 2, 1, 0, 0];
             break;
-        case 'Month':
-            labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+        case 'week':
+            newlabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
             receivedData = [7, 5, 8, 4];
             deliveredData = [4, 6, 3, 7];
             break;
-        case 'Year':
-            labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        case 'year':
+            newlabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             receivedData = [23, 19, 27, 21, 24, 28, 30, 25, 31, 29, 32, 24];
             deliveredData = [18, 17, 24, 19, 22, 25, 27, 22, 28, 26, 29, 21];
             break;
     }
     
     // Update Activity Chart data
-    activityChart.data.labels = labels;
+    activityChart.data.labels = newlabels;
     activityChart.data.datasets[0].data = receivedData;
     activityChart.data.datasets[1].data = deliveredData;
     activityChart.update();
 }
 
-// assets/js/script.js
+document.getElementById('monthButton').addEventListener('click', () => {
+    updateChartData('month');
+    setActiveButton('monthButton');
+});
+
+document.getElementById('weekButton').addEventListener('click', () => {
+    updateChartData('week');
+    setActiveButton('weekButton');
+});
+
+document.getElementById('yearButton').addEventListener('click', () => {
+    updateChartData('year');
+    setActiveButton('yearButton');
+});
+
+function setActiveButton(buttonId) {
+    for (const button of document.querySelectorAll('.chart-action')) {
+        button.classList.remove('active');
+    }
+    document.getElementById(buttonId).classList.add('active');
+}
+
+
+
+
+
 // General app functionality
 document.addEventListener('DOMContentLoaded', () => {
     // Search functionality

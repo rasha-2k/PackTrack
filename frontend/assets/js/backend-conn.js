@@ -1,4 +1,3 @@
-
 /*=========================== connect registration form to backend ===========================*/
 document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.querySelector("#register-form form");
@@ -13,16 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const adminSecret = role === 'admin' ? document.getElementById('admin-secret').value : '';
 
         if (!name || !email || !password || !role) {
-            alert("All fields are required.");
+            showNotification("All fields are required.", "error");
             return;
         }
         
-        const data = { name, email, password, role};
-
-        // Only attach adminSecretKey if role is admin
+        const data = { name, email, password, role };
         if (role === 'admin') {
             data.adminSecret = adminSecret;
         }
+
         try {
             const response = await fetch("http://localhost/PackTrack/backend/auth/register.php", {
                 method: "POST",
@@ -31,22 +29,35 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const result = await response.json();
-            if (result.success) {
-                alert(result.message || "Registered successfully!");
+            console.log('Registration response:', result); 
 
-                document.getElementById("show-login").click();
+            if (result.success) { 
+                console.log("Registered User:", result.user); // Debug log
+                console.log("Role Received:", result.user?.role); // Ensure role is received
+            
+                showNotification(`Registration successful! Welcome, ${result.user.name}`, "success");
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("user", JSON.stringify(result.user));
+                
+                setTimeout(() => {
+                    // Redirect based on role
+                    if (result.user.role === "admin") {
+                        window.location.href = "../views/admin-panel.html";
+                    } else {
+                        window.location.href = "../views/dashboard.html";
+                    }
+                }, 1000); 
             } else {
-                alert(result.message || "Registration failed");
+                showNotification(result.message || "Registration failed", "error");
             }
-
         } catch (err) {
-            alert(`Error: ${err.message}`);
+            console.error('Registration error:', err); // Debug log
+            showNotification(`Error: ${err.message}`, "error");
         }
     });
 });
 
 /*=========================== connect login form to backend ===========================*/
-
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.querySelector("#login-form form");
 
@@ -58,10 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const role = document.getElementById('login-role').value;
 
         if (!email || !password) {
-            alert("Email and password are required.");
+            showNotification("Email and password are required.", "error");
             return;
         }
-        const data = { email, password, role };
+        const data = { email, password, role};
 
         try {
             const response = await fetch("http://localhost/PackTrack/backend/auth/login.php", {
@@ -72,25 +83,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const result = await response.json();
             if (result.success) {
-                alert(`Login successful! Welcome, ${result.user.name}`);
+                // Show success notification before redirecting
+                showNotification(`Login successful! Welcome, ${result.user.name}`, "success");
+                
                 // Save token to localStorage
                 localStorage.setItem("token", result.token);
                 localStorage.setItem("user", JSON.stringify(result.user));
-                console.log("Token:", result.token);
-                console.log("User:", JSON.stringify(result.user));
-                // Redirect based on role
-                if (result.user.role === "admin") {
-                window.location.href = "admin-dashboard.html";
-                } else {
-                window.location.href = "user-dashboard.html";
-                }
+                
+                // Small delay to allow notification to show before redirect
+                setTimeout(() => {
+                    // Redirect based on role
+                    if (result.user.role === "admin") {
+                        window.location.href = "../views/admin-panel.html";
+                    } else {
+                        window.location.href = "../views/dashboard.html";
+                    }
+                }, 1000); // 1 second delay
             } else {
-                alert(result.message || "Login failed");
+                showNotification(result.message || "Login failed", "error");
             }
-
         } catch (err) {
-            alert(`Error: ${err.message}`);
+            showNotification(`Error: ${err.message}`, "error");
         }
     });
 });
-

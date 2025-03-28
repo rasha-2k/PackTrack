@@ -9,7 +9,7 @@ function checkAuth() {
             const user = JSON.parse(localStorage.getItem("user"));
             if (!user) {
                 alert("User data is missing.");
-                window.location.href = "index.html";
+                window.location.href = "../index.html";
             }
         }, 100);
     }
@@ -24,5 +24,10 @@ function logout() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) logoutBtn.addEventListener("click", logout);
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+            e.preventDefault(); 
+            logout();
+        });
+    }
 });
