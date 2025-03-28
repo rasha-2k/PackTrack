@@ -1,4 +1,3 @@
-
 /*=========================== toggle style switcher ===========================*/
 const styleSwitcherToggle = document.querySelector(".style-switcher-toggler");
 styleSwitcherToggle.addEventListener("click", () => {
@@ -40,5 +39,10 @@ dayNightToggle.addEventListener("click", () => {
     applyTheme(newTheme);
     
     // Update charts to match current theme
-    updateChartsTheme();
+    if (typeof updateChartsTheme === 'function') {
+        updateChartsTheme();
+    }
+    if (typeof updateAdminChartsTheme === 'function') {
+        updateAdminChartsTheme();
+    }
 });
