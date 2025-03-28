@@ -1,14 +1,13 @@
 <?php
 
-// Allow CORS for frontend testing (optional)
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
-// Force JSON output and handle CORS if needed
 header('Content-Type: application/json');
 
-function sendSuccess($message, $data = [], $statusCode = 200) {
+function sendSuccess($message, $data = [], $statusCode = 200)
+{
     http_response_code($statusCode);
     header('Content-Type: application/json');
     echo json_encode([
@@ -19,7 +18,8 @@ function sendSuccess($message, $data = [], $statusCode = 200) {
     exit;
 }
 
-function sendError($message, $statusCode = 500, $extra = []) {
+function sendError($message, $statusCode = 500, $extra = [])
+{
     http_response_code($statusCode);
     header('Content-Type: application/json');
     echo json_encode(array_merge([

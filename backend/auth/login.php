@@ -53,5 +53,3 @@ echo json_encode([
         "role" => $user['role']
     ]
 ]);
-
-?>

@@ -1,52 +1,88 @@
 <?php
 header("Content-Type: application/json");
 
+
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../db/db.php';
+require_once __DIR__ . '/../jwt/JwtHandler.php';
+
 
 use Dotenv\Dotenv;
+use Jwt\JwtHandler;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
-$data = json_decode(file_get_contents("php://input"), true);
-$name = trim($data["name"] ?? '');
-$email = trim($data["email"] ?? '');
-$password = trim($data["password"] ?? '');
-$role = trim($data['role'] ?? 'user');
-$adminSecret = trim($data['adminSecret'] ?? '');
-
-if ($role === 'admin') {
-    if (!$adminSecret || $adminSecret !== $_ENV['ADMIN_SECRET']) {
-        sendError("Invalid admin secret key", 403);
-    }
-}
-
-
-if (!$name || !$email || !$password) {
-    sendError("All fields are required", 400);
-}
-
-$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
 try {
+    $data = json_decode(file_get_contents("php://input"), true);
+    $name = trim($data["name"] ?? '');
+    $email = trim($data["email"] ?? '');
+    $password = trim($data["password"] ?? '');
+    $role = trim($data['role'] ?? 'user');
+    $adminSecret = trim($data['adminSecret'] ?? '');
+
+    if ($role === 'admin') {
+        if (!$adminSecret || $adminSecret !== $_ENV['ADMIN_SECRET']) {
+            sendError("Invalid admin secret key", 403);
+            exit;
+        }
+    }
+
+    if (!$name || !$email || !$password) {
+        sendError("All fields are required", 400);
+        exit;
+    }
+
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
     // Check if user exists
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->rowCount() > 0) {
         sendError("Email already registered", 409);
+        exit;
     }
 
     // Register user
     $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
-
     if ($stmt->execute([$name, $email, $hashedPassword, $role])) {
-        sendSuccess("User registered successfully");
-    } else {
-        sendError("Something went wrong", 500);
-    }
 
+        $userId = $pdo->lastInsertId();
+        $stmt = $pdo->prepare("SELECT id, name, email, role FROM users WHERE id = ?");
+        $stmt->execute([$userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Generate JWT token for the new user
+        $jwt = new JwtHandler();
+
+        $userId = $pdo->lastInsertId();
+        $token = $jwt->generate($userId, [
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'role' => $user['role']
+        ]);
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'User registered successfully',
+            'token' => $token,
+            'user' => [
+                'id' => $user['id'],
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'role' => $user['role']
+            ]
+        ]);
+    } else {
+        sendError("Registration failed", 500);
+    }
 } catch (PDOException $e) {
     sendError("Database error: " . $e->getMessage(), 500);
+} catch (Exception $e) {
+    sendError("Server error: " . $e->getMessage(), 500);
 }
-?>

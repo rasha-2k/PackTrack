@@ -1,42 +1,56 @@
 <?php
-require_once __DIR__ . '/../helpers/response.php';
-require_once __DIR__ . '/../jwt/JwtHandler.php';
+require_once __DIR__ . '/../jwt/jwtHandler.php';
+
 use Jwt\JwtHandler;
 
-function validateToken($token) {
-    if (!$token) return false;
-    $jwt = new JwtHandler();
-    $decoded = $jwt->decode($token);
-    return $decoded ?? false;
+class AuthMiddleware
+{
+    public function checkRole($requiredRole)
+    {
+        // Get all headers and convert to lowercase for consistency
+        $headers = array_change_key_case(getallheaders(), CASE_LOWER);
+
+        // Check for authorization header
+        if (!isset($headers['authorization'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'No token provided']);
+            exit;
+        }
+
+        $token = trim(str_replace('Bearer', '', $headers['authorization']));
+
+        if (empty($token)) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Empty token provided']);
+            exit;
+        }
+        try {
+            $jwt = new JwtHandler();
+            $decoded = $jwt->decode($token);
+
+            // Access role from the correct path in decoded data
+            $userRole = $decoded->data->role ?? '';
+
+            // For admin-panel, only allow admin role
+            if ($requiredRole === 'admin' && $userRole !== 'admin') {
+                http_response_code(403);
+                echo json_encode(['error' => 'Access denied. Admin privileges required.']);
+                exit;
+            }
+
+            // For dashboard, allow both user and admin roles
+            if ($requiredRole === 'user' && !in_array($userRole, ['user', 'admin'])) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Access denied. User privileges required.']);
+                exit;
+            }
+
+            echo json_encode(['access' => true]);
+            exit;
+        } catch (Exception $e) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Invalid token: ' . $e->getMessage()]);
+            exit;
+        }
+    }
 }
-
-// 1. Get the Authorization header
-$headers = getallheaders();
-$authHeader = $headers['Authorization'] ?? '';
-
-// 2. Check if Bearer token exists
-if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
-    sendError("Unauthorized: Missing token", 401);
-}
-
-// 3. Extract token from header
-$token = trim(str_replace('Bearer', '', $authHeader));
-
-// 4. Decode the token
-$jwt = new JwtHandler();
-$decoded = $jwt->decode($token);
-
-// 5. Check if token is valid
-if (!$decoded || !isset($decoded['data']) || !isset($decoded['data']->id)) {
-    sendError("Unauthorized: Invalid or expired token", 401);
-}
-
-// 6. Make user data available in this file
-$authUser = [
-    'id'    => $decoded['data']->id,
-    'name'  => $decoded['data']->name ?? '',
-    'email' => $decoded['data']->email ?? '',
-    'role'  => $decoded['data']->role ?? ''
-];
-
-?>

@@ -9,24 +9,28 @@ use Firebase\JWT\Key;
 use Dotenv\Dotenv;
 use \Exception;
 
-$dotenv = Dotenv::createImmutable(__DIR__.'/../../');
-$dotenv->load();
-
 class JwtHandler {
-
     private static $secretKey;
+    
     public function __construct() {
+        // Load environment variables if not already loaded
+        if (!isset($_ENV['JWT_SECRET'])) {
+            $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+            $dotenv->load();
+        }
 
-            self::$secretKey = $_ENV['JWT_SECRET'] ?? null;
-    
-            if (empty(self::$secretKey)) {
-                sendError("JWT secret key not set in .env", 500);
-            }
+        self::$secretKey = $_ENV['JWT_SECRET'] ?? null;
+
+        if (empty(self::$secretKey)) {
+            sendError("JWT secret key not set in .env", 500);
+        }
     }
-    
-
 
     public static function generate($userId, $userData = []) {
+        if (!isset(self::$secretKey)) {
+            (new self()); // Ensure secret key is initialized
+        }
+        
         $issuedAt = time();
         $expirationTime = $issuedAt + 3600;  // jwt valid for 1 hour from the issued time
         $payload = [
@@ -44,8 +48,11 @@ class JwtHandler {
         return JWT::encode($payload, self::$secretKey, 'HS256');
     }
 
-    public function decode($token)
-    {
+    public function decode($token) {
+        if (!isset(self::$secretKey)) {
+            (new self()); 
+        }
+        
         try {
             return JWT::decode($token, new Key(self::$secretKey, 'HS256'));
         } catch (\Firebase\JWT\ExpiredException $e) {
