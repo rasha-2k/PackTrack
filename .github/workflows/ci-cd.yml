@@ -29,12 +29,13 @@ jobs:
         php composer.phar install  # Install PHP dependencies
 
     - name: Set up environment variables
-      run: echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
-      run: echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
-      run: echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
-      run: echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
-      run: echo "DB_PASS=${{ secrets.DB_PASS }}" >> $GITHUB_ENV
-      run: echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+      run: |
+        echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+        echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+        echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+        echo "DB_PASS=${{ secrets.DB_PASS }}" >> $GITHUB_ENV
+        echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
 
     # - name: Run tests (optional)
     #   run: |
