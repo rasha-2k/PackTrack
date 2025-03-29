@@ -35,5 +35,6 @@ docker/data/
 composer.lock
 
 #! database backups
-*.sql
 *.sqlite
+
+/backend/test/ 

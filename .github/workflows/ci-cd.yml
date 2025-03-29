@@ -1,0 +1,55 @@
+name: CI/CD Pipeline for PackTrack
+
+on:
+  push:
+    branches:
+      - main  
+  pull_request:
+    branches:
+      - main  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2 
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2.12' 
+        extensions: mbstring, mysqli, pdo, pdo_mysql  
+        ini-values: post_max_size=256M, max_execution_time=300
+
+    - name: Install Composer dependencies
+      run: |
+        curl -sS https://getcomposer.org/installer | php
+        php composer.phar install  # Install PHP dependencies
+
+    - name: Set up environment variables
+      run: echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+      run: echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+      run: echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+      run: echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+      run: echo "DB_PASS=${{ secrets.DB_PASS }}" >> $GITHUB_ENV
+      run: echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+
+    # - name: Run tests (optional)
+    #   run: |
+
+    # - name: Deploy to Server (optional)
+    #   run: |
+    #     echo "Deploying to server..."
+    #     # Add your deploy commands here, for example:
+    #     # scp -r * username@server:/path/to/your/production/folder
+    #     # Or use SSH commands for deployment
+
+    # - name: Clear cache and restart server (optional)
+    #   run: |
+    #     # If you're using something like Laravel, Symfony, or a similar framework:
+    #     # php artisan config:cache
+    #     # php artisan route:cache
+    #     # service apache2 restart  # Restart the server (if needed)
+

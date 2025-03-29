@@ -153,7 +153,7 @@ mysql -u root -p PackTrackDB < database/PackTrackDB_users.sql
 
 Instead of using a local server like XAMPP, use Docker for a consistent setup:
 
-- **Build Docker Images**: Build the `web` (backend + frontend) and `db` images using Docker Compose
+1. **Build Docker Images**: Build the `web` (backend + frontend) and `db` images using Docker Compose
 
 ```bash
 docker-compose build
@@ -161,7 +161,7 @@ docker-compose up -d
 ```
 > This will start the backend and the MySQL database on the specified ports.
 
-- **Verify containers are running**: Run the following command to check running containers:
+2. **Verify containers are running**: Run the following command to check running containers:
 
 ```bash
 docker ps
@@ -179,7 +179,7 @@ CONTAINER ID   IMAGE           COMMAND        STATUS          PORTS             
 224b91db57c7   mysql:8.0       "docker-entry" Up 49 minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   packtrack-db-1
 ```
 
-- Access the app at [http://localhost:8080/frontend/views/index.html](http://localhost:8080/frontend/views/index.html)
+3. Access the app at [http://localhost:8080/frontend/views/index.html](http://localhost:8080/frontend/views/index.html)
 
 ---
 
