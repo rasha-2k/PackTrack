@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             //! docker: fetch "http://localhost:8080/PackTrack/backend/auth/register.php"
             //! local: fetch "http://localhost/PackTrack/backend/auth/register.php"
-            const response = await fetch("http://localhost:8080/PackTrack/backend/auth/register.php", {
+            const response = await fetch("http://localhost/PackTrack/backend/auth/register.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
