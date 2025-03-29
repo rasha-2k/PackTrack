@@ -4,70 +4,75 @@
 
 # PackTrack – Personal Delivery Log with Status Tracker and Smart Tips
 
-> PackTrack is a lightweight web-based application that helps users organize and track their personal deliveries in one centralized platform. Designed with modern users in mind, PackTrack combines powerful delivery tracking features with smart tips and motivational quotes to make package management fun and insightful.
+> **PackTrack** is a lightweight web-based application designed to help users organize and track their personal deliveries in one centralized platform. It streamlines delivery tracking, provides packaging tips, and adds a fun touch with motivational quotes.
 
 ---
 
-## Problem Statement
+## 📌 Problem Statement
 
-Most online shoppers manage their deliveries through fragmented sources like emails and SMS links. There’s no centralized tool tailored for personal delivery management, which leads to confusion, missed deliveries, and lack of packaging awareness.
-
-**PackTrack** solves this by offering a streamlined delivery log dashboard, real-time status tracking, and insightful packaging tips — all while demonstrating best practices in modern software engineering.
+Managing online deliveries is often chaotic—tracking numbers are scattered across emails and SMS, leading to missed deliveries and confusion. **PackTrack** solves this with a centralized dashboard, real-time status tracking, and insightful packaging tips.
 
 ---
 
-## Core Features
+## 🔥 Core Features
 
-### User Features
-- JWT-based secure **User Registration & Login**
-- Personal **Dashboard** to manage delivery logs
-- **Add New Deliveries**: Courier, Tracking Number, Item Title, Expected Delivery Date
-- **View / Filter / Search / Sort** delivery logs
-- **Delivery Status Auto-Tracking** via Public Courier Tracking API
-- Smart Packaging & Delivery **Tips Section**
-- **Random Quote Integration** (via Quotable API)
-- **PDF Export** for Delivery Records
+### ✅ User Features
 
-### Admin Features
-- Admin Dashboard for managing all users and logs
-- **Update Delivery Status** manually or automatically
-- **User Management** (Add/Remove Users)
-- **Report Generation** (Export as PDF)
+-  **JWT-secured User Registration & Login**
+- **Dashboard** to manage deliveries
+- **Add New Deliveries** (Courier, Tracking Number, Item Title, Expected Delivery Date)
+- **View / Filter / Search / Sort** deliveries
+- **Delivery Status Auto-Tracking** via Public API
+- **Eco-friendly packaging tips**
+- **Random Motivational Quotes**
+- **Export Delivery Logs as PDF**
 
-### Add-on Dashboard Charts
-- Delivery Status Summary
-- Monthly Delivery Trends
-- Top Couriers Used
-> Charts are added for better data visualization and user engagement.
+### 🔧 Admin Features
 
----
+- **Admin Dashboard** for managing users & logs
+- **Manually / Automatically Update Delivery Status**
+- **User Management (Add/Remove Users)**
+- **Generate Reports (Export as PDF)**
 
-## Tech Stack
-
-| Layer          | Technologies                      |
-|----------------|-----------------------------------|
-| Frontend       | HTML, CSS, JavaScript             |
-| Backend        | PHP                               |
-| Database       | MySQL                             |
-| Authentication | JWT Tokens                        |
-| DevOps         | GitHub Actions, Docker (Advanced) |
-| APIs Used      | TrackingMore API, Quotable API    |
+### 📊 Add-on Dashboard Charts
+- **Delivery Status Summary**
+- **Monthly Delivery Trends**
+- **Top Couriers Used**
 
 ---
 
-## API References
+## 🛠 Tech Stack
 
-- **TrackingMore API** (Real-time package tracking): [https://www.trackingmore.com/](https://www.trackingmore.com/)
-- **Quotable API** (Random quotes): [https://api.quotable.io/random](https://api.quotable.io/random)
+| Layer          | Technologies                    |
+|----------------|---------------------------------|
+| Frontend       | HTML, CSS, JavaScript           |
+| Backend        | PHP                             |
+| Database       | MySQL                           |
+| Authentication | JWT Tokens                      |
+| DevOps         | GitHub Actions, Docker          |
+| APIs Used      | TrackingMore API, Quotable API  |
 
 ---
 
-## Project Structure
- ```bash
+## 🔗 API References
+
+- [**TrackingMore API**](https://www.trackingmore.com/) (Real-time package tracking)
+- [**Quotable API**](https://api.quotable.io/random) (Random quotes)
+
+---
+
+## 📂 Project Structure
+
+```bash
 PackTrack/ 
-├── docs/
+├── .github/ 
+│   └── workflows/ 
+│       └── ci-cd.yml 
+├── apache/ 
+│   └── apache.conf
 ├── backend/ 
 │   ├── api/ 
+│   │   ├── check-access.php
 │   │   └── protectedRoute.php
 │   ├── auth/
 │   │   ├── login.php
@@ -81,118 +86,148 @@ PackTrack/
 │   ├── jwt/
 │   │   └── JwtHandler.php
 │   ├── middlewares/
-│   │   └── authMiddleware.php
-│   └── test/
-│       └── responseTest.php
+│   │    └── authMiddleware.php
+│   └── composer.json
 ├── frontend/ 
 │   ├── assets/ 
 │   │   ├── css/  
 │   │   │   └── style.css
 │   │   └── js/ 
+│   │       ├── access-control.js
+│   │       ├── admin.js
 │   │       ├── auth.js
 │   │       ├── backend-conn.js
 │   │       ├── dashboard.js
 │   │       ├── script.js
 │   │       └── style-switcher.js
-│   ├── components/ 
-│   │   └── navbar.html
-│   ├── index.html 
-│   ├── dashboard.html 
-│   └── admin-panel.html 
+│   └── views/
+│       ├── shared/
+│       │   └── sidebar.html
+│       ├── admin-panel.html 
+│       ├── dashboard.html 
+│       └── index.html 
+├── database/ 
+│   └── PackTrackDB_users.sql
 ├── docker/ 
-├── .env.example
-├── .github/ 
-│   └── workflows/ 
-│       └── ci-cd.yml 
+│   └── Dockerfile
 ├── docker-compose.yml 
-├── Dockerfile  
-├── LICENSE/ 
+├── Documents/
+├── .env
+├── LICENSE
 └── README.md
  ```
-<!--
-# ├── docs/ 
-# │   ├── SDLC_Model.pdf 
-# │   ├── Use_Case_Diagram.png 
-# │   ├── Gantt_Chart.pdf 
-# │   └── Project_Plan.pdf -->
 
 ---
 
-## Setup Instructions
+## ⚙️ Setup Instructions
 
-### Local Setup
+### 💻 Local Setup
 1. **Clone the Repository**
+
 ```bash
 git clone https://github.com/rasha-2k/PackTrack.git
 cd packtrack
 ```
+
 2. **Copy `.env.example` and fill in credentials**
+
 ```bash
 cp .env.example .env
 ```
-> Fill in your database credentials, JWT secret, and API keys.
-3. **Run Backend Server**
-    - Configure your Apache or PHP local server (XAMPP, Laragon, etc.)
-    - Import `packtrackdb.sql` to your database  
-4. Open Frontend
-    - Start from `index.html` (Login Page)
-5. **Optional: Docker Deployment**
+
+> open the `.env` file and fill in the following details:
+    - **DB credentials**: MySQL host, port, username, and password.
+    - **JWT secret**: **Other API keys** (optional for tracking or quotes API)
+3. **Database Set Up**
+    - Configure your PHP/Apache local server 
+    - Locate the `PackTrackDB_users.sql` file inside the `database/` folder. 
+    - Import the SQL file into your local MySQL database using the following command:
 ```bash
-docker build -t packtrack-app .
-docker run -p 8000:80 packtrack-app
+mysql -u root -p PackTrackDB < database/PackTrackDB_users.sql
 ```
+ 
+4. **Start Frontend**
+    - Start from [index.html](http://localhost/frontend/views/index.html) (Login Page)
+
+### 🐳 Optional: Docker Setup 
+
+Instead of using a local server like XAMPP, use Docker for a consistent setup:
+
+- **Build Docker Images**: Build the `web` (backend + frontend) and `db` images using Docker Compose
+
+```bash
+docker-compose build
+docker-compose up -d
+```
+> This will start the backend and the MySQL database on the specified ports.
+
+- **Verify containers are running**: Run the following command to check running containers:
+
+```bash
+docker ps
+```
+
+**Expected Output**:
+- You should see at least two containers: one for the backend and one for the database.
+- The STATUS column should show "Up" (e.g., Up 10 minutes).
+
+**Example**:
+
+```bash
+CONTAINER ID   IMAGE           COMMAND        STATUS          PORTS                               NAMES
+9d08b27b5631   packtrack-web   "php-apache"   Up 49 minutes   0.0.0.0:8080->80/tcp                packtrack-web-1
+224b91db57c7   mysql:8.0       "docker-entry" Up 49 minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   packtrack-db-1
+```
+
+- Access the app at [http://localhost:8080/frontend/views/index.html](http://localhost:8080/frontend/views/index.html)
 
 ---
 
-## Environment Variables
+## 🌍 Environment Variables
 ```env
-DB_HOST=localhost
+DB_HOST=db
 DB_PORT=3306
-DB_NAME=packtrackdb
-DB_USER=your_db_user
-DB_PASS=your_db_password
+DB_NAME=PackTrackDB
+DB_USER=root
+DB_PASS=your_database_password
 
-JWT_SECRET=your_secret_key
+ADMIN_SECRET=admin_secret_key
+
+JWT_SECRET=your_secret_jwt_key
 
 TRACKING_API_KEY=your_trackingmore_api_key
 QUOTES_API_URL=https://api.quotable.io/random
 ```
 ---
-## DevOps & CI/CD
-PackTrack includes GitHub Actions workflow for Continuous Integration and Deployment:
-- Code Linting & Testing
-- Auto Deployment (Optional)
-- Docker Support for Containerized Environments
+
+## 🚀 DevOps & CI/CD
+
+- **Automated Build & Deployment** via GitHub Actions.
+- The `.github/workflows/ci-cd.yml` file defines the CI/CD steps, including:
+    - Code linting and testing.
+    - Docker image builds.
+    - Deploy to the server automatically when new changes are merged.
+
 > Workflow: `.github/workflows/ci-cd.yml`
 
 ---
 
-<!-- ---
 
-## 📸 Screenshots 
+## 📸 User Interface (Soon)
 
-> ✅ UI Mockups  
-> ✅ User Dashboard  
-> ✅ Admin Panel  
-> ✅ API Responses  
-> ✅ PDF Export Example -->
-## Future Enhancements
-
-- Interactive Dashboard Charts:
-    - Delivery status pie chart
-    - Monthly delivery trends line chart
-    - Top couriers usage bar chart
-- Mobile App for native experience
-- User Notification System for status updates
+- ✅ Dashboard  
+- ✅ Admin Panel  
+- ✅ API Responses  
+- ✅ PDF Export Example 
 
 ---
 
-## Contact
+## 📞 Contact
 > Website: [rashaalsaleh.com](https://rashaalsaleh.com) | Email: [rasha.k.alsaleh@gmail.com](mailto:rasha.k.alsaleh@gmail.com) | LinkedIn: [@rasha-alsaleh](https://www.linkedin.com/in/rasha-alsaleh/)
 
 ---
 
-## Contributors
+## 👥 Contributors
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <a href="https://github.com/rasha-2k" style="text-decoration: none; display: flex; align-items: center;">
         <img src="https://github.com/rasha-2k.png" alt="@rasha-2k" title="@rasha-2k" width="100px" height="100px" style="border-radius: 50%; margin-right: 10px;">
