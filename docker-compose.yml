@@ -1,0 +1,40 @@
+# version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www/html/PackTrack/backend
+      - .:/var/www/html/PackTrack
+      - .:/var/www/html
+      - ./apache/apache.conf:/etc/apache2/sites-available/000-default.conf
+    environment:
+      - JWT_SECRET = ${JWT_SECRET}
+    depends_on:
+      - db
+    networks:
+      - packtrack_network
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_HOST = ${DB_HOST} 
+      - MYSQL_ROOT_PASSWORD = ${DB_PASS}
+      - MYSQL_DATABASE = ${DB_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - packtrack_network
+
+networks:
+  packtrack_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

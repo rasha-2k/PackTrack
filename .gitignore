@@ -8,6 +8,7 @@ vendor/
 #! IDE/editor settings
 .vscode/
 .idea/
+.git
 
 #! logs and system files
 *.log
