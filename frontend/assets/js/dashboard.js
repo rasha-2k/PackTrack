@@ -16,36 +16,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /*=========================== charts ===========================*/
-// Global chart variables
 let activityChart;
 let statusChart;
 
-// Initialize Dashboard
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Charts
     initCharts();
     
-    // Chart period buttons (Week, Month, Year)
     const chartActions = document.querySelectorAll('.chart-action');
     for (const action of chartActions) {
         action.addEventListener('click', function() {
-            // Remove active class from all buttons
             for (const btn of chartActions) {
                 btn.classList.remove('active');
             }
-            // Add active class to clicked button
             this.classList.add('active');
             
-            // Update chart data based on selected period
             updateChartData(this.textContent.trim());
         });
     }
     
-    // Mobile sidebar toggle
     const sidebarOverlay = document.querySelector('.sidebar-overlay');
     const sidebar = document.querySelector('.sidebar');
     
-    // If there's a mobile toggle button, add event listeners
     const mobileToggle = document.querySelector('.mobile-toggle');
     if (mobileToggle) {
         mobileToggle.addEventListener('click', () => {
@@ -54,20 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Close sidebar when clicking overlay
     sidebarOverlay.addEventListener('click', () => {
         sidebar.classList.remove('active');
         sidebarOverlay.classList.remove('active');
     });
 });
 
-// Initialize Charts
 function initCharts() {
     const isDarkMode = document.body.classList.contains('dark');
     const textColor = isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
     const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
 
-    // Common chart options for consistent styling
     const commonChartOptions = {
         responsive: true,
         maintainAspectRatio: false,
@@ -132,7 +120,6 @@ function initCharts() {
         }
     };
 
-    // Activity Chart
     const activityCtx = document.getElementById('activityChart').getContext('2d');
     activityChart = new Chart(activityCtx, {
         type: 'line',
@@ -210,7 +197,6 @@ function initCharts() {
         }
     });
 
-    // Status Chart
     const statusCtx = document.getElementById('statusChart').getContext('2d');
     statusChart = new Chart(statusCtx, {
         type: 'doughnut',
@@ -249,7 +235,6 @@ function initCharts() {
         }
     });
 
-    // Chart 3: Bar Chart for Delivery Times
     const deliveryTimesCtx = document.getElementById('deliveryTimesChart').getContext('2d');
     deliveryTimesChart = new Chart(deliveryTimesCtx, {
         type: 'bar',
@@ -301,20 +286,17 @@ function initCharts() {
     });
 }
 
-// Update Charts Theme
 function updateChartsTheme() {
     const isDarkMode = document.body.classList.contains('dark');
     const textColor = isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
     const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
 
-    // Common font settings
     const fontSettings = {
         family: 'Inter',
         size: 12,
         weight: 500
     };
 
-    // Common tooltip settings
     const tooltipSettings = {
         backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
         titleColor: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
@@ -323,7 +305,6 @@ function updateChartsTheme() {
         bodyFont: fontSettings
     };
 
-    // Update Activity Chart theme
     if (activityChart) {
         activityChart.options.plugins.legend.labels.color = textColor;
         activityChart.options.plugins.legend.labels.font = fontSettings;
@@ -337,7 +318,6 @@ function updateChartsTheme() {
         activityChart.update();
     }
 
-    // Update Status Chart theme
     if (statusChart) {
         statusChart.options.plugins.legend.labels.color = textColor;
         statusChart.options.plugins.legend.labels.font = fontSettings;
@@ -345,7 +325,6 @@ function updateChartsTheme() {
         statusChart.update();
     }
 
-    // Update Delivery Times Chart theme
     if (deliveryTimesChart) {
         deliveryTimesChart.options.plugins.legend.labels.color = textColor;
         deliveryTimesChart.options.plugins.legend.labels.font = fontSettings;
@@ -360,7 +339,6 @@ function updateChartsTheme() {
     }
 }
 
-// Update Chart Data based on selected period (Week, Month, Year)
 function updateChartData(period) {
     let newlabels = [];
     let receivedData = [];
@@ -384,7 +362,6 @@ function updateChartData(period) {
             break;
     }
     
-    // Update Activity Chart data
     activityChart.data.labels = newlabels;
     activityChart.data.datasets[0].data = receivedData;
     activityChart.data.datasets[1].data = deliveredData;
@@ -417,38 +394,29 @@ function setActiveButton(buttonId) {
 
 
 
-// General app functionality
 document.addEventListener('DOMContentLoaded', () => {
-    // Search functionality
     const searchInput = document.querySelector('.search-bar input');
     if (searchInput) {
         searchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
-                // Handle search
                 console.log('Searching for:', this.value);
-                // Implement search functionality here
             }
         });
     }
     
-    // Add package button
     const addPackageBtn = document.querySelector('.btn-add-package');
     if (addPackageBtn) {
         addPackageBtn.addEventListener('click', () => {
-            // Navigate to add package page or open modal
             console.log('Add package clicked');
-            // Implement navigation or modal here
         });
     }
     
-    // Package action buttons
     const packageActions = document.querySelectorAll('.package-action');
     for (const action of packageActions) {
         action.addEventListener('click', function(e) {
             e.preventDefault();
             const trackingNumber = this.closest('tr').querySelector('.tracking-number').textContent;
             console.log('View package details:', trackingNumber);
-            // Implement package details view here
         });
     }
 });

@@ -34,20 +34,15 @@ class Sidebar {
 
     async loadSidebar() {
         try {
-            // Load sidebar HTML
             const response = await fetch('../views/shared/sidebar.html');
             const sidebarHtml = await response.text();
             
-            // Insert sidebar into the page
             document.getElementById('sidebar-container').innerHTML = sidebarHtml;
             
-            // Update user details
             this.updateUserInfo();
             
-            // Generate menu based on role
             this.generateMenu();
             
-            // Setup event listeners after the sidebar is loaded
             setTimeout(() => {
                 this.setupEventListeners();
             }, 100);

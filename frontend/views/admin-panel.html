@@ -19,15 +19,16 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 </head>
+
 <body class="dark">
     <!-- Mobile sidebar toggle -->
     <div class="sidebar-overlay"></div>
-    
+
     <!-- Dashboard Container -->
     <div class="dashboard-container Box">
         <!-- Sidebar container -->
         <div id="sidebar-container"></div>
-        
+
         <!-- Main Content -->
         <main class="main-content">
             <div class="page-header">
@@ -106,15 +107,18 @@
                         <div class="chart-title">Deliveries Overview (Status)</div>
                     </div>
                     <div class="chart-actions-group">
-                        <button class="chart-action" id="statusDailyButton" data-chart-type="delivery-status">Daily</button>
-                        <button class="chart-action active" id="statusWeeklyButton" data-chart-type="delivery-status">Weekly</button>
-                        <button class="chart-action" id="statusMonthlyButton" data-chart-type="delivery-status">Monthly</button>
+                        <button class="chart-action" id="statusDailyButton"
+                            data-chart-type="delivery-status">Daily</button>
+                        <button class="chart-action active" id="statusWeeklyButton"
+                            data-chart-type="delivery-status">Weekly</button>
+                        <button class="chart-action" id="statusMonthlyButton"
+                            data-chart-type="delivery-status">Monthly</button>
                     </div>
                     <div class="chart-wrapper">
                         <canvas id="deliveryStatusChart"></canvas>
                     </div>
                 </div>
-            
+
                 <!-- Chart 2: Line Chart for Delivery Trends -->
                 <div class="chart-container">
                     <div class="chart-header">
@@ -122,46 +126,52 @@
                     </div>
                     <div class="chart-actions-group">
                         <button class="chart-action" id="trendWeekButton" data-chart-type="delivery-trend">Week</button>
-                        <button class="chart-action active" id="trendMonthButton" data-chart-type="delivery-trend">Month</button>
+                        <button class="chart-action active" id="trendMonthButton"
+                            data-chart-type="delivery-trend">Month</button>
                         <button class="chart-action" id="trendYearButton" data-chart-type="delivery-trend">Year</button>
                     </div>
                     <div class="chart-wrapper">
                         <canvas id="deliveryTrendChart"></canvas>
                     </div>
                 </div>
-            
-            
+
+
                 <!-- Chart 3: Pie Chart for Package Category Distribution -->
                 <div class="chart-container">
                     <div class="chart-header">
                         <div class="chart-title">Package Category Distribution</div>
                     </div>
                     <div class="chart-actions-group">
-                        <button class="chart-action" id="categoryFragileButton" data-chart-type="package-category">Fragile</button>
-                        <button class="chart-action active" id="categoryAllButton" data-chart-type="package-category">All Categories</button>
+                        <button class="chart-action" id="categoryFragileButton"
+                            data-chart-type="package-category">Fragile</button>
+                        <button class="chart-action active" id="categoryAllButton"
+                            data-chart-type="package-category">All Categories</button>
                     </div>
                     <div class="chart-wrapper">
                         <canvas id="packageCategoryChart"></canvas>
                     </div>
                 </div>
-            
+
                 <!-- Chart 4: Stacked Bar Chart for Delivery Status by Time (Week) -->
                 <div class="chart-container">
                     <div class="chart-header">
                         <div class="chart-title">Delivery Status by Time (Week)</div>
                     </div>
                     <div class="chart-actions-group">
-                        <button class="chart-action" id="timeWeek1Button" data-chart-type="delivery-status-by-time">Week 1</button>
-                        <button class="chart-action active" id="timeWeek2Button" data-chart-type="delivery-status-by-time">Week 2</button>
-                        <button class="chart-action" id="timeWeek3Button" data-chart-type="delivery-status-by-time">Week 3</button>
+                        <button class="chart-action" id="timeWeek1Button" data-chart-type="delivery-status-by-time">Week
+                            1</button>
+                        <button class="chart-action active" id="timeWeek2Button"
+                            data-chart-type="delivery-status-by-time">Week 2</button>
+                        <button class="chart-action" id="timeWeek3Button" data-chart-type="delivery-status-by-time">Week
+                            3</button>
                     </div>
                     <div class="chart-wrapper">
                         <canvas id="statusByTimeChart"></canvas>
                     </div>
                 </div>
             </div>
-            
-            
+
+
 
             <!-- Recent User Activity & Logs -->
             <div class="packages-section">
@@ -229,8 +239,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            checkPageAccess(); // Check access before loading the page content
+            checkPageAccess();
         });
     </script>
 </body>
+
 </html>

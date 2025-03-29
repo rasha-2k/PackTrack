@@ -40,7 +40,6 @@ try {
 
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-    // Check if user exists
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->rowCount() > 0) {
@@ -48,7 +47,6 @@ try {
         exit;
     }
 
-    // Register user
     $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
     if ($stmt->execute([$name, $email, $hashedPassword, $role])) {
 
@@ -57,7 +55,6 @@ try {
         $stmt->execute([$userId]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Generate JWT token for the new user
         $jwt = new JwtHandler();
 
         $userId = $pdo->lastInsertId();

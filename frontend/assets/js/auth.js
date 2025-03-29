@@ -4,7 +4,6 @@ function checkAuth() {
         alert("You must be logged in.");
         window.location.href = "index.html";
     } else {
-        // Wait for the page to fully load before accessing user data
         setTimeout(() => {
             const user = JSON.parse(localStorage.getItem("user"));
             if (!user) {

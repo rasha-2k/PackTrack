@@ -11,7 +11,6 @@ function checkPageAccess() {
     const user = JSON.parse(userData);
     const currentPage = window.location.pathname;
 
-    // Check for admin panel access
     if (currentPage.includes('admin-panel.html')) {
         if (user.role !== 'admin') {
             showNotification("Access denied. Admin privileges required.", "error");
@@ -20,7 +19,6 @@ function checkPageAccess() {
         }
     }
 
-    // Check for user dashboard access
     if (currentPage.includes('dashboard.html')) {
         if (!['admin', 'user'].includes(user.role)) {
             showNotification("Access denied. Please log in.", "error");
