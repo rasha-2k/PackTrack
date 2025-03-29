@@ -1,8 +1,12 @@
-![Status](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
-![License](https://img.shields.io/badge/License-Educational-blue)
+![alt text](Documents/PackTrack-Logo.png)
 ---
 
-# PackTrack – Personal Delivery Log with Status Tracker and Smart Tips
+![Status](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
+![License](https://img.shields.io/badge/License-Educational-blue)
+
+---
+
+# PackTrack
 
 > **PackTrack** is a lightweight web-based application designed to help users organize and track their personal deliveries in one centralized platform. It streamlines delivery tracking, provides packaging tips, and adds a fun touch with motivational quotes.
 
