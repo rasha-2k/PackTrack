@@ -37,4 +37,4 @@ composer.lock
 #! database backups
 *.sqlite
 
-/backend/test/ 
+/test/ 
