@@ -1,51 +1,38 @@
 <?php
 require_once __DIR__ . '/../jwt/jwtHandler.php';
 
-use Jwt\JwtHandler;
-
+require_once __DIR__ . '/../auth/validateToken.php';
 class AuthMiddleware
 {
+    private $tokenValidator;
+
+    public function __construct()
+    {
+        $this->tokenValidator = new TokenValidator();
+    }
+
     public function checkRole($requiredRole)
     {
-        $headers = array_change_key_case(getallheaders(), CASE_LOWER);
+        $headers = getallheaders();
+        $tokenValidation = $this->tokenValidator->validateToken($headers);
 
-        if (!isset($headers['authorization'])) {
-            http_response_code(401);
-            echo json_encode(['error' => 'No token provided']);
+        if (!$tokenValidation['status']) {
+            http_response_code($tokenValidation['code']);
+            echo json_encode(['error' => $tokenValidation['message']]);
             exit;
         }
 
-        $token = trim(str_replace('Bearer', '', $headers['authorization']));
-
-        if (empty($token)) {
-            http_response_code(401);
-            echo json_encode(['error' => 'Empty token provided']);
-            exit;
+        $user = $tokenValidation['user'];
+        $userRole = $user->data->role ?? '';
+        if ($requiredRole === 'admin' && $userRole !== 'admin') {
+            sendError('Access denied. Admin privileges required.', 403);
+        
         }
-        try {
-            $jwt = new JwtHandler();
-            $decoded = $jwt->decode($token);
-
-            $userRole = $decoded->data->role ?? '';
-
-            if ($requiredRole === 'admin' && $userRole !== 'admin') {
-                http_response_code(403);
-                echo json_encode(['error' => 'Access denied. Admin privileges required.']);
-                exit;
-            }
-
-            if ($requiredRole === 'user' && !in_array($userRole, ['user', 'admin'])) {
-                http_response_code(403);
-                echo json_encode(['error' => 'Access denied. User privileges required.']);
-                exit;
-            }
-
-            echo json_encode(['access' => true]);
-            exit;
-        } catch (Exception $e) {
-            http_response_code(401);
-            echo json_encode(['error' => 'Invalid token: ' . $e->getMessage()]);
-            exit;
+        
+        if ($requiredRole === 'user' && !in_array($userRole, ['user', 'admin'])) {
+            sendError('Access denied. User privileges required.', 403);
         }
+
+        return $user;
     }
 }

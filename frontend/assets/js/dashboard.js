@@ -1,18 +1,3 @@
-/*=========================== dashboard connection ===========================*/
-document.addEventListener("DOMContentLoaded", () => {
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
-    
-    if (!token || !userData) {
-        showNotification("Unauthorized access. Please log in first.", "error");
-        window.location.href = "index.html";
-        return;
-    }
-
-    const user = JSON.parse(userData);
-    console.log('User data:', user);
-    
-});
 
 
 /*=========================== charts ===========================*/
@@ -21,22 +6,22 @@ let statusChart;
 
 document.addEventListener('DOMContentLoaded', () => {
     initCharts();
-    
+
     const chartActions = document.querySelectorAll('.chart-action');
     for (const action of chartActions) {
-        action.addEventListener('click', function() {
+        action.addEventListener('click', function () {
             for (const btn of chartActions) {
                 btn.classList.remove('active');
             }
             this.classList.add('active');
-            
+
             updateChartData(this.textContent.trim());
         });
     }
-    
+
     const sidebarOverlay = document.querySelector('.sidebar-overlay');
     const sidebar = document.querySelector('.sidebar');
-    
+
     const mobileToggle = document.querySelector('.mobile-toggle');
     if (mobileToggle) {
         mobileToggle.addEventListener('click', () => {
@@ -44,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebarOverlay.classList.add('active');
         });
     }
-    
+
     sidebarOverlay.addEventListener('click', () => {
         sidebar.classList.remove('active');
         sidebarOverlay.classList.remove('active');
@@ -343,8 +328,8 @@ function updateChartData(period) {
     let newlabels = [];
     let receivedData = [];
     let deliveredData = [];
-    
-    switch(period) {
+
+    switch (period) {
         case 'month':
             newlabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
             receivedData = [2, 1, 3, 1, 2, 0, 1];
@@ -361,7 +346,7 @@ function updateChartData(period) {
             deliveredData = [18, 17, 24, 19, 22, 25, 27, 22, 28, 26, 29, 21];
             break;
     }
-    
+
     activityChart.data.labels = newlabels;
     activityChart.data.datasets[0].data = receivedData;
     activityChart.data.datasets[1].data = deliveredData;
@@ -390,30 +375,26 @@ function setActiveButton(buttonId) {
     document.getElementById(buttonId).classList.add('active');
 }
 
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.querySelector('.search-bar input');
     if (searchInput) {
-        searchInput.addEventListener('keyup', function(e) {
+        searchInput.addEventListener('keyup', function (e) {
             if (e.key === 'Enter') {
                 console.log('Searching for:', this.value);
             }
         });
     }
-    
+
     const addPackageBtn = document.querySelector('.btn-add-package');
     if (addPackageBtn) {
         addPackageBtn.addEventListener('click', () => {
             console.log('Add package clicked');
         });
     }
-    
+
     const packageActions = document.querySelectorAll('.package-action');
     for (const action of packageActions) {
-        action.addEventListener('click', function(e) {
+        action.addEventListener('click', function (e) {
             e.preventDefault();
             const trackingNumber = this.closest('tr').querySelector('.tracking-number').textContent;
             console.log('View package details:', trackingNumber);

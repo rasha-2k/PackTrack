@@ -1,21 +1,3 @@
-/*=========================== admin connection ===========================*/
-document.addEventListener("DOMContentLoaded", () => {
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
-
-    if (!token || !userData) {
-        showNotification("Unauthorized access. Please log in first.", "error");
-        window.location.href = "index.html";
-        return;
-    }
-
-    const user = JSON.parse(userData);
-    console.log('User data:', user);
-
-
-
-});
-
 /*=========================== charts ===========================*/
 let deliveryStatusChart;
 let deliveryTrendChart;

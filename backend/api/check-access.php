@@ -9,8 +9,12 @@ require_once __DIR__ . '/../middlewares/authMiddleware.php';
 
 $data = json_decode(file_get_contents("php://input"));
 $page = $data->page ?? '';
+$headers = getallheaders();
+$authHeader = $headers['Authorization'] ?? '';
 
 $authMiddleware = new AuthMiddleware();
+
+
 
 try {
     switch ($page) {
@@ -30,5 +34,5 @@ try {
     }
 } catch (Exception $e) {
     http_response_code(403);
-    echo json_encode(['error' => $e->getMessage()]);
+    echo json_encode(['error' => 'Forbidden access: '. $e->getMessage()]);
 }
