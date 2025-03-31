@@ -193,6 +193,7 @@
             text-decoration: none;
             font-size: 0.9rem;
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .back-link:hover {
@@ -234,12 +235,20 @@
 
     <script type="text/javascript">
         document.getElementById("dashboard-link").href = window.location.origin + "/PackTrack/frontend/views/dashboard.html";
-    </script>    
+    </script>
     <script type="text/javascript">
         document.getElementById("go-back-login").addEventListener("click", function (event) {
             event.preventDefault();
-            window.location.href = window.location.origin + "/PackTrack/frontend/views/index.html"; 
+            window.location.href = window.location.origin + "/PackTrack/frontend/views/index.html";
         });
+    </script>
+    <script>
+        function applyTheme(theme) {
+            document.body.classList.remove("dark", "light");
+            document.body.classList.add(theme);
+        }
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        applyTheme(savedTheme);
     </script>
 </body>
 

@@ -120,6 +120,7 @@
             height: 4px;
             background: linear-gradient(to right, var(--color-primary), var(--color-accent));
         }
+
         .error-container {
             margin: 1rem 0 2.5rem;
         }
@@ -127,7 +128,7 @@
         .error-icon {
             height: 120px;
             width: 120px;
-            background: rgba(250, 204, 21, 0.15);;
+            background: rgba(250, 204, 21, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -192,6 +193,7 @@
             text-decoration: none;
             font-size: 0.9rem;
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .back-link:hover {
@@ -223,27 +225,34 @@
                 <i class="fas fa-home" style="margin-right: 0.5rem;"></i>
                 Go to Dashboard
             </a>
-
-            <a href="#" onclick="history.back();" class="back-link">
-                <i class="fas fa-arrow-left" style="margin-right: 0.3rem;"></i>
-                Go Back
+            <a href="javascript:void(0);" onclick="window.location.reload();" class="back-link">
+                <i class="fas fa-sync" style="margin-right: 0.3rem;"></i>
+                Reload Page
             </a>
         </div>
     </div>
 
     <script type="text/javascript">
         document.getElementById("dashboard-link").href = window.location.origin + "/PackTrack/frontend/views/dashboard.html";
-    </script>    
-    <script type="text/javascript">
+    </script>
+    <!-- <script type="text/javascript">
         document.querySelector(".back-link").addEventListener("click", function (event) {
             event.preventDefault();
 
             if (document.referrer) {
-                window.history.back();
+                window.pa();
             } else {
                 window.location.href = "../PackTrack/frontend/views/dashboard.html";
             }
         });
+    </script> -->
+    <script>
+        function applyTheme(theme) {
+            document.body.classList.remove("dark", "light");
+            document.body.classList.add(theme);
+        }
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        applyTheme(savedTheme);
     </script>
 </body>
 

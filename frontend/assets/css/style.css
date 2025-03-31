@@ -55,7 +55,7 @@
 
     /* Transition */
     --transition: all 0.3s ease;
-    
+
 }
 
 
@@ -67,7 +67,8 @@
     scrollbar-color: var(--color-primary) var(--bg-black-100);
     scroll-behavior: smooth;
 }
-body{
+
+body {
     font-family: var(--font-family);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-normal);
@@ -79,6 +80,7 @@ body{
     align-items: center;
     justify-content: center;
 }
+
 body.dark {
     --color-text: var(--color-text-light);
     --color-bg: var(--color-bg-dark);
@@ -106,7 +108,7 @@ body.light {
     --color-switcher-bg: hsla(0, 0%, 100%, 0.075);
 }
 
-.Box{
+.Box {
     /* justify-content: center;
     background: var(--bg-black-25); */
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
@@ -141,9 +143,10 @@ body.light {
     margin: 2rem;
     background: var(--bg-black-25);
     padding: 2rem;
-    border-radius: var(--card-radius);
-    position: relative;
     overflow: hidden;
+    border-radius: var(--card-radius);
+    box-shadow: var(--outer-shadow);
+    position: relative;
 }
 
 .container::before {
@@ -211,24 +214,25 @@ body.light {
 .input-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: var(--text-black-700);}
+    color: var(--text-black-700);
+}
 
 .input-group input,
 .input-group select {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border-radius: var(--border-radius);
-        background-color: var(--bg-black-100);
-        border: 1px solid transparent;
-        color: var(--text-black-900);
-        outline: none;
-        transition: all 0.3s;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    background-color: var(--bg-black-100);
+    border: 1px solid transparent;
+    color: var(--text-black-900);
+    outline: none;
+    transition: all 0.3s;
 }
 
 .input-group input:focus,
 .input-group select:focus {
-        border-color: var(--color-primary);
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .input-group input::placeholder {
@@ -263,19 +267,19 @@ body.light {
     height: 0;
     width: 0;
     border-radius: 5px;
-   }
-   
-   .check-container {
+}
+
+.check-container {
     display: block;
     position: relative;
     cursor: pointer;
     font-size: 15px;
     user-select: none;
     border-radius: 5px;
-   }
-   
-   /* Create a custom checkbox */
-   .checkmark {
+}
+
+/* Create a custom checkbox */
+.checkmark {
     position: relative;
     top: 0;
     left: 0;
@@ -283,36 +287,36 @@ body.light {
     width: 1.3em;
     background-color: #ccc;
     border-radius: 5px;
-   }
-   
-   /* When the checkbox is checked, add a blue background */
-   .check-container input:checked ~ .checkmark {
+}
+
+/* When the checkbox is checked, add a blue background */
+.check-container input:checked~.checkmark {
     transition: all 0.3s;
     opacity: 1;
     background-image: linear-gradient(45deg, #653ddb 0%, #d915ef 100%);
-   }
-   
-   .check-container input ~ .checkmark {
+}
+
+.check-container input~.checkmark {
     transition: all 0.2s;
     opacity: 1;
-   }
-   
-   /* Create the checkmark/indicator (hidden when not checked) */
-   .checkmark:after {
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
     content: "";
     position: absolute;
     opacity: 0;
     transition: all 0.2s;
-   }
-   
-   /* Show the checkmark when checked */
-   .check-container input:checked ~ .checkmark:after {
+}
+
+/* Show the checkmark when checked */
+.check-container input:checked~.checkmark:after {
     opacity: 1;
     transition: all 0.2s;
-   }
-   
-   /* Style the checkmark/indicator */
-   .check-container .checkmark:after {
+}
+
+/* Style the checkmark/indicator */
+.check-container .checkmark:after {
     left: 0.45em;
     top: 0.25em;
     width: 0.25em;
@@ -320,7 +324,7 @@ body.light {
     border: solid white;
     border-width: 0 0.15em 0.15em 0;
     transform: rotate(45deg);
-   }
+}
 
 .btn-primary {
     background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
@@ -421,6 +425,7 @@ body.light {
 .style-switcher .day-night {
     top: 55px;
 }
+
 .animated {
     animation-duration: 0.5s;
     animation-fill-mode: both;
@@ -432,6 +437,7 @@ body.light {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -449,10 +455,32 @@ body.light {
         padding: 1.75rem;
         max-width: 100%;
     }
-    
+
     .form-toggle button {
         padding: 0.75rem 1rem;
     }
+}
+
+/* error page */
+.error-logo {
+    margin-bottom: 2rem;
+}
+
+.error-logo i {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-primary);
+}
+
+.error-icon {
+    height: 120px;
+    width: 120px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
 }
 
 
@@ -770,7 +798,8 @@ body.light {
     transition: var(--transition);
 }
 
-.chart-action:hover, .chart-action.active {
+.chart-action:hover,
+.chart-action.active {
     background: var(--color-primary);
     color: white;
 }
@@ -815,7 +844,8 @@ body.light {
     border-collapse: collapse;
 }
 
-.packages-table th, .packages-table td {
+.packages-table th,
+.packages-table td {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid var(--bg-black-50);
@@ -936,18 +966,22 @@ body.light {
     .sidebar {
         transform: translateX(-100%);
     }
+
     .sidebar.active {
         transform: translateX(0);
     }
+
     .main-content {
         margin-left: 0;
     }
+
     .mobile-toggle {
         display: block;
         font-size: 1.5rem;
         color: var(--text-black-900);
         cursor: pointer;
     }
+
     .dashboard-cards {
         grid-template-columns: 1fr;
     }

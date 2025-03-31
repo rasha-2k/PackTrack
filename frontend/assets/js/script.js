@@ -66,3 +66,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+document.onreadystatechange = () => {
+    const state = document.readyState;
+    if (state === 'interactive') {
+        document.getElementById('load').style.display = "block";
+        fetch('/PackTrack/frontend/views/shared/loading.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('load').innerHTML = html;
+            });
+    } else if (state === 'complete') {
+        setTimeout(() => {
+            document.getElementById('load').style.display = "none";
+        }, 2000);
+    }
+};
