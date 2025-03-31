@@ -18,6 +18,19 @@ Managing online deliveries is often chaotic—tracking numbers are scattered acr
 
 ---
 
+## 👥 Roles & Contributions  
+
+Each team member contributed to different aspects of the project, ensuring a well-rounded and structured development process.  
+
+| Team Member        | Responsibilities                                               |
+|--------------------|----------------------------------------------------------------|
+| **All Members**    | Planning & Requirement Gathering                               |
+| **Rasha Al-Saleh** | Problem Statement, Business Case, Scope & Goals, UI Mockups    |
+| **Sdra Awameh**    | SDLC Model, Gantt Chart                                        |
+| **Dalaa Saqer**    | Functional Requirements, System Use Case Diagram               |
+
+---
+
 ## 🔥 Core Features
 
 ### ✅ User Features
