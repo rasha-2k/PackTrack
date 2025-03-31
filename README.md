@@ -97,7 +97,9 @@ PackTrack/
 │   │   ├── css/  
 │   │   │   └── style.css
 │   │   └── js/ 
-│   │       ├── access-control.js
+│   │       ├── shared/
+│   │       │   ├── notification.js
+│   │       │   └── sidebar.js
 │   │       ├── admin.js
 │   │       ├── auth.js
 │   │       ├── backend-conn.js
@@ -105,7 +107,13 @@ PackTrack/
 │   │       ├── script.js
 │   │       └── style-switcher.js
 │   └── views/
+│       ├── errors/
+│       │   ├── 403.html
+│       │   ├── 404.html
+│       │   └── 500.html
 │       ├── shared/
+│       │   ├── loading.html
+│       │   ├── maintenance.html
 │       │   └── sidebar.html
 │       ├── admin-panel.html 
 │       ├── dashboard.html 
@@ -117,6 +125,7 @@ PackTrack/
 ├── docker-compose.yml 
 ├── Documents/
 ├── .env
+├── .htaccess
 ├── LICENSE
 └── README.md
  ```
