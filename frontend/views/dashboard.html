@@ -18,10 +18,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
-
 </head>
 
 <body class="dark">
+    <div id="loader"></div>
     <!-- Mobile sidebar toggle -->
     <div class="sidebar-overlay"></div>
     <!-- Notification Container -->
@@ -225,6 +225,29 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/shared/notifications.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        function loadLoadingScreen() {
+            fetch('/PackTrack/frontend/views/shared/loading.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('loader').innerHTML = html;
+                });
+        }
+    
+        loadLoadingScreen();
+    </script>
+    <script>
+        document.onreadystatechange = function () {
+            if (document.readyState === 'loading') {
+                document.getElementById('loader').style.display = 'flex'; 
+            } else if (document.readyState === 'complete') {
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none'; 
+                }, 1000);
+            }
+        };
+    </script>
+
 </body>
 
 </html>
