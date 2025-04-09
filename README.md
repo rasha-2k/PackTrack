@@ -108,6 +108,7 @@ PackTrack/
 ├── frontend/ 
 │   ├── assets/ 
 │   │   ├── css/  
+│   │   │   ├── loading.css
 │   │   │   └── style.css
 │   │   └── js/ 
 │   │       ├── shared/
@@ -137,6 +138,7 @@ PackTrack/
 │   └── Dockerfile
 ├── docker-compose.yml 
 ├── Documents/
+│   └── images/
 ├── .env
 ├── .htaccess
 ├── LICENSE
@@ -249,8 +251,9 @@ QUOTES_API_URL=https://api.quotable.io/random
 ---
 
 ## 📞 Contact
-> Website: [rashaalsaleh.com](https://rashaalsaleh.com) | Email: [rasha.k.alsaleh@gmail.com](mailto:rasha.k.alsaleh@gmail.com) | LinkedIn: [@rasha-alsaleh](https://www.linkedin.com/in/rasha-alsaleh/)
-
+> Email: [rasha.k.alsaleh@gmail.com](mailto:rasha.k.alsaleh@gmail.com) | LinkedIn: [@rasha-alsaleh](https://www.linkedin.com/in/rasha-alsaleh/) <br>
+> Email: [awamehsdra@gmail.com](mailto:awamehsdra@gmail.com) | LinkedIn: [@sdra-awameh](https://www.linkedin.com/in/sdra-awameh-3b1391326/) <br>
+> Email: [Saqerdalaa@gmail.com](mailto:Saqerdalaa@gmail.com) | LinkedIn: [@dalaa-saqer](https://www.linkedin.com/in/dalaa-saqer/)
 ---
 
 ## 👥 Contributors
