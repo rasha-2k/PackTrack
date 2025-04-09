@@ -261,8 +261,8 @@ QUOTES_API_URL=https://api.quotable.io/random
     <a href="https://github.com/rasha-2k" style="text-decoration: none; display: flex; align-items: center;">
         <img src="https://github.com/rasha-2k.png" alt="@rasha-2k" title="@rasha-2k" width="100px" height="100px" style="border-radius: 50%; margin-right: 10px;">
     </a>
-    <a href="https://github.com/awsdra" style="text-decoration: none; display: flex; align-items: center;">
-        <img src="https://github.com/awsdra.png" alt="@awsdra" title="@awsdra" width="100px" height="100px" style="border-radius: 50%; margin-right: 10px;">
+    <a href="https://github.com/Sdra-Awameh" style="text-decoration: none; display: flex; align-items: center;">
+        <img src="https://github.com/Sdra-Awameh.png" alt="@awsdra" title="@awsdra" width="100px" height="100px" style="border-radius: 50%; margin-right: 10px;">
     </a>
     <a href="https://github.com/dalaasaqer" style="text-decoration: none; display: flex; align-items: center;">
         <img src="https://github.com/dalaasaqer.png" alt="@dalaasaqer" title="@dalaasaqer" width="100px" height="100px" style="border-radius: 50%; margin-right: 10px;">
