@@ -1,4 +1,4 @@
-![alt text](Documents/PackTrack-Logo.png)
+![alt text](Documents/images/PackTrack-Logo.png)
 ---
 
 ![Status](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
