@@ -1,8 +1,8 @@
-![alt text](Documents/images/PackTrack-Logo.png)
+![Status](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
+![License](https://img.shields.io/github/license/rasha-2k/PackTrack?color=blue)
 ---
 
-![Status](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
-![License](https://img.shields.io/badge/License-Educational-blue)
+![alt text](Documents/images/PackTrack-Logo.png)
 
 ---
 
