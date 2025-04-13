@@ -252,7 +252,7 @@ QUOTES_API_URL=https://api.quotable.io/random
 
 ## 📞 Contact
 > Email: [rasha.k.alsaleh@gmail.com](mailto:rasha.k.alsaleh@gmail.com) | LinkedIn: [@rasha-alsaleh](https://www.linkedin.com/in/rasha-alsaleh/) <br>
-> Email: [awamehsdra@gmail.com](mailto:awamehsdra@gmail.com) | LinkedIn: [@sdra-awameh](https://www.linkedin.com/in/sdra-awameh-3b1391326/) <br>
+> Email: [awamasdra@gmail.com](mailto:awamasdra@gmail.com) | LinkedIn: [@sdra-awameh](https://www.linkedin.com/in/sdra-awameh-3b1391326/) <br>
 > Email: [Saqerdalaa@gmail.com](mailto:Saqerdalaa@gmail.com) | LinkedIn: [@dalaa-saqer](https://www.linkedin.com/in/dalaa-saqer/)
 ---
 
