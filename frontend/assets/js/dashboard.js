@@ -219,56 +219,6 @@ function initCharts() {
             scales: false
         }
     });
-
-    const deliveryTimesCtx = document.getElementById('deliveryTimesChart').getContext('2d');
-    deliveryTimesChart = new Chart(deliveryTimesCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
-            datasets: [{
-                label: 'Number of Deliveries',
-                data: [45, 65, 35, 25],
-                backgroundColor: 'rgba(59, 130, 246, 0.8)',
-                borderColor: 'rgba(59, 130, 246, 1)',
-                borderWidth: 1,
-                borderRadius: 5,
-                hoverBackgroundColor: 'rgba(59, 130, 246, 1)'
-            }]
-        },
-        options: {
-            ...commonChartOptions,
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    grid: {
-                        color: gridColor
-                    },
-                    ticks: {
-                        color: textColor,
-                        font: {
-                            family: 'Inter',
-                            size: 12,
-                            weight: 500
-                        }
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: gridColor
-                    },
-                    ticks: {
-                        color: textColor,
-                        font: {
-                            family: 'Inter',
-                            size: 12,
-                            weight: 500
-                        }
-                    }
-                }
-            }
-        }
-    });
 }
 
 function updateChartsTheme() {
@@ -308,19 +258,6 @@ function updateChartsTheme() {
         statusChart.options.plugins.legend.labels.font = fontSettings;
         statusChart.options.plugins.tooltip = tooltipSettings;
         statusChart.update();
-    }
-
-    if (deliveryTimesChart) {
-        deliveryTimesChart.options.plugins.legend.labels.color = textColor;
-        deliveryTimesChart.options.plugins.legend.labels.font = fontSettings;
-        deliveryTimesChart.options.plugins.tooltip = tooltipSettings;
-        deliveryTimesChart.options.scales.x.grid.color = gridColor;
-        deliveryTimesChart.options.scales.x.ticks.color = textColor;
-        deliveryTimesChart.options.scales.x.ticks.font = fontSettings;
-        deliveryTimesChart.options.scales.y.grid.color = gridColor;
-        deliveryTimesChart.options.scales.y.ticks.color = textColor;
-        deliveryTimesChart.options.scales.y.ticks.font = fontSettings;
-        deliveryTimesChart.update();
     }
 }
 
