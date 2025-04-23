@@ -38,7 +38,7 @@ class JwtHandler
         }
 
         $issuedAt = time();
-        $expirationTime = $issuedAt + 3600;
+        $expirationTime = $issuedAt + 604800; // token valid for 7 days
         $payload = [
             'iat' => $issuedAt,
             'exp' => $expirationTime,

@@ -14,9 +14,12 @@ $db   = $_ENV['DB_NAME'] ?? '';
 $user = $_ENV['DB_USER'] ?? '';
 $pass = $_ENV['DB_PASS'] ?? '';
 $port = $_ENV['DB_PORT'] ?? '3306'; //! docker: 3306, local: 3308
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
 
 try {
-    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db", $user, $pass);
+    $pdo = new PDO($dsn, $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // echo json_encode(["success" => true, "message" => "Connected to the database!"]);
 } catch (PDOException $e) {
