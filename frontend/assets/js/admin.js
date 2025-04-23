@@ -206,18 +206,23 @@ function initAdminCharts() {
         type: 'line',
         data: {
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
+            datasets: [
+            {
                 label: 'Number of Deliveries',
                 data: [10, 12, 9, 14, 16, 8, 7],
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 fill: true,
                 tension: 0.4,
-                borderWidth: 3,
-                pointRadius: 3,
+                borderWidth: 2,
+                pointRadius: 4,
                 pointBackgroundColor: '#3b82f6',
-                pointHoverRadius: 5,
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointHoverRadius: 6,
                 pointHoverBackgroundColor: '#3b82f6',
+                pointHoverBorderColor: '#ffffff',
+                pointHoverBorderWidth: 2
             }]
         },
         options: {
