@@ -88,16 +88,24 @@ PackTrack/
 ├── apache/ 
 │   └── apache.conf
 ├── backend/ 
-│   ├── api/ 
+│   ├── api/
+│   │   ├── deliveries/
+│   │   │   ├── activity.php
+│   │   │   └── status.php
 │   │   ├── check-access.php
 │   │   └── protectedRoute.php
 │   ├── auth/
 │   │   ├── login.php
 │   │   ├── register.php
 │   │   └── validateToken.php
-│   ├── controllers/ 
+│   ├── database/
+│   │   ├── MOCK_Deliveries_DATA.csv
+│   │   ├── MOCK_Users_DATA.csv
+│   │   └── PackTrackDB_users.sql
 │   ├── db/ 
 │   │   └── db.php
+│   ├── handlers/
+│   │   └── add-package.php
 │   ├── helpers/
 │   │   └── response.php
 │   ├── jwt/
@@ -112,28 +120,31 @@ PackTrack/
 │   │   │   └── style.css
 │   │   └── js/ 
 │   │       ├── shared/
-│   │       │   ├── notification.js
-│   │       │   └── sidebar.js
+│   │       │   └── notification.js
 │   │       ├── admin.js
 │   │       ├── auth.js
 │   │       ├── backend-conn.js
 │   │       ├── dashboard.js
 │   │       ├── script.js
 │   │       └── style-switcher.js
-│   └── views/
-│       ├── errors/
-│       │   ├── 403.html
-│       │   ├── 404.html
-│       │   └── 500.html
-│       ├── shared/
-│       │   ├── loading.html
-│       │   ├── maintenance.html
-│       │   └── sidebar.html
-│       ├── admin-panel.html 
-│       ├── dashboard.html 
-│       └── index.html 
-├── database/ 
-│   └── PackTrackDB_users.sql
+│   ├── views/
+│   │   ├── errors/
+│   │   │   ├── 403.html
+│   │   │   ├── 404.html
+│   │   │   └── 500.html
+│   │   ├── shared/
+│   │   │   ├── add-package-modal.html
+│   │   │   ├── add-package-modal.js
+│   │   │   ├── loading.html
+│   │   │   ├── maintenance.html
+│   │   │   ├──sidebar.html
+│   │   │   └── sidebar.js
+│   │   ├── admin-panel.html 
+│   │   ├── dashboard.html 
+│   │   └── index.html
+│   └── scripts/
+│       ├── insert_deliveries_data.py
+│       └── insert_users_data.py
 ├── docker/ 
 │   └── Dockerfile
 ├── docker-compose.yml 
