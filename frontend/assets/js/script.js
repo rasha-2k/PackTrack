@@ -33,9 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         loginBtn.addEventListener('click', showLogin);
         registerBtn.addEventListener('click', showRegister);
-    } else {
-        console.log("loginBtn or registerBtn not found");
-    }
+    } 
     /*=========================== Show/Hide Admin Secret Field ===========================*/
     const registerRole = document.getElementById("register-role");
     const adminSecretGroup = document.getElementById("admin-secret-group");
@@ -44,8 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
         registerRole.addEventListener("change", () => {
             adminSecretGroup.style.display = registerRole.value === "admin" ? "block" : "none";
         });
-    } else {
-        console.log("registerRole or adminSecretGroup not found");
     }
     /*=========================== Password visibility toggle ===========================*/
     const passwordToggles = document.querySelectorAll('.password-toggle');

@@ -27,7 +27,6 @@ async function checkPageAccess(page) {
     const user = JSON.parse(localStorage.getItem('user'));
     
     if (!user) return;
-    console.log('Token:', token); 
 
     try{
         const response = await fetch('/PackTrack/backend/api/check-access.php', {

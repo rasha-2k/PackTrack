@@ -402,7 +402,7 @@ body.light {
     width: 200px;
     border: 1px solid var(--bg-black-50);
     background: var(--bg-black-25);
-    z-index: 101;
+    z-index: 5;
     border-radius: 5px;
     transition: var(--transition);
     transform: translateX(100%);
@@ -797,6 +797,13 @@ body.light {
     font-weight: 600;
 }
 
+.chart-actions-group{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 0.5rem;
+}
+
 .chart-actions {
     display: flex;
     gap: 0.5rem;
@@ -904,7 +911,7 @@ body.light {
     color: var(--color-primary);
 }
 
-.status-pending {
+.status-Delayed {
     background: rgba(245, 158, 11, 0.15);
     color: var(--color-accent);
 }
