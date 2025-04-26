@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
-require_once __DIR__ . '/../db/db.php';
+require_once __DIR__ . '/../connection/db-conn.php';
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../jwt/JwtHandler.php';
 
