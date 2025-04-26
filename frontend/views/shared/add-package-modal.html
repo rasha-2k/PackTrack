@@ -1,0 +1,334 @@
+<style>
+    body {
+        font-family: var(--font-family);
+        background-color: var(--bg-black-900);
+        color: var(--text-black-900);
+    }
+
+    .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(2px);
+        transition: var(--transition);
+    }
+
+    .modal-content {
+        overflow: hidden;
+        background: var(--bg-black-25);
+        border-radius: var(--card-radius);
+        box-shadow: var(--outer-shadow);
+    }
+
+    .modal-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+        border-top-left-radius: var(--card-radius);
+        border-top-right-radius: var(--card-radius);
+    }
+
+    .form-input {
+        background-color: var(--bg-black-100);
+        border: 1px solid transparent;
+        color: var(--text-black-900);
+        outline: none;
+        transition: var(--transition);
+    }
+
+    .form-input:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .form-input::placeholder {
+        color: var(--text-black-700);
+        opacity: 0.6;
+    }
+
+    .btn-primary {
+        background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        transition: var(--transition);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-close:hover {
+        color: var(--color-primary);
+    }
+</style>
+
+<!-- Modal -->
+<div id="modalOverlay" class="modal-overlay fixed inset-0 z-40 hidden items-center justify-center">
+    <div id="modalContent" class="modal-content relative w-full max-w-md mx-auto p-6 pt-8">
+        <!-- Close Button -->
+        <button id="closeModalBtn" class="btn-close absolute top-4 right-4 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h3 class="text-xl font-semibold text-white">Add New Package</h3>
+            <p class="text-sm text-gray-400">Enter the package details below</p>
+        </div>
+
+        <!-- Form -->
+        <form id="packageForm">
+            <div class="mb-4">
+                <label for="courier_service" class="block text-sm text-gray-400 mb-1">Courier Service*</label>
+                <select id="courier_service" name="courier_service" class="form-input w-full px-4 py-2 rounded-md"
+                    required>
+                    <option value="">Select a courier service</option>
+                    <option value="4PX">4PX</option>
+                    <option value="Anteraja">Anteraja</option>
+                    <option value="Aramex">Aramex</option>
+                    <option value="Asendia">Asendia</option>
+                    <option value="Australia Post">Australia Post</option>
+                    <option value="Barq Express">Barq Express</option>
+                    <option value="Blue Dart">Blue Dart</option>
+                    <option value="Cainiao">Cainiao</option>
+                    <option value="Canada Post">Canada Post</option>
+                    <option value="China Post">China Post</option>
+                    <option value="CityLink">CityLink</option>
+                    <option value="Correos">Correos</option>
+                    <option value="Delhivery">Delhivery</option>
+                    <option value="DHL">DHL</option>
+                    <option value="DHL Express">DHL Express</option>
+                    <option value="DHL eCommerce">DHL eCommerce</option>
+                    <option value="DPD">DPD</option>
+                    <option value="DTDC">DTDC</option>
+                    <option value="Ekart">Ekart</option>
+                    <option value="EMS">EMS</option>
+                    <option value="Emirates Post">Emirates Post</option>
+                    <option value="Fastway">Fastway</option>
+                    <option value="FedEx">FedEx</option>
+                    <option value="Fetchr">Fetchr</option>
+                    <option value="Gati">Gati</option>
+                    <option value="Hermes">Hermes</option>
+                    <option value="India Post">India Post</option>
+                    <option value="iMile">iMile</option>
+                    <option value="J&T Express">J&T Express</option>
+                    <option value="Japan Post">Japan Post</option>
+                    <option value="Jeebly">Jeebly</option>
+                    <option value="JNE Express">JNE Express</option>
+                    <option value="Kerry Express">Kerry Express</option>
+                    <option value="Korea Post">Korea Post</option>
+                    <option value="La Poste">La Poste</option>
+                    <option value="Lalamove">Lalamove</option>
+                    <option value="MyUS">MyUS</option>
+                    <option value="Naqel Express">Naqel Express</option>
+                    <option value="Ninja Van">Ninja Van</option>
+                    <option value="Ninja Xpress">Ninja Xpress</option>
+                    <option value="Noon Express">Noon Express</option>
+                    <option value="NZ Post">NZ Post</option>
+                    <option value="Parcelforce">Parcelforce</option>
+                    <option value="Pos Malaysia">Pos Malaysia</option>
+                    <option value="PostNL">PostNL</option>
+                    <option value="PostaPlus">PostaPlus</option>
+                    <option value="Qxpress">Qxpress</option>
+                    <option value="Quiqup">Quiqup</option>
+                    <option value="Royal Mail">Royal Mail</option>
+                    <option value="Saudi Post">Saudi Post</option>
+                    <option value="SF Express">SF Express</option>
+                    <option value="Shopee Xpress">Shopee Xpress</option>
+                    <option value="Sicepat">Sicepat</option>
+                    <option value="Skynet">Skynet</option>
+                    <option value="SMSA Express">SMSA Express</option>
+                    <option value="TNT">TNT</option>
+                    <option value="Toll Group">Toll Group</option>
+                    <option value="UPS">UPS</option>
+                    <option value="USPS">USPS</option>
+                    <option value="Yanwen">Yanwen</option>
+                    <option value="Yodel">Yodel</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="origin" class="block text-sm text-gray-400 mb-1">Origin*</label>
+                <select id="origin" name="origin" class="form-input w-full px-4 py-2 rounded-md" required>
+                    <option value="">Select origin location</option>
+                    <option value="Abu Dhabi">Abu Dhabi</option>
+                    <option value="Amman">Amman</option>
+                    <option value="Amsterdam">Amsterdam</option>
+                    <option value="Baghdad">Baghdad</option>
+                    <option value="Bangkok">Bangkok</option>
+                    <option value="Beijing">Beijing</option>
+                    <option value="Beirut">Beirut</option>
+                    <option value="Berlin">Berlin</option>
+                    <option value="Bengaluru">Bengaluru</option>
+                    <option value="Brussels">Brussels</option>
+                    <option value="Buenos Aires">Buenos Aires</option>
+                    <option value="Cairo">Cairo</option>
+                    <option value="Cape Town">Cape Town</option>
+                    <option value="Casablanca">Casablanca</option>
+                    <option value="Copenhagen">Copenhagen</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Doha">Doha</option>
+                    <option value="Dubai">Dubai</option>
+                    <option value="Frankfurt">Frankfurt</option>
+                    <option value="Geneva">Geneva</option>
+                    <option value="Hong Kong">Hong Kong</option>
+                    <option value="Istanbul">Istanbul</option>
+                    <option value="Jakarta">Jakarta</option>
+                    <option value="Jeddah">Jeddah</option>
+                    <option value="Johannesburg">Johannesburg</option>
+                    <option value="Karachi">Karachi</option>
+                    <option value="Kuala Lumpur">Kuala Lumpur</option>
+                    <option value="Kuwait City">Kuwait City</option>
+                    <option value="London">London</option>
+                    <option value="Los Angeles">Los Angeles</option>
+                    <option value="Madrid">Madrid</option>
+                    <option value="Manama">Manama</option>
+                    <option value="Manila">Manila</option>
+                    <option value="Melbourne">Melbourne</option>
+                    <option value="Mexico City">Mexico City</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Muscat">Muscat</option>
+                    <option value="Nairobi">Nairobi</option>
+                    <option value="New York">New York</option>
+                    <option value="Osaka">Osaka</option>
+                    <option value="Oslo">Oslo</option>
+                    <option value="Paris">Paris</option>
+                    <option value="Riyadh">Riyadh</option>
+                    <option value="Rome">Rome</option>
+                    <option value="São Paulo">São Paulo</option>
+                    <option value="Seoul">Seoul</option>
+                    <option value="Shanghai">Shanghai</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Stockholm">Stockholm</option>
+                    <option value="Sydney">Sydney</option>
+                    <option value="Tokyo">Tokyo</option>
+                    <option value="Toronto">Toronto</option>
+                    <option value="Tunis">Tunis</option>
+                    <option value="Vancouver">Vancouver</option>
+                    <option value="Vienna">Vienna</option>
+                    <option value="Zurich">Zurich</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="destination" class="block text-sm text-gray-400 mb-1">Destination*</label>
+                <select id="destination" name="destination" class="form-input w-full px-4 py-2 rounded-md" required>
+                    <option value="">Select destination location</option>
+                    <option value="Abu Dhabi">Abu Dhabi</option>
+                    <option value="Amman">Amman</option>
+                    <option value="Amsterdam">Amsterdam</option>
+                    <option value="Baghdad">Baghdad</option>
+                    <option value="Bangkok">Bangkok</option>
+                    <option value="Beijing">Beijing</option>
+                    <option value="Beirut">Beirut</option>
+                    <option value="Berlin">Berlin</option>
+                    <option value="Bengaluru">Bengaluru</option>
+                    <option value="Brussels">Brussels</option>
+                    <option value="Buenos Aires">Buenos Aires</option>
+                    <option value="Cairo">Cairo</option>
+                    <option value="Cape Town">Cape Town</option>
+                    <option value="Casablanca">Casablanca</option>
+                    <option value="Copenhagen">Copenhagen</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Doha">Doha</option>
+                    <option value="Dubai">Dubai</option>
+                    <option value="Frankfurt">Frankfurt</option>
+                    <option value="Geneva">Geneva</option>
+                    <option value="Hong Kong">Hong Kong</option>
+                    <option value="Istanbul">Istanbul</option>
+                    <option value="Jakarta">Jakarta</option>
+                    <option value="Jeddah">Jeddah</option>
+                    <option value="Johannesburg">Johannesburg</option>
+                    <option value="Karachi">Karachi</option>
+                    <option value="Kuala Lumpur">Kuala Lumpur</option>
+                    <option value="Kuwait City">Kuwait City</option>
+                    <option value="London">London</option>
+                    <option value="Los Angeles">Los Angeles</option>
+                    <option value="Madrid">Madrid</option>
+                    <option value="Manama">Manama</option>
+                    <option value="Manila">Manila</option>
+                    <option value="Melbourne">Melbourne</option>
+                    <option value="Mexico City">Mexico City</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Muscat">Muscat</option>
+                    <option value="Nairobi">Nairobi</option>
+                    <option value="New York">New York</option>
+                    <option value="Osaka">Osaka</option>
+                    <option value="Oslo">Oslo</option>
+                    <option value="Paris">Paris</option>
+                    <option value="Riyadh">Riyadh</option>
+                    <option value="Rome">Rome</option>
+                    <option value="São Paulo">São Paulo</option>
+                    <option value="Seoul">Seoul</option>
+                    <option value="Shanghai">Shanghai</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Stockholm">Stockholm</option>
+                    <option value="Sydney">Sydney</option>
+                    <option value="Tokyo">Tokyo</option>
+                    <option value="Toronto">Toronto</option>
+                    <option value="Tunis">Tunis</option>
+                    <option value="Vancouver">Vancouver</option>
+                    <option value="Vienna">Vienna</option>
+                    <option value="Zurich">Zurich</option>
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label for="status" class="block text-sm text-gray-400 mb-1">Status*</label>
+                <select id="status" name="status" class="form-input w-full px-4 py-2 rounded-md" required>
+                    <option value="">Select status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Received">Received</option>
+                    <option value="Delayed">Delayed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+
+            <!-- Delivered At Date (only if status is "Delivered") -->
+            <div class="mb-4" id="deliveredAtWrapper" style="display: none;">
+                <label for="delivered_at" class="block text-sm text-gray-400 mb-1">Delivered At</label>
+                <input type="date" id="delivered_at" name="delivered_at"
+                    class="form-input w-full px-4 py-2 rounded-md" />
+            </div>
+
+            <!-- Expected Delivery Date -->
+            <div class="mb-4" id="expectedDeliveryDateWrapper" style="display: none;">
+                <label for="expected_delivery_date" class="block text-sm text-gray-400 mb-1">Expected Delivery
+                    Date</label>
+                <input type="date" id="expected_delivery_date" name="expected_delivery_date"
+                    class="form-input w-full px-4 py-2 rounded-md" />
+            </div>
+
+            <!-- Received At Date (only if status is "Received") -->
+            <div class="mb-4" id="receivedAtWrapper" style="display: none;">
+                <label for="received_at" class="block text-sm text-gray-400 mb-1">Received At</label>
+                <input type="date" id="received_at" name="received_at" class="form-input w-full px-4 py-2 rounded-md" />
+            </div>
+
+            <!-- Package Category -->
+            <div class="mb-4">
+                <label for="category" class="block text-sm text-gray-400 mb-1">Package Category</label>
+                <select id="category" name="category" class="form-input w-full px-4 py-2 rounded-md" optio "" <option
+                    value="">Select category</option>
+                    <option value="Fragile">Fragile</option>
+                    <option value="Non-Fragile">Non-Fragile</option>
+                    <option value="Perishable">Perishable</option>
+                    <option value="Heavy">Heavy</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary w-full py-2 px-4 rounded-md text-white font-medium">
+                Add Package
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="../views/shared/add-package-modal.js"></script>
