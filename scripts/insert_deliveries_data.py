@@ -6,13 +6,15 @@ from dotenv import load_dotenv
 import os
 
 def convert_date(date_str):
-    try:
-        return datetime.strptime(date_str, "%d/%m/%Y").strftime("%Y-%m-%d %H:%M:%S")
-    except ValueError:
-        return None  # handle missing or bad values gracefully
+    """Convert to 'YYYY-MM-DD' (MySQL DATE format) from various formats."""
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(date_str, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    return None
 
-load_dotenv()  
-
+load_dotenv()
 
 config = {
     'host': 'localhost',
@@ -21,20 +23,29 @@ config = {
     'database': os.getenv('DB_NAME')
 }
 
-csv_file_path = Path(__file__).resolve().parent.parent / 'backend' / 'database' / 'MOCK_Deliveries_DATA.csv'
+csv_file_path = Path(__file__).resolve().parent.parent / 'backend' / 'database' / 'MOCK_DATA.csv'
 
-columns = ['id', 'user_id', 'tracking_number', 'courier_service', 'origin', 'destination', 'status','created_at','updated_at']
+# Update the columns to include 'delivered_at', 'expected_delivery_date', and 'received_at'
+columns = ['id', 'user_id', 'tracking_number', 'courier_service', 'origin', 'destination', 
+            'status', 'delivered_at', 'expected_delivery_date', 'received_at', 
+            'category', 'created_at', 'updated_at']
+
 
 try:
     conn = mysql.connector.connect(**config)
     cursor = conn.cursor()
 
     with open(csv_file_path, newline='', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile) 
+        reader = csv.DictReader(csvfile)  # Reading CSV
         for row in reader:
+            row['delivered_at'] = convert_date(row['delivered_at'])
+            row['expected_delivery_date'] = convert_date(row['expected_delivery_date'])
+            row['received_at'] = convert_date(row['received_at'])
             row['created_at'] = convert_date(row['created_at'])
             row['updated_at'] = convert_date(row['updated_at'])
+
             values = [row[col] for col in columns] 
+
             sql = f"""
                 INSERT INTO deliveries ({', '.join(columns)})
                 VALUES ({', '.join(['%s'] * len(columns))})
@@ -42,10 +53,10 @@ try:
             cursor.execute(sql, values)
 
     conn.commit()
-    print(f" CSV data inserted successfully into 'deliveries' table.")
+    print(f"CSV data inserted successfully into 'deliveries' table.")
 
 except mysql.connector.Error as err:
-    print(f" MySQL Error: {err}")
+    print(f"MySQL Error: {err}")
 
 finally:
     if 'cursor' in locals():

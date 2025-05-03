@@ -3,7 +3,7 @@ let activityChart;
 let statusChart;
 document.addEventListener('DOMContentLoaded', () => {
     initGeneralFunctionalities();
-    initButtons();
+    updateStatCards();
     initializeCharts();
 });
 
@@ -44,7 +44,7 @@ function initGeneralFunctionalities() {
             }
         }
     });
-
+    initButtons();
 }
 
 function initButtons() {
@@ -57,7 +57,7 @@ function initButtons() {
             }
 
             this.classList.add('active');
-            updateStatusChartOptions(this.textContent.trim());
+            updateStatusChartAction(this.textContent.trim());
         });
     }
 
@@ -71,6 +71,54 @@ function initButtons() {
                 console.log('View package details:', trackingNumberEl.textContent);
             }
         });
+    }
+}
+
+function updateStatCards() {
+    fetch('../../backend/api/dashboard/dashboard-stats.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error('Error loading stat cards:', data.error);
+                return;
+            }
+
+            updateCard('Total Packages', data.total.value, data.total.change);
+            
+            updateCard('Received', data.received.value, data.received.change);
+            
+            updateCard('Delivered', data.delivered.value, data.delivered.change);
+            
+            updateCard('Delayed', data.delayed.value, data.delayed.change);
+        })
+        .catch(err => console.error('Failed to load stat cards data:', err));
+}
+
+function updateCard(title, value, change) {
+    const cards = document.querySelectorAll('.stat-card');
+    for (const card of cards) {
+        const cardTitle = card.querySelector('h3').textContent;
+        if (cardTitle === title) {
+            card.querySelector('.value').textContent = value;
+            
+            const changeElement = card.querySelector('.change');
+            
+            if (change > 0) {
+                changeElement.innerHTML = `<i class="fas fa-arrow-up"></i> ${change}% from last month`;
+                changeElement.classList.remove('negative');
+                changeElement.classList.add('positive');
+            } else if (change < 0) {
+                changeElement.innerHTML = `<i class="fas fa-arrow-down"></i> ${Math.abs(change)}% from last month`;
+                changeElement.classList.remove('positive');
+                changeElement.classList.add('negative');
+            } else {
+                changeElement.innerHTML = `<i class="fas fa-zero"></i> 0% from last month`;
+                changeElement.classList.remove('positive', 'negative');
+                changeElement.classList.add('zero');
+            }
+            
+            break;
+        }
     }
 }
 
@@ -211,7 +259,7 @@ function updateActivityChart() {
     const options = getChartOptions(isDarkMode);
     const DataPointBorderColor = isDarkMode ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)';
 
-    fetch('../../backend/api/dashboard/package-activity.php')
+    fetch('../../backend/api/dashboard/charts/package-activity.php')
         .then(res => res.json())
         .then(data => {
             if (!Array.isArray(data)) {
@@ -271,7 +319,7 @@ function updateStatusChart() {
     const isDarkMode = document.body.classList.contains('dark');
     const options = getChartOptions(isDarkMode);
 
-    fetch('../../backend/api/dashboard/package-status.php')
+    fetch('../../backend/api/dashboard/charts/package-status.php')
         .then(res => res.json())
         .then(data => {
             if (!Array.isArray(data)) {
@@ -322,7 +370,7 @@ function updateStatusChart() {
         .catch(err => console.error('Failed to load status chart data:', err));
 }
 
-async function updateStatusChartOptions(period) {
+async function updateStatusChartAction(period) {
 
     let range;
 
@@ -337,7 +385,7 @@ async function updateStatusChartOptions(period) {
         range = 'month';
     }
 
-    const url = `../../backend/api/dashboard/package-activity.php?range=${range}`;
+    const url = `../../backend/api/dashboard/charts/package-activity.php?range=${range}`;
 
     try {
         const res = await fetch(url);
