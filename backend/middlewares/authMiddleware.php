@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../jwt/jwtHandler.php';
 
-require_once __DIR__ . '/../auth/validateToken.php';
+require_once __DIR__ . '/../auth/TokenValidator.php';
 class AuthMiddleware
 {
     private $tokenValidator;
@@ -26,7 +26,6 @@ class AuthMiddleware
         $userRole = $user->data->role ?? '';
         if ($requiredRole === 'admin' && $userRole !== 'admin') {
             sendError('Access denied. Admin privileges required.', 403);
-        
         }
         
         if ($requiredRole === 'user' && !in_array($userRole, ['user', 'admin'])) {
