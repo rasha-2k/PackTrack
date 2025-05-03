@@ -147,7 +147,7 @@ if ($stmt->execute([
                 SELECT 'delivered' as type, YEAR(delivered_at) as year, COUNT(*) as count
                 FROM deliveries 
                 WHERE delivered_at IS NOT NULL 
-                AND YEAR(delivered_at) BETWEEN 2021 AND 2024
+                AND YEAR(delivered_at) IS NOT NULL
                 AND status = 'Delivered'
                 GROUP BY YEAR(delivered_at)
                 
@@ -156,7 +156,7 @@ if ($stmt->execute([
                 SELECT 'received' as type, YEAR(received_at) as year, COUNT(*) as count
                 FROM deliveries 
                 WHERE received_at IS NOT NULL 
-                AND YEAR(received_at) BETWEEN 2021 AND 2024
+                AND YEAR(received_at) IS NOT NULL
                 AND status = 'Received'
                 GROUP BY YEAR(received_at)
             ) as combined_data
