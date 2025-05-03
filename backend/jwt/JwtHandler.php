@@ -25,7 +25,6 @@ class JwtHandler
         self::$secretKey = $_ENV['JWT_SECRET'] ?? null;
 
         if (empty(self::$secretKey)) {
-            // sendError("JWT secret key not set in .env", 500);
             header('Location: /PackTrack/frontend/views/errors/500.html');
             exit();
         }
