@@ -226,7 +226,7 @@
                 Go to Dashboard
             </a>
 
-            <a id="go-back-login" onclick="history.back();" class="back-link">
+            <a id="back-to-login" class="back-link">
                 <i class="fas fa-arrow-left" style="margin-right: 0.3rem;"></i>
                 Back to Login
             </a>
@@ -235,9 +235,8 @@
 
     <script type="text/javascript">
         document.getElementById("dashboard-link").href = window.location.origin + "/PackTrack/frontend/views/dashboard.html";
-    </script>
-    <script type="text/javascript">
-        document.getElementById("go-back-login").addEventListener("click", function (event) {
+
+        document.getElementById("back-to-login").addEventListener("click", function (event) {
             event.preventDefault();
             window.location.href = window.location.origin + "/PackTrack/frontend/views/index.html";
         });
