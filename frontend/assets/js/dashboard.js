@@ -62,7 +62,7 @@ function initButtons() {
     }
 
     // Package action buttons
-    const packageActions = document.querySelectorAll('.package-action');
+    const packageActions = document.querySelectorAll('.log-action');
     for (const action of packageActions) {
         action.addEventListener('click', function (e) {
             e.preventDefault();

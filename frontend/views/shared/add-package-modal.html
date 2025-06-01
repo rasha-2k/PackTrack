@@ -1,7 +1,21 @@
+<!-- Tailwind CSS -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/PackTrack/frontend/assets/css/style.css">
+
 <style>
     body {
         font-family: var(--font-family);
         background-color: var(--bg-black-900);
+        color: var(--text-black-50);
+    }
+
+    h3 {
         color: var(--text-black-900);
     }
 
@@ -31,7 +45,7 @@
     }
 
     .form-input {
-        background-color: var(--bg-black-100);
+        background-color: var(--bg-black-50);
         border: 1px solid transparent;
         color: var(--text-black-900);
         outline: none;
@@ -57,15 +71,44 @@
     .btn-primary:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-    }
-
+    }    
+    
     .btn-close:hover {
         color: var(--color-primary);
     }
+
+    /* Custom validation message styling */
+    .form-input-error {
+        border-color: #ff4e4e !important;
+        animation: shake 0.5s;
+    }
+
+    .validation-message {
+        color: #ff4e4e;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+        display: none;
+        opacity: 0;
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
+
+    .validation-message.show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
 </style>
 
+<body class="dark">
 <!-- Modal -->
-<div id="modalOverlay" class="modal-overlay fixed inset-0 z-40 hidden items-center justify-center">
+<div id="modalOverlay" class="modal-overlay fixed inset-0 z-40 items-center justify-center">
     <div id="modalContent" class="modal-content relative w-full max-w-md mx-auto p-6 pt-8">
         <!-- Close Button -->
         <button id="closeModalBtn" class="btn-close absolute top-4 right-4 text-gray-400">
@@ -78,7 +121,7 @@
 
         <!-- Header -->
         <div class="text-center mb-6">
-            <h3 class="text-xl font-semibold text-white">Add New Package</h3>
+            <h3 class="text-xl font-semibold">Add New Package</h3>
             <p class="text-sm text-gray-400">Enter the package details below</p>
         </div>
 
@@ -314,9 +357,8 @@
 
             <!-- Package Category -->
             <div class="mb-4">
-                <label for="category" class="block text-sm text-gray-400 mb-1">Package Category</label>
-                <select id="category" name="category" class="form-input w-full px-4 py-2 rounded-md" optio "" <option
-                    value="">Select category</option>
+                <label for="category" class="block text-sm text-gray-400 mb-1">Package Category</label>                <select id="category" name="category" class="form-input w-full px-4 py-2 rounded-md">
+                    <option value="">Select category</option>
                     <option value="Fragile">Fragile</option>
                     <option value="Non-Fragile">Non-Fragile</option>
                     <option value="Perishable">Perishable</option>
@@ -330,5 +372,5 @@
         </form>
     </div>
 </div>
-
-<script src="../views/shared/add-package-modal.js"></script>
+<script src="/PackTrack/frontend/views/shared/add-package-modal.js"></script>
+</body>
