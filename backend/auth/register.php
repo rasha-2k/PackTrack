@@ -64,6 +64,10 @@ try {
             'role' => $user['role']
         ]);
 
+        // Log user registration
+        $logStmt = $pdo->prepare("INSERT INTO user_activity_logs (user_id, action) VALUES (?, ?)");
+        $logStmt->execute([$user['id'], 'register']);
+
         echo json_encode([
             'success' => true,
             'message' => 'User registered successfully',

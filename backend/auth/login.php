@@ -51,6 +51,10 @@ $token = $jwtHandler->generate($user['id'], [
     "role" => $user['role']
 ]);
 
+// Log user login
+$logStmt = $pdo->prepare("INSERT INTO user_activity_logs (user_id, action) VALUES (?, ?)");
+$logStmt->execute([$user['id'], 'login']);
+
 echo json_encode([
     "success" => true,
     "message" => "Login successful",
