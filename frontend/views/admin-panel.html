@@ -34,6 +34,7 @@
     </style>
 
 </head>
+
 <body class="dark">
     <div id="loader"></div>
     <!-- Mobile sidebar toggle -->
@@ -189,14 +190,11 @@
 
 
             <!-- Recent User Activity & Logs -->
-            <div class="packages-section">
+            <div class="log-section">
                 <div class="table-header">
                     <div class="table-title">Recent User Activity</div>
-                    <div class="table-actions">
-                        <a href="#">View All Logs <i class="fas fa-arrow-right"></i></a>
-                    </div>
                 </div>
-                <table class="packages-table">
+                <table class="log-table">
                     <thead>
                         <tr>
                             <th>User</th>
@@ -213,10 +211,9 @@
                             <td>john.doe@example.com</td>
                             <td>Today, 10:45 AM</td>
                             <td>12 Active</td>
-                            <td><span class="status-badge status-success">Active</span></td>
+                            <td><span class="status-badge status-green">Active</span></td>
                             <td>
-                                <a href="#" class="package-action"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="package-action text-red-500"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="log-action text-red-500"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         <!-- More user rows can be added similarly -->
@@ -224,7 +221,7 @@
                 </table>
             </div>
         </main>
-        <!-- Style Switcher (same as user dashboard) -->
+        <!-- Style Switcher-->
         <div class="style-switcher">
             <div class="style-switcher-toggler s-icon">
                 <i class="fas fa-cog fa-spin"></i>
@@ -243,30 +240,107 @@
             sidebar.loadSidebar();
         });
     </script>
-    <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/style-switcher.js"></script>
+    <script src="../assets/js/shared/script.js"></script>
+    <script src="../assets/js/shared/style-switcher.js"></script>
     <script src="../assets/js/admin.js"></script>
-    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/shared/auth.js"></script>
     <script src="../assets/js/shared/notifications.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="../assets/js/shared/quotes.js"></script>
     <script>
-        function loadLoadingScreen() {
-            fetch('/PackTrack/frontend/views/shared/loading.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('loader').innerHTML = html;
-                });
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString(); // or use .toLocaleDateString() and .toLocaleTimeString() for split
         }
-    
-        loadLoadingScreen();
+        function loadRecentActivity() {
+            fetch('/PackTrack/backend/api/admin/get-recent-activity.php')
+                .then(res => res.json())
+                .then(res => {
+                    if (!res.success) {
+                        console.error(res.message);
+                        return;
+                    }
+
+                    const tbody = document.querySelector(".log-table tbody");
+                    tbody.innerHTML = '';
+                    function getStatusLabel(action) {
+                        switch (action) {
+                            case 'login': return 'Active';
+                            case 'logout': return 'Logged Out';
+                            case 'register': return 'New';
+                            default: return 'Activity';
+                        }
+                    }
+
+                    function getStatusColor(action) {
+                        switch (action) {
+                            case 'login': return 'status-green';
+                            case 'logout': return 'status-red';
+                            case 'register': return 'status-yellow';
+                            default: return 'status-blue';
+                        }
+                    }
+
+                    res.data.forEach(log => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${log.name}</td>
+                            <td>${log.email}</td>
+                            <td>${formatDate(log.last_login)}</td>
+                            <td>${log.active_packages} Active</td>
+                            <td>
+                                <span class="status-badge ${getStatusColor(log.action)}">
+                                    ${getStatusLabel(log.action)}
+                                </span>
+                            </td>
+                            <td>
+                                <button type="button" class="log-action text-red-500 delete-row">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(err => console.error("Fetch failed:", err));
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            loadRecentActivity();
+            setInterval(loadRecentActivity, 5000); // every 5 seconds
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tableBody = document.querySelector(".log-table tbody");
+
+            tableBody.addEventListener("click", function (e) {
+                const target = e.target.closest(".delete-row");
+
+                if (target) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const row = target.closest("tr");
+                    if (row) {
+                        row.classList.add("fade-out");
+                        setTimeout(() => row.remove(), 200);
+                        console.log("Row deleted:", row);
+                    } else {
+                        console.warn("Couldn't find row to remove.");
+                    }
+                }
+            });
+        });
+
     </script>
     <script>
         document.onreadystatechange = function () {
             if (document.readyState === 'loading') {
-                document.getElementById('loader').style.display = 'flex'; 
+                document.getElementById('loader').style.display = 'flex';
             } else if (document.readyState === 'complete') {
                 setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none'; 
+                    document.getElementById('loader').style.display = 'none';
                 }, 1000);
             }
         };
