@@ -1,5 +1,3 @@
-// Add this to your dashboard.js file or create a new quotes.js file
-
 class QuoteWidget {
     constructor() {
         this.currentQuote = null;
@@ -16,7 +14,6 @@ class QuoteWidget {
     }
 
     createQuoteWidget() {
-        // Create the quote widget HTML
         const quoteWidgetHTML = `
             <div id="quote-widget" class="quote-widget">
                 <div class="quote-content">
@@ -53,7 +50,6 @@ class QuoteWidget {
             </div>
         `;
 
-        // Insert the widget into the dashboard
         document.body.insertAdjacentHTML('beforeend', quoteWidgetHTML);
     }
 
@@ -64,7 +60,6 @@ class QuoteWidget {
         const refreshBtn = widget.querySelector('.quote-refresh');
         const autoToggleBtn = widget.querySelector('.quote-toggle');
 
-        // Toggle widget visibility
         toggleBtn.addEventListener('click', () => {
             this.toggleWidget();
         });
@@ -73,17 +68,14 @@ class QuoteWidget {
             this.hideWidget();
         });
 
-        // Refresh quote
         refreshBtn.addEventListener('click', () => {
             this.fetchRandomQuote();
         });
 
-        // Toggle auto-refresh
         autoToggleBtn.addEventListener('click', () => {
             this.toggleAutoRefresh();
         });
 
-        // Close on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.isVisible) {
                 this.hideWidget();
@@ -98,7 +90,6 @@ class QuoteWidget {
         const refreshBtn = document.querySelector('.quote-refresh i');
 
         try {
-            // Show loading state
             quoteText.innerHTML = `
                 <div class="quote-loading">
                     <div class="loading-spinner"></div>
@@ -108,11 +99,11 @@ class QuoteWidget {
             quoteAuthor.textContent = '';
             quoteTags.innerHTML = '';
 
-            // Add spinning animation to refresh button
             refreshBtn.classList.add('fa-spin');
 
-            const response = await fetch('https://api.quotable.io/random');
-            const quote = await response.json();
+            const response = await fetch('/PackTrack/backend/api/random/quotes.json');
+            const allQuotes = await response.json();
+            const quote = allQuotes[Math.floor(Math.random() * allQuotes.length)];
 
             if (quote.content) {
                 this.currentQuote = quote;
@@ -124,7 +115,6 @@ class QuoteWidget {
             console.error('Error fetching quote:', error);
             this.displayError();
         } finally {
-            // Remove spinning animation
             setTimeout(() => {
                 refreshBtn.classList.remove('fa-spin');
             }, 500);
@@ -136,14 +126,12 @@ class QuoteWidget {
         const quoteAuthor = document.querySelector('.quote-author');
         const quoteTags = document.querySelector('.quote-tags');
 
-        // Animate quote appearance
         quoteText.style.opacity = '0';
 
         setTimeout(() => {
             quoteText.innerHTML = `"${quote.content}"`;
             quoteAuthor.textContent = `— ${quote.author}`;
 
-            // Display tags
             if (quote.tags && quote.tags.length > 0) {
                 quoteTags.innerHTML = quote.tags.map(tag =>
                     `<span class="quote-tag">${tag}</span>`
@@ -187,7 +175,6 @@ class QuoteWidget {
     }
 
     startAutoRefresh() {
-        // Refresh quote every 10 seconds
         this.autoRefreshInterval = setInterval(() => {
             this.fetchRandomQuote();
         }, 20000); // 20 seconds
@@ -207,22 +194,6 @@ class QuoteWidget {
             autoToggleBtn.classList.add('fa-play');
         }
     }
-}
-
-// Initialize Quote Widget
-function initializeQuoteWidget() {
-    // Add styles to the page
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = quoteWidgetStyles;
-
-    // Check if styles already exist
-    if (!document.getElementById('quote-widget-styles')) {
-        styleSheet.id = 'quote-widget-styles';
-        document.head.appendChild(styleSheet);
-    }
-
-    // Initialize the quote widget
-    new QuoteWidget();
 }
 
 // CSS Styles - Add this to your style.css file
@@ -422,9 +393,7 @@ body.light .quote-content {
 }
 `;
 
-// Initialize the quote widget when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Add styles to the page
     const styleSheet = document.createElement('style');
     styleSheet.textContent = quoteWidgetStyles;
     document.head.appendChild(styleSheet);
@@ -432,7 +401,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new QuoteWidget();
 });
 
-// Export for use in dashboard.js
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = QuoteWidget;
 }
