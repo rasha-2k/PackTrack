@@ -1,5 +1,5 @@
 /*=========================== charts ===========================*/
-let deliveryStatusChart;
+let deliveryOverviewChart;
 let deliveryTrendChart;
 let packageCategoryChart
 let statusByTimeChart
@@ -7,8 +7,8 @@ let statusByTimeChart
 document.addEventListener('DOMContentLoaded', () => {
     initGeneralFunctionalities();
 
-    if (deliveryStatusChart) {
-        deliveryStatusChart.destroy();
+    if (deliveryOverviewChart) {
+        deliveryOverviewChart.destroy();
     }
     if (deliveryTrendChart) {
         deliveryTrendChart.destroy();
@@ -41,6 +41,11 @@ function initGeneralFunctionalities() {
         });
     }
 
+    // Initialize Add Package Modal
+    if (typeof loadAddPackageModal === 'function') {
+        loadAddPackageModal();
+    }
+
     // Search functionality
     const searchInput = document.querySelector('.search-bar input');
     if (searchInput) {
@@ -63,18 +68,32 @@ function initGeneralFunctionalities() {
 
 }
 
+async function fetchChartData(endpoint, params = {}) {
+    try {
+        const queryString = new URLSearchParams(params).toString();
+        const response = await fetch(`../../backend/api/admin/charts/${endpoint}?${queryString}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching chart data:', error);
+        return null;
+    }
+}
+
 function initAdminCharts() {
     const isDarkMode = document.body.classList.contains('dark');
     const DataPointBorderColor = isDarkMode ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)';
     const options = getChartOptions(isDarkMode);
 
-    const deliveryStatusCtx = document.getElementById('deliveryStatusChart').getContext('2d');
-    deliveryStatusChart = new Chart(deliveryStatusCtx, {
+    const deliveryOverviewCtx = document.getElementById('deliveryOverviewChart').getContext('2d');
+    deliveryOverviewChart = new Chart(deliveryOverviewCtx, {
         type: 'bar',
         data: {
-            labels: ['Received', 'Delivered', 'Delayed', 'Canceled'],
+            labels: ['Received', 'Delivered', 'Delayed', 'Cancelled'],
             datasets: [{
-                data: [5, 8, 3, 1],
+                data: [0, 0, 0, 0],
                 backgroundColor: [
                     'rgba(16, 185, 129, 0.8)',
                     'rgba(59, 130, 246, 0.8)',
@@ -105,29 +124,83 @@ function initAdminCharts() {
     deliveryTrendChart = new Chart(deliveryTrendCtx, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [
-                {
-                    data: [20, 40, 37, 59, 31, 25, 35, 45, 88, 50, 60, 45],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointBorderColor: DataPointBorderColor,
-                    pointHoverBorderColor: DataPointBorderColor,
-                    pointBorderWidth: 2,
-                    pointHoverBorderWidth: 2,
-                    pointHoverRadius: 6,
-                    pointBackgroundColor: '#3b82f6',
-                    pointHoverBackgroundColor: '#3b82f6',
-                }]
+            labels: [],
+            datasets: [{
+                label: 'Deliveries', data: [],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBorderColor: isDarkMode ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)',
+                pointHoverBorderColor: isDarkMode ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)',
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#3b82f6',
+                pointHoverBackgroundColor: '#3b82f6',
+            },
+            {
+                label: 'Canceled',
+                data: [],
+                borderColor: '#ef4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBorderColor: DataPointBorderColor,
+                pointHoverBorderColor: DataPointBorderColor,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#ef4444',
+                pointHoverBackgroundColor: '#ef4444',
+            },
+            {
+                label: 'Received',
+                data: [],
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBorderColor: DataPointBorderColor,
+                pointHoverBorderColor: DataPointBorderColor,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#10b981',
+                pointHoverBackgroundColor: '#10b981',
+            },
+            {
+                label: 'Delayed',
+                data: [],
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBorderColor: DataPointBorderColor,
+                pointHoverBorderColor: DataPointBorderColor,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#f59e0b',
+                pointHoverBackgroundColor: '#f59e0b',
+            }
+
+            ]
         },
         options: {
             ...options,
             plugins: {
+                ...options.plugins,
                 legend: {
+                    ...options.plugins.legend,
                     display: false
                 },
                 tooltip: {
@@ -142,9 +215,9 @@ function initAdminCharts() {
     packageCategoryChart = new Chart(packageCategoryCtx, {
         type: 'pie',
         data: {
-            labels: ['Fragile', 'Non-Fragile', 'Perishable', 'Heavy'],
+            labels: [],
             datasets: [{
-                data: [25, 35, 20, 20],
+                data: [],
                 backgroundColor: [
                     'rgba(16, 185, 129, 0.8)',
                     'rgba(59, 130, 246, 0.8)',
@@ -181,10 +254,10 @@ function initAdminCharts() {
     statusByTimeChart = new Chart(statusByTimeCtx, {
         type: 'line',
         data: {
-            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Saturday'],
+            labels: [],
             datasets: [{
                 label: 'Received',
-                data: [5, 8, 7, 6, 9, 4],
+                data: [],
                 backgroundColor: 'rgba(16, 185, 129, 0.1)',
                 borderColor: '#10b981',
                 fill: true,
@@ -200,7 +273,7 @@ function initAdminCharts() {
                 pointHoverBackgroundColor: '#10b981',
             }, {
                 label: 'Delivered',
-                data: [2, 4, 4, 3, 6, 3],
+                data: [],
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 borderColor: '#3b82f6',
                 fill: true,
@@ -217,7 +290,7 @@ function initAdminCharts() {
             },
             {
                 label: 'Delayed',
-                data: [14, 4, 8, 6, 5, 2],
+                data: [],
                 backgroundColor: 'rgba(245, 158, 11, 0.1)',
                 borderColor: '#f59e0b',
                 fill: true,
@@ -234,7 +307,7 @@ function initAdminCharts() {
             },
             {
                 label: 'Canceled',
-                data: [4, 7, 9, 5, 6, 8],
+                data: [],
                 backgroundColor: 'rgba(239, 68, 68, 0.1)',
                 borderColor: '#ef4444',
                 fill: true,
@@ -251,120 +324,174 @@ function initAdminCharts() {
             }]
         },
         options: {
-            ...options
+            ...options,
+            plugins: {
+                ...options.plugins,
+                legend: {
+                    ...options.plugins.legend,
+                    display: true
+                },
+                tooltip: {
+                    padding: 12,
+                    cornerRadius: 6,
+                }
+            },
         }
-    });
+    });    // Initial data load
+    updatedeliveryOverviewChart();
+    updateStatusByTimeChart('month');
+    updateDeliveryTrendsChart('month');
+    updatePackageCategoryChart('month');
 
-
-    function updateDeliveryStatusChart(timePeriod) {
-        let newData = [];
-        if (timePeriod === 'Daily') {
-            newData = [5, 2, 3, 1];
-        } else if (timePeriod === 'Weekly') {
-            newData = [15, 8, 5, 1];
-        } else {
-            newData = [60, 40, 30, 20];
-        }
-
-        deliveryStatusChart.data.datasets[0].data = newData;
-        deliveryStatusChart.update();
-    }
-    document.getElementById('statusDailyButton').addEventListener('click', () => {
-        updateDeliveryStatusChart('Daily');
-        setActiveButton('statusDailyButton');
-    });
-    document.getElementById('statusWeeklyButton').addEventListener('click', () => {
-        updateDeliveryStatusChart('Weekly');
-        setActiveButton('statusWeeklyButton');
-    });
-    document.getElementById('statusMonthlyButton').addEventListener('click', () => {
-        updateDeliveryStatusChart('Monthly');
-        setActiveButton('statusMonthlyButton');
-    });
-
-
-    function updateStatusByTimeChart(week) {
-        let newData = [[4, 8, 7, 3, 6, 2], [2, 4, 7, 9, 6, 3], [4, 7, 9, 4, 5, 8,], [3, 6, 8, 5, 7, 4]];
-        if (week === 1) {
-            newData = [[6, 7, 8, 4, 5, 6], [3, 1, 2, 4, 3, 1], [7, 6, 5, 3, 4, 3], [2, 4, 5, 3, 6, 7]];
-        } else if (week === 2) {
-            newData = [[5, 8, 2, 5, 6, 8], [8, 2, 4, 5, 3, 1], [6, 2, 4, 5, 3, 1], [4, 5, 6, 7, 8, 9]];
-        } else {
-            newData = [[6, 9, 8, 5, 7, 4], [4, 3, 2, 1, 5, 6], [7, 8, 9, 6, 5, 4], [3, 2, 1, 4, 5, 6]];
-        }
-
-        statusByTimeChart.data.datasets[0].data = newData[0];
-        statusByTimeChart.data.datasets[1].data = newData[1];
-        statusByTimeChart.data.datasets[2].data = newData[2];
-        statusByTimeChart.data.datasets[3].data = newData[3];
-        statusByTimeChart.update();
-    }
     document.getElementById('timeWeek1Button').addEventListener('click', () => {
-        updateStatusByTimeChart(1);
+        updateStatusByTimeChart('week');
         setActiveButton('timeWeek1Button');
     });
     document.getElementById('timeWeek2Button').addEventListener('click', () => {
-        updateStatusByTimeChart(2);
+        updateStatusByTimeChart('month');
         setActiveButton('timeWeek2Button');
     });
     document.getElementById('timeWeek3Button').addEventListener('click', () => {
-        updateStatusByTimeChart(3);
+        updateStatusByTimeChart('year');
         setActiveButton('timeWeek3Button');
     });
 
-
-    function updateDeliveryTrendChart(period) {
-        let newLabels = [];
-        let newData = [];
-
-        if (period === 'Week') {
-            newLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-            newData = [10, 12, 9, 14, 16, 8, 7];
-        } else if (period === 'Year') {
-            newLabels = ['2021', '2022', '2023', '2024'];
-            newData = [157, 443, 500, 829];
-        } else {
-            newLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            newData = [20, 40, 37, 59, 31, 25, 35, 45, 88, 50, 60, 45];
-        }
-
-        deliveryTrendChart.data.labels = newLabels;
-        deliveryTrendChart.data.datasets[0].data = newData;
-        deliveryTrendChart.update();
-    }
-    document.getElementById('trendWeekButton').addEventListener('click', () => {
-        updateDeliveryTrendChart('Week');
-        setActiveButton('trendWeekButton');
-    });
+    // document.getElementById('trendWeekButton').addEventListener('click', () => {
+    //     updateDeliveryTrendsChart('week');
+    //     setActiveButton('trendWeekButton');
+    // });
     document.getElementById('trendMonthButton').addEventListener('click', () => {
-        updateDeliveryTrendChart('Month');
+        updateDeliveryTrendsChart('month');
         setActiveButton('trendMonthButton');
     });
     document.getElementById('trendYearButton').addEventListener('click', () => {
-        updateDeliveryTrendChart('Year');
+        updateDeliveryTrendsChart('year');
         setActiveButton('trendYearButton');
     });
 
-    function updatePackageCategoryChart(category) {
-        let newData = [];
-        if (category === 'Fragile') {
-            newData = [80, 20];
-        } else {
-            newData = [25, 35, 20, 20];
-        }
-
-        packageCategoryChart.data.datasets[0].data = newData;
-        packageCategoryChart.update();
-    }
     document.getElementById('categoryFragileButton').addEventListener('click', () => {
-        updatePackageCategoryChart('Fragile');
+        updatePackageCategoryChart('week');
         setActiveButton('categoryFragileButton');
     });
     document.getElementById('categoryAllButton').addEventListener('click', () => {
-        updatePackageCategoryChart('All Categories');
+        updatePackageCategoryChart('month');
         setActiveButton('categoryAllButton');
     });
+}
 
+async function updatedeliveryOverviewChart() {
+    const data = await fetchChartData('delivery-overview.php');
+    if (data) {
+        const statusData = data.data;
+        deliveryOverviewChart.data.datasets[0].data = [
+            statusData.received || 0,
+            statusData.delivered || 0,
+            statusData.delayed || 0,
+            statusData.cancelled || 0
+        ];
+        deliveryOverviewChart.update();
+    }
+}
+
+async function updateStatusByTimeChart(period) {
+    const data = await fetchChartData('status-by-time.php', { mode: period });
+    if (data) {
+        const timeData = data.data;
+        statusByTimeChart.data.labels = timeData.labels;
+        statusByTimeChart.data.datasets[0].data = timeData.received;
+        statusByTimeChart.data.datasets[1].data = timeData.delivered;
+        statusByTimeChart.data.datasets[2].data = timeData.delayed;
+        statusByTimeChart.data.datasets[3].data = timeData.canceled;
+        statusByTimeChart.update();
+    }
+}
+
+async function updateDeliveryTrendsChart(period) {
+    const data = await fetchChartData('delivery-trends.php', { range: period });
+    if (data && data.data) {
+        const trendData = data.data;
+        deliveryTrendChart.data.labels = trendData.labels; 
+        const isDarkMode = document.body.classList.contains('dark');
+        const DataPointBorderColor = isDarkMode ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)';
+        deliveryTrendChart.data.datasets = [
+            {
+                label: 'Total Packages',
+                data: trendData.total,
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#3b82f6',
+                pointHoverBackgroundColor: '#3b82f6',
+                pointBorderColor: DataPointBorderColor,
+                pointHoverBorderColor: DataPointBorderColor,
+            }, {
+                label: 'Delivered',
+                data: trendData.delivered,
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#10b981',
+                pointHoverBackgroundColor: '#10b981',
+                pointBorderColor: DataPointBorderColor,
+                pointHoverBorderColor: DataPointBorderColor,
+            }, {
+                label: 'Received',
+                data: trendData.received,
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#f59e0b',
+                pointHoverBackgroundColor: '#f59e0b',
+                pointBorderColor: DataPointBorderColor,
+                pointHoverBorderColor: DataPointBorderColor,
+            }, {
+                label: 'Delayed',
+                data: trendData.delayed,
+                borderColor: '#ef4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#ef4444',
+                pointHoverBackgroundColor: '#ef4444',
+                pointBorderColor: DataPointBorderColor,
+                pointHoverBorderColor: DataPointBorderColor,
+            }
+        ];
+        deliveryTrendChart.update();
+    }
+}
+
+async function updatePackageCategoryChart(period) {
+    const data = await fetchChartData('categories.php', { mode: period });
+    if (data) {
+        const categoryData = data.data;
+        packageCategoryChart.data.labels = categoryData.labels;
+        packageCategoryChart.data.datasets[0].data = categoryData.counts;
+        packageCategoryChart.update();
+    }
 }
 
 function updateAdminChartsTheme() {
@@ -380,15 +507,15 @@ function updateAdminChartsTheme() {
         bodyColor: isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
     };
 
-    if (deliveryStatusChart) {
-        deliveryStatusChart.options.plugins.legend.labels.color = textColor;
-        deliveryStatusChart.options.plugins.tooltip = tooltipSettings;
-        deliveryStatusChart.options.scales.x.grid.color = gridColor;
-        deliveryStatusChart.options.scales.x.ticks.color = textColor;
-        deliveryStatusChart.options.scales.y.grid.color = gridColor;
-        deliveryStatusChart.options.scales.y.ticks.color = textColor;
-        deliveryStatusChart.options.plugins.legend.labels.strokeStyle = legendColor;
-        deliveryStatusChart.update();
+    if (deliveryOverviewChart) {
+        deliveryOverviewChart.options.plugins.legend.labels.color = textColor;
+        deliveryOverviewChart.options.plugins.tooltip = tooltipSettings;
+        deliveryOverviewChart.options.scales.x.grid.color = gridColor;
+        deliveryOverviewChart.options.scales.x.ticks.color = textColor;
+        deliveryOverviewChart.options.scales.y.grid.color = gridColor;
+        deliveryOverviewChart.options.scales.y.ticks.color = textColor;
+        deliveryOverviewChart.options.plugins.legend.labels.strokeStyle = legendColor;
+        deliveryOverviewChart.update();
     }
 
     if (deliveryTrendChart) {
@@ -399,10 +526,11 @@ function updateAdminChartsTheme() {
         deliveryTrendChart.options.scales.y.grid.color = gridColor;
         deliveryTrendChart.options.scales.y.ticks.color = textColor;
         deliveryTrendChart.data.datasets[0].pointBorderColor = DataPointBorderColor;
+        deliveryTrendChart.data.datasets[1].pointBorderColor = DataPointBorderColor;
+        deliveryTrendChart.data.datasets[2].pointBorderColor = DataPointBorderColor;
+        deliveryTrendChart.data.datasets[3].pointBorderColor = DataPointBorderColor;
         deliveryTrendChart.update();
     }
-
-
 
     if (packageCategoryChart) {
         packageCategoryChart.options.plugins.legend.labels.color = textColor;
