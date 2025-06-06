@@ -3,7 +3,8 @@ class Sidebar {
         this.user = JSON.parse(localStorage.getItem('user'));
         this.menuItems1 = {
             admin: [
-                { icon: 'fas fa-tachometer-alt', text: 'Dashboard', link: 'admin-panel.html' },
+                { icon: 'fas fa-tachometer-alt', text: 'Admin Panel', link: 'admin-panel.html' },
+                { icon: 'fas fa-tachometer-alt', text: 'Dashboard', link: 'dashboard.html' },
                 { icon: 'fas fa-users', text: 'User Management', link: 'users.html' },
                 { icon: 'fas fa-box', text: 'All Packages', link: 'packages.html' },
                 { icon: 'fas fa-chart-bar', text: 'Reporting', link: 'reporting.html' },
