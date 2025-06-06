@@ -25,9 +25,7 @@ switch ($mode) {
                 FROM deliveries 
                 WHERE delivered_at IS NOT NULL AND status = 'Delivered'
                 GROUP BY combined_label, week_num
-                
                 UNION ALL
-                
                 SELECT 
                     'received' as type, 
                     CONCAT('Week ', CASE 
@@ -60,9 +58,7 @@ switch ($mode) {
                 AND YEAR(delivered_at) IS NOT NULL
                 AND status = 'Delivered'
                 GROUP BY YEAR(delivered_at)
-                
                 UNION ALL
-                
                 SELECT 'received' as type, YEAR(received_at) as year, COUNT(*) as count
                 FROM deliveries 
                 WHERE received_at IS NOT NULL 
@@ -91,9 +87,7 @@ switch ($mode) {
             FROM deliveries 
             WHERE delivered_at IS NOT NULL AND status = 'Delivered'
             GROUP BY MONTH(delivered_at), month_label
-            
             UNION ALL
-            
             SELECT 
                 'received' as type, 
                 MONTH(received_at) as month_num, 
