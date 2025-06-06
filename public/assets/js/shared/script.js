@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const state = document.readyState;
         if (state === 'interactive') {
             loadEl.style.display = "flex";
-            fetch('/PackTrack/frontend/views/shared/loading.html')
+            fetch('/PackTrack/public/views/shared/loading.html')
                 .then(response => response.text())
                 .then(html => {
                     loadEl.innerHTML = html;
@@ -112,7 +112,7 @@ function loadAddPackageModal() {
 
     btn.addEventListener('click', async () => {
         if (!container.innerHTML.trim()) {
-            const response = await fetch('/frontend/views/shared/add-package-modal.html');
+            const response = await fetch('/public/views/shared/add-package-modal.html');
             const html = await response.text();
             container.innerHTML = html;
 

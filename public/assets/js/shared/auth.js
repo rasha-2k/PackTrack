@@ -2,7 +2,7 @@
 function checkAuth() {
     const token = localStorage.getItem("token");
     if (!token) {
-        window.location.href = "/PackTrack/frontend/views/errors/403.html";
+        window.location.href = "/PackTrack/public/views/errors/403.html";
         // alert("You must be logged in.");
         // return false;
     }
@@ -10,7 +10,7 @@ function checkAuth() {
     try {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user) {
-            window.location.href = "/PackTrack/frontend/views/errors/403.html";
+            window.location.href = "/PackTrack/public/views/errors/403.html";
             // alert("User data is missing.");
             // return false;
         }
@@ -39,7 +39,7 @@ async function checkPageAccess(page) {
         });
 
         if (response.status === 403 || response.status === 401) {
-            window.location.href = "/PackTrack/frontend/views/errors/403.html";
+            window.location.href = "/PackTrack/public/views/errors/403.html";
         } else if (response.ok) {
             return await response.json();
         } else {

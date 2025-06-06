@@ -81,15 +81,15 @@ try {
         ]);
     } else {
         // sendError("Registration failed", 500);
-        header('Location: /PackTrack/frontend/views/errors/500.html');
+        header('Location: /PackTrack/public/views/errors/500.html');
         exit();
     }
 } catch (PDOException $e) {
     // sendError("Database error: " . $e->getMessage(), 500);
-    header('Location: /PackTrack/frontend/views/errors/500.html');
+    header('Location: /PackTrack/public/views/errors/500.html');
     exit();
 } catch (Exception $e) {
     // sendError("Server error: " . $e->getMessage(), 500);
-    header('Location: /PackTrack/frontend/views/errors/500.html');
+    header('Location: /PackTrack/public/views/errors/500.html');
     exit();
 }

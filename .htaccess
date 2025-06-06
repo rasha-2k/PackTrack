@@ -2,19 +2,19 @@ RewriteEngine On
 
 RewriteBase /
 
-ErrorDocument 404 /PackTrack/frontend/views/errors/404.html
-ErrorDocument 403 /PackTrack/frontend/views/errors/403.html
-ErrorDocument 500 /PackTrack/frontend/views/errors/500.html
+ErrorDocument 404 /PackTrack/public/views/errors/404.html
+ErrorDocument 403 /PackTrack/public/views/errors/403.html
+ErrorDocument 500 /PackTrack/public/views/errors/500.html
 
-<Files "/PackTrack/frontend/views/errors/404.html">
+<Files "/PackTrack/public/views/errors/404.html">
     Require all granted
 </Files>
 
-<Files "/PackTrack/frontend/views/errors/403.html">
+<Files "/PackTrack/public/views/errors/403.html">
     Require all granted
 </Files>
 
-<Files "/PackTrack/frontend/views/errors/500.html">
+<Files "/PackTrack/public/views/errors/500.html">
     Require all granted
 </Files>
 

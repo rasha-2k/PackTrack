@@ -35,7 +35,7 @@ async function setupForm(formSelector, action) {
         } catch (err) {
             console.error(`${action} error:`, err);
             showNotification("A server error occurred.", "error");
-            window.location.href = "/PackTrack/frontend/views/errors/500.html";
+            window.location.href = "/PackTrack/public/views/errors/500.html";
         }
     });
 }

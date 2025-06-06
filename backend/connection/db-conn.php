@@ -24,6 +24,6 @@ try {
     // echo json_encode(["success" => true, "message" => "Connected to the database!"]);
 } catch (PDOException $e) {
     // sendError("Database connection failed: " . $e->getMessage(), 500);
-    header('Location: /PackTrack/frontend/views/errors/500.html');
+    header('Location: /PackTrack/public/views/errors/500.html');
     exit();
 }

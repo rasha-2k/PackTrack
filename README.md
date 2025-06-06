@@ -106,11 +106,12 @@ PackTrack/
 │   │   └── protectedRoute.php
 │   ├── auth/
 │   │   ├── login.php
+│   │   ├── logout.php
 │   │   ├── register.php
 │   │   └── TokenValidator.php
 │   ├── connection/ 
 │   │   └── db-conn.php
-│   ├── database/
+│   ├── data/
 │   │   ├── MOCK_Deliveries_DATA.csv
 │   │   ├── MOCK_Users_DATA.csv
 │   │   └── PackTrackDB_users.sql
@@ -123,20 +124,20 @@ PackTrack/
 │   ├── middlewares/
 │   │    └── authMiddleware.php
 │   └── composer.json
-├── frontend/ 
+├── public/ 
 │   ├── assets/ 
 │   │   ├── css/  
-│   │   │   ├── loading.css
 │   │   │   └── style.css
 │   │   └── js/ 
 │   │       ├── shared/
-│   │       │   └── notification.js
+│   │       │   ├── auth.js
+│   │       │   ├── backend-conn.js
+│   │       │   ├── notification.js
+│   │       │   ├── quotes.js
+│   │       │   ├── script.js
+│   │       │   └── style-switcher.js
 │   │       ├── admin.js
-│   │       ├── auth.js
-│   │       ├── backend-conn.js
-│   │       ├── dashboard.js
-│   │       ├── script.js
-│   │       └── style-switcher.js
+│   │       └── dashboard.js
 │   ├── views/
 │   │   ├── errors/
 │   │   │   ├── 403.html
@@ -194,14 +195,14 @@ cp .env.example .env
     - **JWT secret**: **Other API keys** (optional for tracking or quotes API)
 3. **Database Set Up**
     - Configure your PHP/Apache local server 
-    - Locate the `PackTrackDB_users.sql` file inside the `database/` folder. 
+    - Locate the `PackTrackDB_users.sql` file inside the `data/` folder. 
     - Import the SQL file into your local MySQL database using the following command:
 ```bash
-mysql -u root -p PackTrackDB < database/PackTrackDB_users.sql
+mysql -u root -p PackTrackDB < data/PackTrackDB_users.sql
 ```
  
 4. **Start Frontend**
-    - Start from [index.html](http://localhost/frontend/views/index.html) (Login Page)
+    - Start from [index.html](http://localhost/public/views/index.html) (Login Page)
 
 ### 🐳 Optional: Docker Setup 
 
@@ -233,7 +234,7 @@ CONTAINER ID   IMAGE           COMMAND        STATUS          PORTS             
 224b91db57c7   mysql:8.0       "docker-entry" Up 49 minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   packtrack-db-1
 ```
 
-3. Access the app at [http://localhost:8080/frontend/views/index.html](http://localhost:8080/frontend/views/index.html)
+3. Access the app at [http://localhost:8080/public/views/index.html](http://localhost:8080/public/views/index.html)
 
 ---
 

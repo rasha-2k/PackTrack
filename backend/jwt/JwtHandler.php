@@ -25,7 +25,7 @@ class JwtHandler
         self::$secretKey = $_ENV['JWT_SECRET'] ?? null;
 
         if (empty(self::$secretKey)) {
-            header('Location: /PackTrack/frontend/views/errors/500.html');
+            header('Location: /PackTrack/public/views/errors/500.html');
             exit();
         }
     }
