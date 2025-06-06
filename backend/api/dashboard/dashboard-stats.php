@@ -4,10 +4,16 @@ require_once __DIR__ . "/../../connection/db-conn.php";
 
 try {
     // Current and last month date ranges
+    /*
     $thisMonthStart = date('Y-m-01');
     $thisMonthEnd = date('Y-m-t');
     $lastMonthStart = date('Y-m-01', strtotime('-1 month'));
-    $lastMonthEnd = date('Y-m-t', strtotime('-1 month'));
+    $lastMonthEnd = date('Y-m-t', strtotime('-1 month'));*/
+
+    $thisMonthStart = date('2025-05-01');
+    $thisMonthEnd = date('2025-05-30');
+    $lastMonthStart = date('2025-06-01');
+    $lastMonthEnd = date('2025-06-30');
 
     function percentChange($current, $previous)
     {
@@ -50,11 +56,11 @@ try {
     $lastMonthTotal = $stmt->fetchColumn();
 
     // Status breakdowns using correct columns
-    $received = countByStatusAndDate($pdo, 'Received', 'received_at', $thisMonthStart, $thisMonthEnd);
-    $lastMonthReceived = countByStatusAndDate($pdo, 'Received', 'received_at', $lastMonthStart, $lastMonthEnd);
+    $received = countByStatusAndDate($pdo, 'Received', 'updated_at', $thisMonthStart, $thisMonthEnd);
+    $lastMonthReceived = countByStatusAndDate($pdo, 'Received', 'updated_at', $lastMonthStart, $lastMonthEnd);
 
-    $delivered = countByStatusAndDate($pdo, 'Delivered', 'delivered_at', $thisMonthStart, $thisMonthEnd);
-    $lastMonthDelivered = countByStatusAndDate($pdo, 'Delivered', 'delivered_at', $lastMonthStart, $lastMonthEnd);
+    $delivered = countByStatusAndDate($pdo, 'Delivered', 'updated_at', $thisMonthStart, $thisMonthEnd);
+    $lastMonthDelivered = countByStatusAndDate($pdo, 'Delivered', 'updated_at', $lastMonthStart, $lastMonthEnd);
 
     $delayed = countByStatusAndDate($pdo, 'Delayed', 'updated_at', $thisMonthStart, $thisMonthEnd);
     $lastMonthDelayed = countByStatusAndDate($pdo, 'Delayed', 'updated_at', $lastMonthStart, $lastMonthEnd);
