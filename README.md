@@ -6,42 +6,36 @@
 
 ---
 
-# 📦 PackTrack
+# PackTrack
 
 > **PackTrack** is a lightweight web-based application designed to help users organize and track their personal deliveries in one centralized platform. It streamlines delivery tracking, provides packaging tips, and adds a fun touch with motivational quotes.
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 
-1. [Problem Statement](#-problem-statement)
-2. [Roles & Contributions](#-roles--contributions)
-3. [Tech Stack](#-tech-stack)
-4. [Core Features](#-core-features)
-
-   * [User Features](#-user-features)
-   * [Admin Features](#-admin-features)
-   * [Add-on Dashboard Charts](#-add-on-dashboard-charts)
-5. [Project Structure](#-project-structure)
-6. [User Interface](#-user-interface)
-7. [Setup Instructions](#️-setup-instructions)
-
-   * [Local Setup](#-local-setup)
-   * [Docker Setup](#-optional-docker-setup)
-8. [Environment Variables](#-environment-variables)
-9. [DevOps & CI/CD](#-devops--cicd)
-10. [Contact](#-contact)
-11. [Contributors](#-contributors)
+1. [Problem Statement](#problem-statement)  
+2. [Tech Stack](#tech-stack)  
+3. [Core Features](#core-features)   
+4. [Project Structure](#project-structure)  
+5. [User Interface](#user-interface)  
+6. [Setup Instructions](#setup-instructions)  
+   - [Local Setup](#local-setup)  
+   - [Docker Setup](#docker-setup)  
+7. [Environment Variables](#environment-variables)  
+8. [DevOps & CI/CD](#devops--cicd)  
+9. [Contact](#contact)  
+10. [Contributors](#contributors)
 
 ---
 
-## 📌 Problem Statement
+## Problem Statement
 
 Managing online deliveries is often chaotic—tracking numbers are scattered across emails and SMS, leading to missed deliveries and confusion. **PackTrack** solves this with a centralized dashboard, real-time status tracking, and insightful packaging tips.
-
+<!-- 
 ---
 
-## 👥 Roles & Contributions  
+## Roles & Contributions  
 
 Each team member contributed to different aspects of the project, ensuring a well-rounded and structured development process.  
 
@@ -49,12 +43,12 @@ Each team member contributed to different aspects of the project, ensuring a wel
 |--------------------|----------------------------------------------------------------------------------|
 | **All Members**    | Planning & Requirement Gathering, Class Diagram                                  |
 | **Rasha Al-Saleh** | Problem Statement, Business Case, Scope & Goals, UI Mockups, System Architecture |
-| **Sdra Awameh**    | SDLC Model, Gantt Chart                                        |
-| **Dalaa Saqer**    | Functional Requirements, System Use Case Diagram               |
+| **Sdra Awameh**    | SDLC Model, Gantt Chart                                                          |
+| **Dalaa Saqer**    | Functional Requirements, System Use Case Diagram                                 | -->
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer          | Technologies                    |
 |----------------|---------------------------------|
@@ -67,7 +61,7 @@ Each team member contributed to different aspects of the project, ensuring a wel
 
 ---
 
-## 🔥 Core Features
+## Core Features
 
 ### User Features
 
@@ -87,14 +81,9 @@ Each team member contributed to different aspects of the project, ensuring a wel
 - **User Management (Add/Remove Users)**
 <!-- - **Generate Reports (Export as PDF)** -->
 
-### Add-on Dashboard Charts
-- **Delivery Status Summary**
-- **Monthly Delivery Trends**
-- **Top Couriers Used**
-
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 PackTrack/ 
@@ -189,7 +178,7 @@ PackTrack/
 
 ---
 
-## 📸 User Interface
+## User Interface
 
 This section provides a visual overview of PackTrack’s user interface. Each screen has been designed to be clean, responsive, and highly functional with a modern dashboard layout that ensures great UX and security.
 
@@ -197,7 +186,7 @@ This section provides a visual overview of PackTrack’s user interface. Each sc
 
 ### Figure 1: Login Form (JWT-Based Authentication)
 <p align="left">
-  <img src="documents/images/UI/Login.png" alt="Login Form" width="1000"/>
+  <img src="/Documents/images/UI/Login.png" alt="Login Form"  style="max-width: 100%; height: auto;" />
 </p>
 
 A sleek, minimalist login screen for both Users and Admins.  
@@ -209,7 +198,7 @@ A sleek, minimalist login screen for both Users and Admins.
 
 ### Figure 2: Registration Form with Role-Based Access
 <p align="left">
-  <img src="documents/images/UI/Register.png" alt="Registration Form" width="1000"/>
+  <img src="/Documents/images/UI/Register.png" alt="Registration Form"  style="max-width: 100%; height: auto;" />
 </p>
 
 A role-aware signup form supporting User and Admin registration.  
@@ -220,7 +209,7 @@ A role-aware signup form supporting User and Admin registration.
 
 ### Figure 3: User Dashboard
 <p align="left">
-  <img src="documents/images/UI/Dashboard.png" alt="User Dashboard" width="1000"/>
+  <img src="/Documents/images/UI/Dashboard.png" alt="User Dashboard"  style="max-width: 100%; height: auto;" />
 </p>
 
 A powerful dashboard for regular users to monitor deliveries.  
@@ -234,7 +223,7 @@ A powerful dashboard for regular users to monitor deliveries.
 
 ### Figure 4: Add New Package Modal  
 <p align="left">
-  <img src="documents/images/UI/Add Package Modal.png" alt="Add Package Modal" width="1000"/>
+  <img src="/Documents/images/UI/Add Package Modal.png" alt="Add Package Modal"  style="max-width: 100%; height: auto;" />
 </p>
 
 This modal allows users to add new delivery records in a structured, user-friendly format.  
@@ -247,7 +236,7 @@ This modal allows users to add new delivery records in a structured, user-friend
 
 ### Figure 5: Admin Panel Overview
 <p align="left">
-  <img src="documents/images/UI/Admin Panel.png" alt="Admin Panel Overview" width="1000"/>
+  <img src="/Documents/images/UI/Admin Panel.png" alt="Admin Panel Overview"  style="max-width: 100%; height: auto;" />
 </p>
 
 Admin dashboard featuring full system oversight.  
@@ -259,7 +248,7 @@ Admin dashboard featuring full system oversight.
 
 ### Figure 6: Admin Panel (cont) & Recent Users Activity Log
 <p align="left">
-  <img src="documents/images/UI/Admin Panel&Users Log.png" alt="Admin Logs" width="1000"/>
+  <img src="/Documents/images/UI/Admin Panel&Users Log.png" alt="Admin Logs"  style="max-width: 100%; height: auto;" />
 </p>
 
 Detailed activity tracking and user management tools.  
@@ -270,7 +259,7 @@ Detailed activity tracking and user management tools.
 
 ### Figure 7: Daily Quote Widget
 <p align="left">
-  <img src="documents/images/UI/Daily Quote Widget.png" alt="Quote Widget" width="1000"/>
+  <img src="/Documents/images/UI/Daily Quote Widget.png" alt="Quote Widget"  style="max-width: 100%; height: auto;" />
 </p>
 
 A motivational widget embedded in the dashboard.  
@@ -282,7 +271,7 @@ A motivational widget embedded in the dashboard.
 
 ### Figure 8: Forbidden Access (403)
 <p align="left">
-  <img src="documents/images/UI/Forbidden (403).png" alt="403 Forbidden" width="1000"/>
+  <img src="/Documents/images/UI/Forbidden (403).png" alt="403 Forbidden"  style="max-width: 100%; height: auto;" />
 </p>
 
 Access denied screen when permissions are insufficient.  
@@ -293,7 +282,7 @@ Access denied screen when permissions are insufficient.
 
 ### Figure 9: Internal Server Error (500)
 <p align="left">
-  <img src="documents/images/UI/Internal Server Error (500).png" alt="500 Error" width="1000"/>
+  <img src="/Documents/images/UI/Internal Server Error (500).png" alt="500 Error"  style="max-width: 100%; height: auto;" />
 </p>
 
 Graceful error screen for backend/server failures.  
@@ -304,7 +293,7 @@ Graceful error screen for backend/server failures.
 
 ### Figure 10: Not Found (404)
 <p align="left">
-  <img src="documents/images/UI/Not Found (404).png" alt="404 Not Found" width="1000"/>
+  <img src="/Documents/images/UI/Not Found (404).png" alt="404 Not Found"  style="max-width: 100%; height: auto;" />
 </p>
 
 Displayed when users land on non-existent routes.  
@@ -315,7 +304,7 @@ Displayed when users land on non-existent routes.
 
 ### Figure 11: Loading Animation
 <p align="left">
-  <img src="documents/images/UI/Loading Animation.png" alt="Loading Screen" width="1000"/>
+  <img src="/Documents/images/UI/Loading Animation.png" alt="Loading Screen"  style="max-width: 100%; height: auto;" />
 </p>
 
 Animated loader shown during data fetch or navigation.  
@@ -328,7 +317,7 @@ Animated loader shown during data fetch or navigation.
 
 ---
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 ### Local Setup
 1. **Clone the Repository**
@@ -361,7 +350,7 @@ mysql -u root -p PackTrackDB < data/PackTrackDB_users.sql
 4. **Start Frontend**
     - Start from [index.html](http://localhost:8080/public/views/index.html) (Login Page)
 
-### Optional: Docker Setup 
+### Docker Setup 
 
 Instead of using a local server like XAMPP, use Docker for a consistent setup:
 
@@ -395,7 +384,7 @@ CONTAINER ID   IMAGE           COMMAND                  CREATED        STATUS   
 
 ---
 
-## 🌍 Environment Variables
+## Environment Variables
 ```env
 DB_HOST=db
 DB_PORT=3306
@@ -410,7 +399,7 @@ QUOTES_API_URL=https://api.quotable.io/random
 
 ---
 
-## 🚀 DevOps & CI/CD
+## DevOps & CI/CD
 
 - **Automated Build & Deployment** via GitHub Actions.
 - The `.github/workflows/ci-cd.yml` file defines the CI/CD steps, including:
@@ -422,13 +411,13 @@ QUOTES_API_URL=https://api.quotable.io/random
 
 ---
 
-## 📞 Contact
+## Contact
 > Email: [rasha.k.alsaleh@gmail.com](mailto:rasha.k.alsaleh@gmail.com) | LinkedIn: [@rasha-alsaleh](https://www.linkedin.com/in/rasha-alsaleh/) <br>
 > Email: [awamasdra@gmail.com](mailto:awamasdra@gmail.com) | LinkedIn: [@sdra-awameh](https://www.linkedin.com/in/sdra-awameh-3b1391326/) <br>
 > Email: [Saqerdalaa@gmail.com](mailto:Saqerdalaa@gmail.com) | LinkedIn: [@dalaa-saqer](https://www.linkedin.com/in/dalaa-saqer/)
 ---
 
-## 👥 Contributors
+## Contributors
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <a href="https://github.com/rasha-2k" style="text-decoration: none; display: flex; align-items: center;">
         <img src="https://github.com/rasha-2k.png" alt="@rasha-2k" title="@rasha-2k" width="100px" height="100px" style="border-radius: 50%; margin-right: 10px;">
