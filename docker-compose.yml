@@ -8,10 +8,10 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./backend:/var/www/html/PackTrack/backend
-      - .:/var/www/html/PackTrack
+      - .:/var/www/html/app
       - .:/var/www/html
-      - ./apache/apache.conf:/etc/apache2/sites-available/000-default.conf
+      - ./docker/apache/apache.conf:/etc/apache2/sites-available/000-default.conf 
+      - .env:/var/www/html/.env
     environment:
       - JWT_SECRET=${JWT_SECRET}
     depends_on:
@@ -34,6 +34,7 @@ services:
 
 networks:
   packtrack_network:
+    name: packtrack_network
     driver: bridge
 
 volumes:
