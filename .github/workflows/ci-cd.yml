@@ -24,7 +24,7 @@ jobs:
         ini-values: post_max_size=256M, max_execution_time=300
 
     - name: Install Composer dependencies
-      working-directory: backend
+      working-directory: app
       run: |
         curl -sS https://getcomposer.org/installer | php
         php composer.phar install
