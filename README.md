@@ -42,14 +42,14 @@ Each team member contributed to different aspects of the project, ensuring a wel
 - **Delivery Status Auto-Tracking** via Public API
 - **Eco-friendly packaging tips**
 - **Random Motivational Quotes**
-- **Export Delivery Logs as PDF**
+<!-- - **Export Delivery Logs as PDF** -->
 
 ### 🔧 Admin Features
 
 - **Admin Dashboard** for managing users & logs
 - **Manually / Automatically Update Delivery Status**
 - **User Management (Add/Remove Users)**
-- **Generate Reports (Export as PDF)**
+<!-- - **Generate Reports (Export as PDF)** -->
 
 ### 📊 Add-on Dashboard Charts
 - **Delivery Status Summary**
@@ -67,7 +67,7 @@ Each team member contributed to different aspects of the project, ensuring a wel
 | Database       | MySQL                           |
 | Authentication | JWT Tokens                      |
 | DevOps         | GitHub Actions, Docker          |
-| APIs Used      | TrackingMore API, Quotable API  |
+| APIs Used      | Quotable API                    |
 
 ---
 
@@ -85,16 +85,14 @@ PackTrack/
 ├── .github/ 
 │   └── workflows/ 
 │       └── ci-cd.yml 
-├── apache/ 
-│   └── apache.conf
-├── backend/ 
+├── app/ 
 │   ├── api/
 │   │   ├── admin/
 │   │   │   ├── charts/
 │   │   │   │   ├── categories.php
-│   │   │   │   ├── status-by-time.php
-│   │   │   │   ├── status.php
-│   │   │   │   └── trand.php
+│   │   │   │   ├── delivery-overview.php
+│   │   │   │   ├── delivery-trends.php
+│   │   │   │   └── status-by-time.php
 │   │   │   ├── admin-stats.php
 │   │   │   └── users-activity.php
 │   │   ├── dashboard/
@@ -102,6 +100,8 @@ PackTrack/
 │   │   │   │   ├── package-activity.php
 │   │   │   │   └── package-status.php
 │   │   │   └── dashboard-stats.php
+│   │   ├── random/
+│   │   │   └── quotes.json
 │   │   ├── check-access.php
 │   │   └── protectedRoute.php
 │   ├── auth/
@@ -111,6 +111,11 @@ PackTrack/
 │   │   └── TokenValidator.php
 │   ├── connection/ 
 │   │   └── db-conn.php
+│   ├── Core/
+│   │   ├── jwt/
+│   │   │   └── JwtHandler.php
+│   │   └── middlewares/
+│   │       └── authMiddleware.php
 │   ├── data/
 │   │   ├── MOCK_Deliveries_DATA.csv
 │   │   ├── MOCK_Users_DATA.csv
@@ -119,12 +124,14 @@ PackTrack/
 │   │   └── add-package.php
 │   ├── helpers/
 │   │   └── response.php
-│   ├── jwt/
-│   │   └── JwtHandler.php
-│   ├── middlewares/
-│   │    └── authMiddleware.php
 │   └── composer.json
-├── public/ 
+├── docker/ 
+│   └── Dockerfile
+├── Documents/
+│   ├── images/
+│   │   └── Diagrams/
+│   └── references/
+├── public
 │   ├── assets/ 
 │   │   ├── css/  
 │   │   │   └── style.css
@@ -138,36 +145,27 @@ PackTrack/
 │   │       │   └── style-switcher.js
 │   │       ├── admin.js
 │   │       └── dashboard.js
-│   ├── views/
-│   │   ├── errors/
-│   │   │   ├── 403.html
-│   │   │   ├── 404.html
-│   │   │   └── 500.html
-│   │   ├── shared/
-│   │   │   ├── add-package-modal.html
-│   │   │   ├── add-package-modal.js
-│   │   │   ├── loading.html
-│   │   │   ├── maintenance.html
-│   │   │   ├──sidebar.html
-│   │   │   └── sidebar.js
-│   │   ├── admin-panel.html 
-│   │   ├── dashboard.html 
-│   │   └── index.html
-│   └── scripts/
-│       ├── insert_deliveries_data.py
-│       └── insert_users_data.py
-├── docker/ 
-│   └── Dockerfile
-├── docker-compose.yml 
-├── Documents/
-│   ├── images/
-│   │   └── Diagrams/
-│   └── references/
+│   └── views/
+│       ├── errors/
+│       │   ├── 403.html
+│       │   ├── 404.html
+│       │   └── 500.html
+│       ├── shared/
+│       │   ├── add-package-modal.html
+│       │   ├── add-package-modal.js
+│       │   ├── loading.html
+│       │   ├── maintenance.html
+│       │   ├──sidebar.html
+│       │   └── sidebar.js
+│       ├── admin-panel.html 
+│       ├── dashboard.html 
+│       └── index.html
 ├── scripts/
 │   ├── insert_deliveries_data.py
 │   └── insert_users_data.py
 ├── .env
 ├── .htaccess
+├── docker-compose.yml 
 ├── LICENSE
 └── README.md
  ```
@@ -202,7 +200,7 @@ mysql -u root -p PackTrackDB < data/PackTrackDB_users.sql
 ```
  
 4. **Start Frontend**
-    - Start from [index.html](http://localhost/public/views/index.html) (Login Page)
+    - Start from [index.html](http://localhost:8080/public/views/index.html) (Login Page)
 
 ### 🐳 Optional: Docker Setup 
 
@@ -273,7 +271,7 @@ QUOTES_API_URL=https://api.quotable.io/random
 - ✅ Dashboard  
 - ✅ Admin Panel  
 - ✅ API Responses  
-- ✅ PDF Export Example 
+<!-- - ✅ PDF Export Example  -->
 
 ---
 
