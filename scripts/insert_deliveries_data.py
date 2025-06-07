@@ -23,7 +23,7 @@ config = {
     'database': os.getenv('DB_NAME')
 }
 
-csv_file_path = Path(__file__).resolve().parent.parent / 'backend' / 'database' / 'MOCK_DATA.csv'
+csv_file_path = Path(__file__).resolve().parent.parent / 'app' / 'data' / 'MOCK_Deliveries_DATA.csv'
 
 # Update the columns to include 'delivered_at', 'expected_delivery_date', and 'received_at'
 columns = ['id', 'user_id', 'tracking_number', 'courier_service', 'origin', 'destination', 
@@ -38,6 +38,17 @@ try:
     with open(csv_file_path, newline='', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)  # Reading CSV
         for row in reader:
+            # Ensure user_id exists in the users table
+            cursor.execute("SELECT COUNT(*) FROM users WHERE id = %s", (row['user_id'],))
+            user_exists = cursor.fetchone()[0]
+
+            if not user_exists:
+                # Insert placeholder user if user_id does not exist
+                cursor.execute(
+                    "INSERT INTO users (id, name, email, password) VALUES (%s, %s, %s, %s)",
+                    (row['user_id'], f"User{row['user_id']}", f"user{row['user_id']}@example.com", "password123")
+                )
+
             row['delivered_at'] = convert_date(row['delivered_at'])
             row['expected_delivery_date'] = convert_date(row['expected_delivery_date'])
             row['received_at'] = convert_date(row['received_at'])

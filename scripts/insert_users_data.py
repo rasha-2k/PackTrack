@@ -14,7 +14,7 @@ config = {
     'database': os.getenv('DB_NAME')
 }
 
-csv_file_path = Path(__file__).resolve().parent.parent / 'backend' / 'database' / 'MOCK_Users_DATA.csv'
+csv_file_path = Path(__file__).resolve().parent.parent / 'app' / 'data' / 'MOCK_Users_DATA.csv'
 
 columns = ['id','name','email','password','role']
 
