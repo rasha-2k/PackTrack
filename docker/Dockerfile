@@ -1,5 +1,8 @@
 # Use the official PHP image with Apache
-FROM php:8.2-apache
+FROM php:8.2-apache-bullseye
+
+# Ensure all packages are updated to the latest security patches
+RUN apt-get update && apt-get upgrade -y
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -33,7 +36,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/html
 
 # Copy project files
-COPY backend/ /var/www/html/
+COPY app/ /var/www/html/
 
 # Install PHP dependencies
 WORKDIR /var/www/html
@@ -44,7 +47,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
 # Apache configuration
-COPY apache/apache.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/apache/apache.conf /etc/apache2/sites-available/000-default.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose port 80
