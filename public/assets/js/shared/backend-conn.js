@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     setupForm("#login-form form", "login");
 });
 
-//! docker: fetch "http://localhost:8080/PackTrack/backend/auth/register.php"
-//! local: fetch "http://localhost/PackTrack/backend/auth/register.php"
-const API_BASE_URL = "http://localhost:8080/PackTrack/backend/auth";
+//! docker: fetch "http://localhost:8080/app/auth/register.php"
+//! local: fetch "http://localhost/app/auth/register.php"
+const API_BASE_URL = "http://localhost:8080/app/auth";
 
 async function setupForm(formSelector, action) {
     const form = document.querySelector(formSelector);
@@ -35,7 +35,7 @@ async function setupForm(formSelector, action) {
         } catch (err) {
             console.error(`${action} error:`, err);
             showNotification("A server error occurred.", "error");
-            window.location.href = "/PackTrack/public/views/errors/500.html";
+            window.location.href = "/public/views/errors/500.html";
         }
     });
 }
@@ -73,6 +73,7 @@ function handleSuccess(result) {
     localStorage.setItem("token", result.token);
     localStorage.setItem("user", JSON.stringify(result.user));
 
+    
     setTimeout(() => {
         window.location.href = result.user.role === "admin"
             ? "../views/admin-panel.html"

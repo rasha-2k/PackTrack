@@ -1,6 +1,8 @@
 // Chart configuration variables
 let activityChart;
 let statusChart;
+const API_BASE = window.location.origin;
+
 document.addEventListener('DOMContentLoaded', () => {
     initGeneralFunctionalities();
     updateStatCards();
@@ -75,7 +77,7 @@ function initButtons() {
 }
 
 function updateStatCards() {
-    fetch('../../backend/api/dashboard/dashboard-stats.php')
+    fetch(`${API_BASE}/app/api/dashboard/dashboard-stats.php`)
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -259,7 +261,7 @@ function updateActivityChart() {
     const options = getChartOptions(isDarkMode);
     const DataPointBorderColor = isDarkMode ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)';
 
-    fetch('../../backend/api/dashboard/charts/package-activity.php')
+    fetch(`${API_BASE}/app/api/dashboard/charts/package-activity.php`)
         .then(res => res.json())
         .then(data => {
             if (!Array.isArray(data)) {
@@ -319,7 +321,7 @@ function updateStatusChart() {
     const isDarkMode = document.body.classList.contains('dark');
     const options = getChartOptions(isDarkMode);
 
-    fetch('../../backend/api/dashboard/charts/package-status.php')
+    fetch(`${API_BASE}/app/api/dashboard/charts/package-status.php`)
         .then(res => res.json())
         .then(data => {
             if (!Array.isArray(data)) {
@@ -385,7 +387,7 @@ async function updateStatusChartAction(period) {
         range = 'month';
     }
 
-    const url = `../../backend/api/dashboard/charts/package-activity.php?range=${range}`;
+    const url = `${API_BASE}/app/api/dashboard/charts/package-activity.php?range=${range}`;
 
     try {
         const res = await fetch(url);

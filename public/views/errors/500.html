@@ -225,7 +225,7 @@
                 <i class="fas fa-home" style="margin-right: 0.5rem;"></i>
                 Go to Dashboard
             </a>
-            <a href="javascript:void(0);" onclick="window.location.reload();" class="back-link">
+            <a href="javascript:void(0);" onclick="location.reload();" class="back-link">
                 <i class="fas fa-sync" style="margin-right: 0.3rem;"></i>
                 Reload Page
             </a>
@@ -233,7 +233,7 @@
     </div>
 
     <script type="text/javascript">
-        document.getElementById("dashboard-link").href = window.location.origin + "/PackTrack/public/views/dashboard.html";
+        document.getElementById("dashboard-link").href = window.location.origin + "/public/views/dashboard.html";
     </script>
     <!-- <script type="text/javascript">
         document.querySelector(".back-link").addEventListener("click", function (event) {
@@ -242,7 +242,7 @@
             if (document.referrer) {
                 window.pa();
             } else {
-                window.location.href = "../PackTrack/public/views/dashboard.html";
+                window.location.href = "../views/dashboard.html";
             }
         });
     </script> -->

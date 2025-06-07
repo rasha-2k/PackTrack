@@ -2,7 +2,7 @@
 function checkAuth() {
     const token = localStorage.getItem("token");
     if (!token) {
-        window.location.href = "/PackTrack/public/views/errors/403.html";
+        window.location.href = "/public/views/errors/403.html";
         // alert("You must be logged in.");
         // return false;
     }
@@ -10,7 +10,7 @@ function checkAuth() {
     try {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user) {
-            window.location.href = "/PackTrack/public/views/errors/403.html";
+            window.location.href = "/public/views/errors/403.html";
             // alert("User data is missing.");
             // return false;
         }
@@ -29,7 +29,7 @@ async function checkPageAccess(page) {
     if (!user) return;
 
     try {
-        const response = await fetch('/PackTrack/backend/api/check-access.php', {
+        const response = await fetch('/app/api/check-access.php', {
             method: 'POST',
             body: JSON.stringify({ page }),
             headers: {
@@ -39,7 +39,7 @@ async function checkPageAccess(page) {
         });
 
         if (response.status === 403 || response.status === 401) {
-            window.location.href = "/PackTrack/public/views/errors/403.html";
+            window.location.href = "/public/views/errors/403.html";
         } else if (response.ok) {
             return await response.json();
         } else {
@@ -67,6 +67,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            logout();
+            setTimeout(() => {
+                loadRecentActivity(); 
+            }, 1000);
+        });
+    }
 });
 
 function logout() {
@@ -79,7 +89,7 @@ function logout() {
         return;
     }
 
-    fetch('http://localhost:8080/PackTrack/backend/auth/logout.php', {
+    fetch('http://localhost:8080/app/auth/logout.php', {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`
@@ -91,13 +101,3 @@ function logout() {
     });
 
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            logout();
-        });
-    }
-});

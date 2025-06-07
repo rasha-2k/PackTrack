@@ -3,6 +3,8 @@ let deliveryOverviewChart;
 let deliveryTrendChart;
 let packageCategoryChart
 let statusByTimeChart
+const API_BASE = window.location.origin;
+
 
 document.addEventListener('DOMContentLoaded', () => {
     initGeneralFunctionalities();
@@ -71,7 +73,7 @@ function initGeneralFunctionalities() {
 async function fetchChartData(endpoint, params = {}) {
     try {
         const queryString = new URLSearchParams(params).toString();
-        const response = await fetch(`../../backend/api/admin/charts/${endpoint}?${queryString}`);
+        const response = await fetch(`${API_BASE}/app/api/admin/charts/${endpoint}?${queryString}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

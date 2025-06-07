@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PackTrack | Admin Dashboard</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="/public/assets/css/style.css">
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
@@ -336,7 +336,7 @@
             return date.toLocaleString(); // or use .toLocaleDateString() and .toLocaleTimeString() for split
         }
         function loadRecentActivity() {
-            fetch('/PackTrack/backend/api/admin/users-activity.php')
+            fetch('/app/api/admin/users-activity.php')
                 .then(res => res.json())
                 .then(res => {
                     if (!res.success) {
@@ -351,7 +351,7 @@
                             case 'login': return 'Active';
                             case 'logout': return 'Logged Out';
                             case 'register': return 'New';
-                            default: return 'Activity';
+                            default: return 'Unknown';
                         }
                     }
 

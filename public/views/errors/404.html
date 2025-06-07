@@ -234,7 +234,7 @@
     </div>
 
     <script type="text/javascript">
-        document.getElementById("dashboard-link").href = window.location.origin + "/PackTrack/public/views/dashboard.html";
+        document.getElementById("dashboard-link").href = window.location.origin + "/public/views/dashboard.html";
 
         document.querySelector(".back-link").addEventListener("click", function (event) {
             event.preventDefault();
@@ -242,7 +242,7 @@
             if (document.referrer) {
                 window.history.back();
             } else {
-                window.location.href = "../PackTrack/public/views/dashboard.html";
+                window.location.href = "../views/dashboard.html";
             }
         });
     </script>

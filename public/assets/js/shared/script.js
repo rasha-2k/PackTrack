@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const state = document.readyState;
         if (state === 'interactive') {
             loadEl.style.display = "flex";
-            fetch('/PackTrack/public/views/shared/loading.html')
+            fetch('/public/views/shared/loading.html')
                 .then(response => response.text())
                 .then(html => {
                     loadEl.innerHTML = html;
@@ -233,7 +233,7 @@ function loadAddPackageModal() {
                 const token = localStorage.getItem('token');
 
                 try {
-                    const response = await fetch('../../backend/handlers/add-package.php', {
+                    const response = await fetch('/app/handlers/add-package.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

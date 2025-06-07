@@ -101,7 +101,7 @@ class QuoteWidget {
 
             refreshBtn.classList.add('fa-spin');
 
-            const response = await fetch('/PackTrack/backend/api/random/quotes.json');
+            const response = await fetch('/app/api/random/quotes.json');
             const allQuotes = await response.json();
             const quote = allQuotes[Math.floor(Math.random() * allQuotes.length)];
 
