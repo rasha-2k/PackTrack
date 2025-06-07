@@ -1,14 +1,14 @@
 /*=========================== toggle style switcher ===========================*/
-const styleSwitcherToggle = document.querySelector(".style-switcher-toggler");
-styleSwitcherToggle.addEventListener("click", () => {
-document.querySelector(".style-switcher").classList.toggle("open");
-})
-window.addEventListener( "scroll", () => {
-if(document.querySelector(".style-switcher").classList.contains("open"))
-{
-    document.querySelector(".style-switcher").classList.remove("open");
-}
-})
+// const styleSwitcherToggle = document.querySelector(".style-switcher-toggler");
+// styleSwitcherToggle.addEventListener("click", () => {
+// document.querySelector(".style-switcher").classList.toggle("open");
+// })
+// window.addEventListener( "scroll", () => {
+// if(document.querySelector(".style-switcher").classList.contains("open"))
+// {
+//     document.querySelector(".style-switcher").classList.remove("open");
+// }
+// })
 /*=========================== theme light and dark mode ===========================*/
 const dayNightToggle = document.querySelector(".day-night");
 const icon = dayNightToggle.querySelector("i");
